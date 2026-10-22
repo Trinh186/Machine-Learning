@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect><x>0</x><y>0</y><width>1366</width><height>820</height></rect>
+  </property>
+  <property name="minimumSize">
+   <size><width>1150</width><height>700</height></size>
+  </property>
+  <property name="windowTitle">
+   <string>RFM Insight – Customer Segmentation System</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QHBoxLayout" name="rootLayout">
+    <property name="spacing"><number>0</number></property>
+    <property name="leftMargin"><number>0</number></property>
+    <property name="topMargin"><number>0</number></property>
+    <property name="rightMargin"><number>0</number></property>
+    <property name="bottomMargin"><number>0</number></property>
+
+    <!-- ================= SIDEBAR ================= -->
+    <item>
+     <widget class="QFrame" name="sidebar">
+      <property name="minimumSize"><size><width>248</width><height>0</height></size></property>
+      <property name="maximumSize"><size><width>248</width><height>16777215</height></size></property>
+      <layout class="QVBoxLayout" name="sidebarLayout">
+       <property name="spacing"><number>4</number></property>
+       <property name="leftMargin"><number>16</number></property>
+       <property name="topMargin"><number>22</number></property>
+       <property name="rightMargin"><number>16</number></property>
+       <property name="bottomMargin"><number>18</number></property>
+       <item>
+        <widget class="QLabel" name="lblAppName">
+         <property name="text"><string>RFM Insight</string></property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="lblAppSubtitle">
+         <property name="text"><string>Customer Segmentation System</string></property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="spacerBrand">
+         <property name="orientation"><enum>Qt::Vertical</enum></property>
+         <property name="sizeType"><enum>QSizePolicy::Fixed</enum></property>
+         <property name="sizeHint" stdset="0"><size><width>20</width><height>22</height></size></property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QLabel" name="lblMenuSection">
+         <property name="text"><string>ANALYTICS</string></property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="btnNavDashboard">
+         <property name="text"><string>Dashboard</string></property>
+         <property name="checkable"><bool>true</bool></property>
+         <property name="cssClass" stdset="0"><string>navButton</string></property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="btnNavTransactions">
+         <property name="text"><string>Transaction Data</string></property>
+         <property name="checkable"><bool>true</bool></property>
+         <property name="cssClass" stdset="0"><string>navButton</string></property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="btnNavRfmModel">
+         <property name="text"><string>RFM &amp;&amp; Model</string></property>
+         <property name="checkable"><bool>true</bool></property>
+         <property name="cssClass" stdset="0"><string>navButton</string></property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="btnNavSegmentation">
+         <property name="text"><string>Customer Segmentation</string></property>
+         <property name="checkable"><bool>true</bool></property>
+         <property name="cssClass" stdset="0"><string>navButton</string></property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="btnNavMarketing">
+         <property name="text"><string>Cluster Analysis &amp;&amp; Marketing</string></property>
+         <property name="checkable"><bool>true</bool></property>
+         <property name="cssClass" stdset="0"><string>navButton</string></property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="spacerAdmin">
+         <property name="orientation"><enum>Qt::Vertical</enum></property>
+         <property name="sizeType"><enum>QSizePolicy::Fixed</enum></property>
+         <property name="sizeHint" stdset="0"><size><width>20</width><height>14</height></size></property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QLabel" name="lblAdminSection">
+         <property name="text"><string>ADMINISTRATION</string></property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="btnNavUsers">
+         <property name="text"><string>User Management</string></property>
+         <property name="checkable"><bool>true</bool></property>
+         <property name="cssClass" stdset="0"><string>navButton</string></property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="spacerSidebar">
+         <property name="orientation"><enum>Qt::Vertical</enum></property>
+         <property name="sizeHint" stdset="0"><size><width>20</width><height>40</height></size></property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QFrame" name="userBox">
+         <layout class="QVBoxLayout" name="userBoxLayout">
+          <property name="spacing"><number>2</number></property>
+          <property name="leftMargin"><number>12</number></property>
+          <property name="topMargin"><number>12</number></property>
+          <property name="rightMargin"><number>12</number></property>
+          <property name="bottomMargin"><number>12</number></property>
+          <item>
+           <widget class="QLabel" name="lblUserName">
+            <property name="text"><string>Full Name</string></property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="lblUserRole">
+            <property name="text"><string>Role</string></property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="spacerUserBox">
+            <property name="orientation"><enum>Qt::Vertical</enum></property>
+            <property name="sizeType"><enum>QSizePolicy::Fixed</enum></property>
+            <property name="sizeHint" stdset="0"><size><width>20</width><height>8</height></size></property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QPushButton" name="btnLogout">
+            <property name="text"><string>Log out</string></property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+
+    <!-- ================= CONTENT ================= -->
+    <item>
+     <widget class="QFrame" name="contentArea">
+      <layout class="QVBoxLayout" name="contentLayout">
+       <property name="spacing"><number>0</number></property>
+       <property name="leftMargin"><number>0</number></property>
+       <property name="topMargin"><number>0</number></property>
+       <property name="rightMargin"><number>0</number></property>
+       <property name="bottomMargin"><number>0</number></property>
+       <item>
+        <widget class="QFrame" name="topBar">
+         <property name="minimumSize"><size><width>0</width><height>76</height></size></property>
+         <property name="maximumSize"><size><width>16777215</width><height>76</height></size></property>
+         <layout class="QHBoxLayout" name="topBarLayout">
+          <property name="leftMargin"><number>28</number></property>
+          <property name="topMargin"><number>12</number></property>
+          <property name="rightMargin"><number>28</number></property>
+          <property name="bottomMargin"><number>12</number></property>
+          <item>
+           <layout class="QVBoxLayout" name="pageTitleLayout">
+            <property name="spacing"><number>2</number></property>
+            <item>
+             <widget class="QLabel" name="lblPageTitle">
+              <property name="text"><string>Dashboard</string></property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="lblPageSubtitle">
+              <property name="text"><string>Page description</string></property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <spacer name="spacerTopBar">
+            <property name="orientation"><enum>Qt::Horizontal</enum></property>
+            <property name="sizeHint" stdset="0"><size><width>40</width><height>20</height></size></property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QLabel" name="lblDataRange">
+            <property name="maximumSize"><size><width>16777215</width><height>30</height></size></property>
+            <property name="text"><string>Data: dd/mm/yyyy – dd/mm/yyyy</string></property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QStackedWidget" name="stackPages"/>
+       </item>
+      </layout>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
