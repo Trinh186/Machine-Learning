@@ -6,3 +6,4 @@ __pycache__/
 .auth_backup/
 .teacher_login_backup/
 .pytest_cache/
+.user_management_backup/
