@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>LoginMainWindow</class>
+ <widget class="QMainWindow" name="LoginMainWindow">
+  <property name="geometry"><rect><x>0</x><y>0</y><width>620</width><height>470</height></rect></property>
+  <property name="minimumSize"><size><width>520</width><height>420</height></size></property>
+  <property name="windowTitle"><string>Đăng nhập — RFM Insight</string></property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="outerLayout">
+    <property name="leftMargin"><number>80</number></property>
+    <property name="topMargin"><number>42</number></property>
+    <property name="rightMargin"><number>80</number></property>
+    <property name="bottomMargin"><number>42</number></property>
+    <property name="spacing"><number>13</number></property>
+    <item>
+     <widget class="QLabel" name="lblAppTitle">
+      <property name="text"><string>RFM Insight</string></property>
+      <property name="alignment"><set>Qt::AlignCenter</set></property>
+      <property name="styleSheet"><string notr="true">font-size: 24pt; font-weight: bold; color: #3B5BDB;</string></property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="lblSubtitle">
+      <property name="text"><string>Customer Segmentation • Đăng nhập hệ thống</string></property>
+      <property name="alignment"><set>Qt::AlignCenter</set></property>
+      <property name="styleSheet"><string notr="true">color: #6B7280; font-size: 10pt;</string></property>
+     </widget>
+    </item>
+    <item><spacer name="spacerTop"><property name="orientation"><enum>Qt::Vertical</enum></property><property name="sizeHint" stdset="0"><size><width>20</width><height>15</height></size></property></spacer></item>
+    <item><widget class="QLabel" name="lblUsername"><property name="text"><string>Tên đăng nhập</string></property></widget></item>
+    <item>
+     <widget class="QLineEdit" name="txtUsername">
+      <property name="placeholderText"><string>Nhập username</string></property>
+      <property name="minimumSize"><size><width>0</width><height>42</height></size></property>
+     </widget>
+    </item>
+    <item><widget class="QLabel" name="lblPassword"><property name="text"><string>Mật khẩu</string></property></widget></item>
+    <item>
+     <widget class="QLineEdit" name="txtPassword">
+      <property name="placeholderText"><string>Nhập mật khẩu</string></property>
+      <property name="echoMode"><enum>QLineEdit::Password</enum></property>
+      <property name="minimumSize"><size><width>0</width><height>42</height></size></property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="lblError">
+      <property name="text"><string></string></property>
+      <property name="wordWrap"><bool>true</bool></property>
+      <property name="styleSheet"><string notr="true">color: #B42318; font-size: 9pt;</string></property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="btnLogin">
+      <property name="text"><string>Đăng nhập</string></property>
+      <property name="minimumSize"><size><width>0</width><height>43</height></size></property>
+      <property name="styleSheet"><string notr="true">QPushButton{background-color:#3B5BDB;color:white;border:0;border-radius:8px;font-weight:600;} QPushButton:hover{background-color:#2B48C0;}</string></property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="btnExit">
+      <property name="text"><string>Thoát ứng dụng</string></property>
+      <property name="minimumSize"><size><width>0</width><height>36</height></size></property>
+     </widget>
+    </item>
+    <item><spacer name="spacerBottom"><property name="orientation"><enum>Qt::Vertical</enum></property><property name="sizeHint" stdset="0"><size><width>20</width><height>20</height></size></property></spacer></item>
+   </layout>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

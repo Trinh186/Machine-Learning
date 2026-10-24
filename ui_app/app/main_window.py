@@ -10,10 +10,11 @@ Cách Login (Task 7) mở cửa sổ này sau khi đăng nhập thành công:
 
 from PyQt6 import uic
 from PyQt6.QtCore import pyqtSignal
-from PyQt6.QtWidgets import QButtonGroup, QMainWindow
+from PyQt6.QtWidgets import QButtonGroup, QMainWindow, QMessageBox
 
 from app.pages.dashboard_page import DashboardPage
 from app.pages.placeholder_page import PlaceholderPage
+from app.pages.user_management_page import UserManagementPage
 from app.paths import UI_DIR
 
 # key, nút trên menu, tiêu đề, mô tả, chỉ Admin?
@@ -36,11 +37,12 @@ PAGES = [
 class MainWindow(QMainWindow):
     logout_requested = pyqtSignal()
 
-    def __init__(self, user: dict, service, parent=None):
+    def __init__(self, user: dict, service, parent=None, auth_service=None):
         super().__init__(parent)
         uic.loadUi(UI_DIR / "main_window.ui", self)
         self.user = user
         self.service = service
+        self.auth_service = auth_service
         self.is_admin = str(user.get("role", "")).lower() == "admin"
 
         self._pages = {}          # key -> widget trong stackPages
@@ -65,13 +67,15 @@ class MainWindow(QMainWindow):
 
         self._fill_user_box()
         self._fill_data_range()
-        self.btnLogout.clicked.connect(self.logout_requested.emit)
+        self.btnLogout.clicked.connect(self._confirm_logout)
         self.show_page("dashboard")
 
     # ---------- tạo trang ----------
     def _create_page(self, key, title):
         if key == "dashboard":
             return DashboardPage(self.service)
+        if key == "users" and self.is_admin and self.auth_service is not None:
+            return UserManagementPage(self.auth_service)
         # Các trang còn lại sẽ thay bằng trang thật khi làm Task 11, 12 (Hằng) và Task 9 (Trinh)
         return PlaceholderPage(title, "This screen is under construction.")
 
@@ -96,3 +100,13 @@ class MainWindow(QMainWindow):
         stats = self.service.get_dashboard_stats()
         self.lblDataRange.setText(
             f"Data: {stats['date_from']:%d/%m/%Y} – {stats['date_to']:%d/%m/%Y}")
+
+    # ---------- Đăng xuất ----------
+    def _confirm_logout(self):
+        reply = QMessageBox.question(
+            self, 'Đăng xuất', 'Bạn muốn đăng xuất khỏi hệ thống?',
+            QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No,
+            QMessageBox.StandardButton.No,
+        )
+        if reply == QMessageBox.StandardButton.Yes:
+            self.logout_requested.emit()
