@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>UserManagementPage</class>
+ <widget class="QWidget" name="UserManagementPage">
+  <property name="geometry"><rect><x>0</x><y>0</y><width>1080</width><height>760</height></rect></property>
+  <layout class="QVBoxLayout" name="rootLayout">
+   <property name="leftMargin"><number>24</number></property>
+   <property name="rightMargin"><number>24</number></property>
+   <property name="topMargin"><number>20</number></property>
+   <property name="bottomMargin"><number>20</number></property>
+   <property name="spacing"><number>14</number></property>
+   <item>
+    <widget class="QLabel" name="lblPageHeader">
+     <property name="text"><string>Quản lý tài khoản</string></property>
+     <property name="styleSheet"><string notr="true">font-size:16pt; font-weight:bold; color:#111827;</string></property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="lblPageDesc">
+     <property name="text"><string>Admin có thể xem danh sách, thêm mới, khóa và mở khóa tài khoản.</string></property>
+     <property name="styleSheet"><string notr="true">color:#6B7280;</string></property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="groupAddUser">
+     <property name="title"><string>Thêm tài khoản mới</string></property>
+     <layout class="QGridLayout" name="gridAddUser">
+      <item row="0" column="0"><widget class="QLabel" name="lblNewUser"><property name="text"><string>Username</string></property></widget></item>
+      <item row="0" column="1"><widget class="QLabel" name="lblNewName"><property name="text"><string>Họ tên</string></property></widget></item>
+      <item row="0" column="2"><widget class="QLabel" name="lblNewPassword"><property name="text"><string>Mật khẩu</string></property></widget></item>
+      <item row="0" column="3"><widget class="QLabel" name="lblNewRole"><property name="text"><string>Vai trò</string></property></widget></item>
+      <item row="1" column="0"><widget class="QLineEdit" name="txtNewUsername"><property name="placeholderText"><string>user01</string></property></widget></item>
+      <item row="1" column="1"><widget class="QLineEdit" name="txtNewFullName"><property name="placeholderText"><string>Họ và tên</string></property></widget></item>
+      <item row="1" column="2"><widget class="QLineEdit" name="txtNewPassword"><property name="placeholderText"><string>Ít nhất 8 ký tự</string></property><property name="echoMode"><enum>QLineEdit::Password</enum></property></widget></item>
+      <item row="1" column="3"><widget class="QComboBox" name="cboNewRole"/></item>
+      <item row="1" column="4"><widget class="QPushButton" name="btnAddUser"><property name="text"><string>+ Thêm tài khoản</string></property><property name="minimumSize"><size><width>0</width><height>37</height></size></property><property name="styleSheet"><string notr="true">QPushButton{background:#3B5BDB;color:white;padding:8px;border-radius:6px;font-weight:bold;} QPushButton:hover{background:#2B48C0;}</string></property></widget></item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="actionsLayout">
+     <item><widget class="QLabel" name="lblListTitle"><property name="text"><string>Danh sách tài khoản</string></property><property name="styleSheet"><string notr="true">font-size:12pt;font-weight:bold;</string></property></widget></item>
+     <item><spacer name="actionSpacer"><property name="orientation"><enum>Qt::Horizontal</enum></property><property name="sizeHint" stdset="0"><size><width>40</width><height>20</height></size></property></spacer></item>
+     <item><widget class="QPushButton" name="btnRefresh"><property name="text"><string>Làm mới</string></property></widget></item>
+     <item><widget class="QPushButton" name="btnLockUser"><property name="text"><string>Khóa tài khoản</string></property><property name="enabled"><bool>false</bool></property></widget></item>
+     <item><widget class="QPushButton" name="btnUnlockUser"><property name="text"><string>Mở khóa</string></property><property name="enabled"><bool>false</bool></property></widget></item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QTableWidget" name="tblUsers">
+     <property name="alternatingRowColors"><bool>true</bool></property>
+     <property name="sortingEnabled"><bool>false</bool></property>
+     <column><property name="text"><string>ID</string></property></column>
+     <column><property name="text"><string>Username</string></property></column>
+     <column><property name="text"><string>Họ tên</string></property></column>
+     <column><property name="text"><string>Vai trò</string></property></column>
+     <column><property name="text"><string>Trạng thái</string></property></column>
+     <column><property name="text"><string>Ngày tạo</string></property></column>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

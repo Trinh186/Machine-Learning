@@ -2,3 +2,7 @@
 .idea/
 __pycache__/
 *.pyc
+.env
+.auth_backup/
+.teacher_login_backup/
+.pytest_cache/
