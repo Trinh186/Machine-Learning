@@ -171,3 +171,80 @@ class DonutChart(QWidget):
                        f"{v / total:.1%}")
             y += 22
         p.end()
+
+
+class LineChart(QWidget):
+    """
+    Biểu đồ đường có đánh dấu 1 điểm (vd. K được chọn).
+    set_data(labels, values, highlight_index=None, value_format="{:,.0f}", color="#3B5BDB")
+    """
+
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self._labels: list[str] = []
+        self._values: list[float] = []
+        self._highlight = None
+        self._fmt = "{:,.0f}"
+        self._color = ACCENT
+        self.setMinimumHeight(180)
+
+    def set_data(self, labels, values, highlight_index=None, value_format="{:,.0f}", color="#3B5BDB"):
+        self._labels = [str(x) for x in labels]
+        self._values = [float(v) for v in values]
+        self._highlight = highlight_index
+        self._fmt = value_format
+        self._color = QColor(color)
+        self.update()
+
+    def paintEvent(self, event):
+        if len(self._values) < 2:
+            return
+        p = QPainter(self)
+        p.setRenderHint(QPainter.RenderHint.Antialiasing)
+        small = QFont(self.font())
+        small.setPointSizeF(max(7.5, self.font().pointSizeF() - 1.5))
+        p.setFont(small)
+
+        left, right, top, bottom = 52, 14, 22, 24
+        plot = QRectF(left, top, self.width() - left - right, self.height() - top - bottom)
+        vmin, vmax = min(self._values), max(self._values)
+        pad = (vmax - vmin) * 0.15 or abs(vmax) * 0.1 or 1
+        lo, hi = vmin - pad, vmax + pad
+
+        def pt(i, v):
+            x = plot.left() + plot.width() * i / (len(self._values) - 1)
+            y = plot.bottom() - plot.height() * (v - lo) / (hi - lo)
+            return QPointF(x, y)
+
+        # lưới + nhãn trục Y
+        for i in range(4):
+            v = lo + (hi - lo) * i / 3
+            y = plot.bottom() - plot.height() * i / 3
+            p.setPen(QPen(GRID, 1))
+            p.drawLine(QPointF(plot.left(), y), QPointF(plot.right(), y))
+            p.setPen(TEXT_MUTED)
+            p.drawText(QRectF(0, y - 8, left - 8, 16),
+                       Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter, self._fmt.format(v))
+
+        # đường + điểm
+        pts = [pt(i, v) for i, v in enumerate(self._values)]
+        p.setPen(QPen(self._color, 2.2))
+        for a, b in zip(pts, pts[1:]):
+            p.drawLine(a, b)
+        for i, point in enumerate(pts):
+            big = i == self._highlight
+            p.setPen(QPen(QColor("#FFFFFF"), 2))
+            p.setBrush(QColor("#E8590C") if big else self._color)
+            r = 6.5 if big else 4
+            p.drawEllipse(point, r, r)
+            if big:
+                p.setPen(QColor("#E8590C"))
+                p.drawText(QRectF(point.x() - 60, point.y() - 24, 120, 16), Qt.AlignmentFlag.AlignCenter,
+                           f"K = {self._labels[i]}: {self._fmt.format(self._values[i])}")
+
+        # nhãn trục X
+        p.setPen(TEXT_MUTED)
+        for i, lab in enumerate(self._labels):
+            x = pts[i].x()
+            p.drawText(QRectF(x - 20, plot.bottom() + 6, 40, 16), Qt.AlignmentFlag.AlignCenter, lab)
+        p.end()

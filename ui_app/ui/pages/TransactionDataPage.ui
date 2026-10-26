@@ -1,0 +1,382 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>TransactionDataPage</class>
+ <widget class="QWidget" name="TransactionDataPage">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1118</width>
+    <height>744</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Transaction Data</string>
+  </property>
+  <layout class="QVBoxLayout" name="layoutTransactionPage" stretch="0,1">
+   <property name="spacing">
+    <number>16</number>
+   </property>
+   <property name="leftMargin">
+    <number>28</number>
+   </property>
+   <property name="topMargin">
+    <number>20</number>
+   </property>
+   <property name="rightMargin">
+    <number>28</number>
+   </property>
+   <property name="bottomMargin">
+    <number>24</number>
+   </property>
+   <item>
+    <widget class="QFrame" name="cardFilters">
+     <property name="cssClass" stdset="0">
+      <string>card</string>
+     </property>
+     <layout class="QVBoxLayout" name="layoutFilters">
+      <property name="spacing">
+       <number>2</number>
+      </property>
+      <property name="leftMargin">
+       <number>20</number>
+      </property>
+      <property name="topMargin">
+       <number>16</number>
+      </property>
+      <property name="rightMargin">
+       <number>20</number>
+      </property>
+      <property name="bottomMargin">
+       <number>16</number>
+      </property>
+      <item>
+       <widget class="QLabel" name="lblFiltersTitle">
+        <property name="text">
+         <string>Search &amp; Filter</string>
+        </property>
+        <property name="cssClass" stdset="0">
+         <string>cardTitle</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <layout class="QGridLayout" name="gridFilters">
+        <property name="horizontalSpacing">
+         <number>12</number>
+        </property>
+        <property name="verticalSpacing">
+         <number>6</number>
+        </property>
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>8</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <item row="0" column="0">
+         <widget class="QLabel" name="lblSearchCaption">
+          <property name="text">
+           <string>Keyword</string>
+          </property>
+          <property name="cssClass" stdset="0">
+           <string>fieldLabel</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QLabel" name="lblCountryCaption">
+          <property name="text">
+           <string>Country</string>
+          </property>
+          <property name="cssClass" stdset="0">
+           <string>fieldLabel</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="2">
+         <widget class="QLabel" name="lblDateFromCaption">
+          <property name="text">
+           <string>From date</string>
+          </property>
+          <property name="cssClass" stdset="0">
+           <string>fieldLabel</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="3">
+         <widget class="QLabel" name="lblDateToCaption">
+          <property name="text">
+           <string>To date</string>
+          </property>
+          <property name="cssClass" stdset="0">
+           <string>fieldLabel</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLineEdit" name="txtSearch">
+          <property name="clearButtonEnabled">
+           <bool>true</bool>
+          </property>
+          <property name="placeholderText">
+           <string>Invoice no., customer ID, stock code or product name</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QComboBox" name="cboCountry">
+          <property name="minimumSize">
+           <size>
+            <width>170</width>
+            <height>0</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="2">
+         <widget class="QDateEdit" name="dateFrom">
+          <property name="calendarPopup">
+           <bool>true</bool>
+          </property>
+          <property name="displayFormat">
+           <string>dd/MM/yyyy</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="3">
+         <widget class="QDateEdit" name="dateTo">
+          <property name="calendarPopup">
+           <bool>true</bool>
+          </property>
+          <property name="displayFormat">
+           <string>dd/MM/yyyy</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="4">
+         <widget class="QPushButton" name="btnSearch">
+          <property name="text">
+           <string>Search</string>
+          </property>
+          <property name="cssClass" stdset="0">
+           <string>primary</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="5">
+         <widget class="QPushButton" name="btnReset">
+          <property name="text">
+           <string>Reset</string>
+          </property>
+          <property name="cssClass" stdset="0">
+           <string>secondary</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QFrame" name="cardTransactions">
+     <property name="cssClass" stdset="0">
+      <string>card</string>
+     </property>
+     <layout class="QVBoxLayout" name="layoutTransactions" stretch="0,1,0">
+      <property name="spacing">
+       <number>10</number>
+      </property>
+      <property name="leftMargin">
+       <number>20</number>
+      </property>
+      <property name="topMargin">
+       <number>16</number>
+      </property>
+      <property name="rightMargin">
+       <number>20</number>
+      </property>
+      <property name="bottomMargin">
+       <number>14</number>
+      </property>
+      <item>
+       <layout class="QHBoxLayout" name="layoutTransactionsHeader">
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="QLabel" name="lblTransactionsTitle">
+          <property name="text">
+           <string>Transaction Lines</string>
+          </property>
+          <property name="cssClass" stdset="0">
+           <string>cardTitle</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="spacerTransactionsHeader">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QLabel" name="lblTotalAmount">
+          <property name="text">
+           <string>Total amount: £0</string>
+          </property>
+          <property name="cssClass" stdset="0">
+           <string>pill</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <widget class="QTableWidget" name="tblTransactions">
+        <property name="editTriggers">
+         <set>QAbstractItemView::NoEditTriggers</set>
+        </property>
+        <property name="selectionBehavior">
+         <enum>QAbstractItemView::SelectRows</enum>
+        </property>
+        <property name="selectionMode">
+         <enum>QAbstractItemView::SingleSelection</enum>
+        </property>
+        <property name="showGrid">
+         <bool>false</bool>
+        </property>
+        <property name="alternatingRowColors">
+         <bool>true</bool>
+        </property>
+        <attribute name="verticalHeaderVisible">
+         <bool>false</bool>
+        </attribute>
+        <attribute name="horizontalHeaderStretchLastSection">
+         <bool>true</bool>
+        </attribute>
+       </widget>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="layoutTransactionsPager">
+        <property name="spacing">
+         <number>8</number>
+        </property>
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="QLabel" name="lblTransactionsSummary">
+          <property name="text">
+           <string>Showing 0 of 0 rows</string>
+          </property>
+          <property name="cssClass" stdset="0">
+           <string>cardSubtitle</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="spacerTransactionsPager">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QLabel" name="lblTransactionsPageSizeCaption">
+          <property name="text">
+           <string>Rows per page</string>
+          </property>
+          <property name="cssClass" stdset="0">
+           <string>cardSubtitle</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QComboBox" name="cboTransactionsPageSize">
+          <property name="minimumSize">
+           <size>
+            <width>80</width>
+            <height>0</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btnTransactionsPrevPage">
+          <property name="text">
+           <string>‹ Prev</string>
+          </property>
+          <property name="cssClass" stdset="0">
+           <string>secondary</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="lblTransactionsPageInfo">
+          <property name="text">
+           <string>Page 1 / 1</string>
+          </property>
+          <property name="cssClass" stdset="0">
+           <string>pageInfo</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btnTransactionsNextPage">
+          <property name="text">
+           <string>Next ›</string>
+          </property>
+          <property name="cssClass" stdset="0">
+           <string>secondary</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

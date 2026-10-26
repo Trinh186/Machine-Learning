@@ -42,7 +42,7 @@ class DashboardPage(QWidget):
         self.revenueChart.set_data([self._month_label(m) for m, _ in monthly],
                                    [v for _, v in monthly])
         self.segmentChart.set_data(
-            [(s["segment_name"], s["customers"], s["color"]) for s in segments], "customers")
+            [(s.get("segment_name_en") or s["segment_name"], s["customers"], s["color"]) for s in segments], "customers")
 
         # --- bảng tóm tắt phân khúc ---
         self._fill_segment_table(segments)
@@ -68,7 +68,7 @@ class DashboardPage(QWidget):
         t.setRowCount(len(segments))
         for row, s in enumerate(segments):
             values = [
-                f"●  {s['segment_name']}",
+                f"●  {s.get('segment_name_en') or s['segment_name']}",
                 f"{s['customers']:,}",
                 f"{s['customers'] / total_c:.1%}",
                 f"{s['avg_recency']:,.1f}",

@@ -14,6 +14,8 @@ from PyQt6.QtWidgets import QButtonGroup, QMainWindow, QMessageBox
 
 from app.pages.dashboard_page import DashboardPage
 from app.pages.placeholder_page import PlaceholderPage
+from app.pages.rfm_model_page import RfmModelPage
+from app.pages.transaction_page import TransactionDataPage
 from app.pages.user_management_page import UserManagementPage
 from app.paths import UI_DIR
 
@@ -74,9 +76,13 @@ class MainWindow(QMainWindow):
     def _create_page(self, key, title):
         if key == "dashboard":
             return DashboardPage(self.service)
+        if key == "transactions":
+            return TransactionDataPage(self.service)
+        if key == "rfm_model":
+            return RfmModelPage(self.service)
         if key == "users" and self.is_admin and self.auth_service is not None:
             return UserManagementPage(self.auth_service)
-        # Các trang còn lại sẽ thay bằng trang thật khi làm Task 11, 12 (Hằng) và Task 9 (Trinh)
+        # Các trang còn lại sẽ thay bằng trang thật khi làm Task 12 (Segmentation & Marketing)
         return PlaceholderPage(title, "This screen is under construction.")
 
     # ---------- điều hướng ----------

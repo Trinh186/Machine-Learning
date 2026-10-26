@@ -1,0 +1,68 @@
+{
+ "reference_date": "2011-12-10",
+ "features": [
+  "recency",
+  "frequency",
+  "monetary"
+ ],
+ "transform": "log1p",
+ "scaler_mean": [
+  3.85719237,
+  1.34558234,
+  6.58856227
+ ],
+ "scaler_scale": [
+  1.30690941,
+  0.68302494,
+  1.25829286
+ ],
+ "centroids": [
+  [
+   -0.80685622,
+   0.96662451,
+   0.90807616
+  ],
+  [
+   0.50454966,
+   -0.60445722,
+   -0.5678453
+  ]
+ ],
+ "k_search": [
+  {
+   "k": 2,
+   "inertia": 6476.51,
+   "silhouette": 0.4325
+  },
+  {
+   "k": 3,
+   "inertia": 4858.24,
+   "silhouette": 0.3363
+  },
+  {
+   "k": 4,
+   "inertia": 3925.43,
+   "silhouette": 0.3329
+  },
+  {
+   "k": 5,
+   "inertia": 3269.27,
+   "silhouette": 0.3181
+  },
+  {
+   "k": 6,
+   "inertia": 2841.42,
+   "silhouette": 0.3129
+  },
+  {
+   "k": 7,
+   "inertia": 2532.98,
+   "silhouette": 0.3103
+  },
+  {
+   "k": 8,
+   "inertia": 2325.08,
+   "silhouette": 0.3021
+  }
+ ]
+}
