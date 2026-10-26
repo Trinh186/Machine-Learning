@@ -1,0 +1,989 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>RfmModelPage</class>
+ <widget class="QWidget" name="RfmModelPage">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1118</width>
+    <height>744</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>RFM &amp; Model</string>
+  </property>
+  <layout class="QVBoxLayout" name="layoutRfmModelPage" stretch="0,1">
+   <property name="spacing">
+    <number>16</number>
+   </property>
+   <property name="leftMargin">
+    <number>28</number>
+   </property>
+   <property name="topMargin">
+    <number>20</number>
+   </property>
+   <property name="rightMargin">
+    <number>28</number>
+   </property>
+   <property name="bottomMargin">
+    <number>24</number>
+   </property>
+   <item>
+    <layout class="QHBoxLayout" name="layoutMetrics">
+     <property name="spacing">
+      <number>16</number>
+     </property>
+     <property name="leftMargin">
+      <number>0</number>
+     </property>
+     <property name="topMargin">
+      <number>0</number>
+     </property>
+     <property name="rightMargin">
+      <number>0</number>
+     </property>
+     <property name="bottomMargin">
+      <number>0</number>
+     </property>
+     <item>
+      <widget class="QFrame" name="cardMetricK">
+       <property name="cssClass" stdset="0">
+        <string>card</string>
+       </property>
+       <layout class="QVBoxLayout" name="layoutMetricK">
+        <property name="spacing">
+         <number>2</number>
+        </property>
+        <property name="leftMargin">
+         <number>20</number>
+        </property>
+        <property name="topMargin">
+         <number>14</number>
+        </property>
+        <property name="rightMargin">
+         <number>20</number>
+        </property>
+        <property name="bottomMargin">
+         <number>14</number>
+        </property>
+        <item>
+         <widget class="QLabel" name="lblMetricKTitle">
+          <property name="text">
+           <string>Number of Clusters (K)</string>
+          </property>
+          <property name="cssClass" stdset="0">
+           <string>kpiTitle</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="lblMetricKValue">
+          <property name="text">
+           <string>0</string>
+          </property>
+          <property name="cssClass" stdset="0">
+           <string>kpiValue</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="lblMetricKNote">
+          <property name="text">
+           <string>K-Means on log1p + StandardScaler</string>
+          </property>
+          <property name="cssClass" stdset="0">
+           <string>kpiNote</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </item>
+     <item>
+      <widget class="QFrame" name="cardMetricSilhouette">
+       <property name="cssClass" stdset="0">
+        <string>card</string>
+       </property>
+       <layout class="QVBoxLayout" name="layoutMetricSilhouette">
+        <property name="spacing">
+         <number>2</number>
+        </property>
+        <property name="leftMargin">
+         <number>20</number>
+        </property>
+        <property name="topMargin">
+         <number>14</number>
+        </property>
+        <property name="rightMargin">
+         <number>20</number>
+        </property>
+        <property name="bottomMargin">
+         <number>14</number>
+        </property>
+        <item>
+         <widget class="QLabel" name="lblMetricSilhouetteTitle">
+          <property name="text">
+           <string>Silhouette Score</string>
+          </property>
+          <property name="cssClass" stdset="0">
+           <string>kpiTitle</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="lblMetricSilhouetteValue">
+          <property name="text">
+           <string>0</string>
+          </property>
+          <property name="cssClass" stdset="0">
+           <string>kpiValue</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="lblMetricSilhouetteNote">
+          <property name="text">
+           <string>Higher is better (max 1)</string>
+          </property>
+          <property name="cssClass" stdset="0">
+           <string>kpiNote</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </item>
+     <item>
+      <widget class="QFrame" name="cardMetricDaviesBouldin">
+       <property name="cssClass" stdset="0">
+        <string>card</string>
+       </property>
+       <layout class="QVBoxLayout" name="layoutMetricDaviesBouldin">
+        <property name="spacing">
+         <number>2</number>
+        </property>
+        <property name="leftMargin">
+         <number>20</number>
+        </property>
+        <property name="topMargin">
+         <number>14</number>
+        </property>
+        <property name="rightMargin">
+         <number>20</number>
+        </property>
+        <property name="bottomMargin">
+         <number>14</number>
+        </property>
+        <item>
+         <widget class="QLabel" name="lblMetricDaviesBouldinTitle">
+          <property name="text">
+           <string>Davies–Bouldin Index</string>
+          </property>
+          <property name="cssClass" stdset="0">
+           <string>kpiTitle</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="lblMetricDaviesBouldinValue">
+          <property name="text">
+           <string>0</string>
+          </property>
+          <property name="cssClass" stdset="0">
+           <string>kpiValue</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="lblMetricDaviesBouldinNote">
+          <property name="text">
+           <string>Lower is better</string>
+          </property>
+          <property name="cssClass" stdset="0">
+           <string>kpiNote</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </item>
+     <item>
+      <widget class="QFrame" name="cardMetricCalinski">
+       <property name="cssClass" stdset="0">
+        <string>card</string>
+       </property>
+       <layout class="QVBoxLayout" name="layoutMetricCalinski">
+        <property name="spacing">
+         <number>2</number>
+        </property>
+        <property name="leftMargin">
+         <number>20</number>
+        </property>
+        <property name="topMargin">
+         <number>14</number>
+        </property>
+        <property name="rightMargin">
+         <number>20</number>
+        </property>
+        <property name="bottomMargin">
+         <number>14</number>
+        </property>
+        <item>
+         <widget class="QLabel" name="lblMetricCalinskiTitle">
+          <property name="text">
+           <string>Calinski–Harabasz Index</string>
+          </property>
+          <property name="cssClass" stdset="0">
+           <string>kpiTitle</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="lblMetricCalinskiValue">
+          <property name="text">
+           <string>0</string>
+          </property>
+          <property name="cssClass" stdset="0">
+           <string>kpiValue</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="lblMetricCalinskiNote">
+          <property name="text">
+           <string>Higher is better</string>
+          </property>
+          <property name="cssClass" stdset="0">
+           <string>kpiNote</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="layoutRfmMain" stretch="1,0">
+     <property name="spacing">
+      <number>16</number>
+     </property>
+     <property name="leftMargin">
+      <number>0</number>
+     </property>
+     <property name="topMargin">
+      <number>0</number>
+     </property>
+     <property name="rightMargin">
+      <number>0</number>
+     </property>
+     <property name="bottomMargin">
+      <number>0</number>
+     </property>
+     <item>
+      <widget class="QFrame" name="cardRfmData">
+       <property name="cssClass" stdset="0">
+        <string>card</string>
+       </property>
+       <layout class="QVBoxLayout" name="layoutRfmData" stretch="0,0,1">
+        <property name="spacing">
+         <number>2</number>
+        </property>
+        <property name="leftMargin">
+         <number>20</number>
+        </property>
+        <property name="topMargin">
+         <number>16</number>
+        </property>
+        <property name="rightMargin">
+         <number>20</number>
+        </property>
+        <property name="bottomMargin">
+         <number>16</number>
+        </property>
+        <item>
+         <widget class="QLabel" name="lblRfmDataTitle">
+          <property name="text">
+           <string>Customer RFM &amp; Model</string>
+          </property>
+          <property name="cssClass" stdset="0">
+           <string>cardTitle</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="lblRfmDataSubtitle">
+          <property name="text">
+           <string>Recency (days since last purchase), Frequency (invoices), Monetary (£) per customer</string>
+          </property>
+          <property name="cssClass" stdset="0">
+           <string>cardSubtitle</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QTabWidget" name="tabsRfmModel">
+          <property name="currentIndex">
+           <number>0</number>
+          </property>
+          <widget class="QWidget" name="tabRfmTable">
+           <attribute name="title">
+            <string>Customer RFM</string>
+           </attribute>
+           <layout class="QVBoxLayout" name="layoutRfmTab" stretch="0,1,0,0">
+            <property name="spacing">
+             <number>8</number>
+            </property>
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>12</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <layout class="QHBoxLayout" name="layoutRfmFilters">
+              <property name="spacing">
+               <number>8</number>
+              </property>
+              <property name="leftMargin">
+               <number>0</number>
+              </property>
+              <property name="topMargin">
+               <number>0</number>
+              </property>
+              <property name="rightMargin">
+               <number>0</number>
+              </property>
+              <property name="bottomMargin">
+               <number>0</number>
+              </property>
+              <item>
+               <widget class="QLineEdit" name="txtRfmSearch">
+                <property name="clearButtonEnabled">
+                 <bool>true</bool>
+                </property>
+                <property name="placeholderText">
+                 <string>Search customer ID</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QComboBox" name="cboRfmSegment">
+                <property name="minimumSize">
+                 <size>
+                  <width>200</width>
+                  <height>0</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="btnRfmSearch">
+                <property name="text">
+                 <string>Search</string>
+                </property>
+                <property name="cssClass" stdset="0">
+                 <string>primary</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <widget class="QTableWidget" name="tblRfm">
+              <property name="editTriggers">
+               <set>QAbstractItemView::NoEditTriggers</set>
+              </property>
+              <property name="selectionBehavior">
+               <enum>QAbstractItemView::SelectRows</enum>
+              </property>
+              <property name="selectionMode">
+               <enum>QAbstractItemView::SingleSelection</enum>
+              </property>
+              <property name="showGrid">
+               <bool>false</bool>
+              </property>
+              <property name="alternatingRowColors">
+               <bool>true</bool>
+              </property>
+              <attribute name="verticalHeaderVisible">
+               <bool>false</bool>
+              </attribute>
+              <attribute name="horizontalHeaderStretchLastSection">
+               <bool>true</bool>
+              </attribute>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="lblRfmHint">
+              <property name="text">
+               <string>Tip: double-click a customer to load their RFM values into Predict Segment.</string>
+              </property>
+              <property name="cssClass" stdset="0">
+               <string>hint</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="layoutRfmPager">
+              <property name="spacing">
+               <number>8</number>
+              </property>
+              <property name="leftMargin">
+               <number>0</number>
+              </property>
+              <property name="topMargin">
+               <number>0</number>
+              </property>
+              <property name="rightMargin">
+               <number>0</number>
+              </property>
+              <property name="bottomMargin">
+               <number>0</number>
+              </property>
+              <item>
+               <widget class="QLabel" name="lblRfmSummary">
+                <property name="text">
+                 <string>Showing 0 of 0 rows</string>
+                </property>
+                <property name="cssClass" stdset="0">
+                 <string>cardSubtitle</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="spacerRfmPager">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item>
+               <widget class="QLabel" name="lblRfmPageSizeCaption">
+                <property name="text">
+                 <string>Rows per page</string>
+                </property>
+                <property name="cssClass" stdset="0">
+                 <string>cardSubtitle</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QComboBox" name="cboRfmPageSize">
+                <property name="minimumSize">
+                 <size>
+                  <width>80</width>
+                  <height>0</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="btnRfmPrevPage">
+                <property name="text">
+                 <string>‹ Prev</string>
+                </property>
+                <property name="cssClass" stdset="0">
+                 <string>secondary</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="lblRfmPageInfo">
+                <property name="text">
+                 <string>Page 1 / 1</string>
+                </property>
+                <property name="cssClass" stdset="0">
+                 <string>pageInfo</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="btnRfmNextPage">
+                <property name="text">
+                 <string>Next ›</string>
+                </property>
+                <property name="cssClass" stdset="0">
+                 <string>secondary</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="tabChooseK">
+           <attribute name="title">
+            <string>Choosing K</string>
+           </attribute>
+           <layout class="QVBoxLayout" name="layoutChooseKTab" stretch="0,1">
+            <property name="spacing">
+             <number>10</number>
+            </property>
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>12</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QLabel" name="lblChooseKNote">
+              <property name="text">
+               <string>Elbow (inertia) and Silhouette score for K = 2 … 8. The highlighted point is the K used by the model.</string>
+              </property>
+              <property name="wordWrap">
+               <bool>true</bool>
+              </property>
+              <property name="cssClass" stdset="0">
+               <string>cardSubtitle</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="layoutKCharts">
+              <property name="spacing">
+               <number>16</number>
+              </property>
+              <property name="leftMargin">
+               <number>0</number>
+              </property>
+              <property name="topMargin">
+               <number>0</number>
+              </property>
+              <property name="rightMargin">
+               <number>0</number>
+              </property>
+              <property name="bottomMargin">
+               <number>0</number>
+              </property>
+              <item>
+               <widget class="QWidget" name="hostElbowChart">
+                <layout class="QVBoxLayout" name="layoutHostElbow">
+                 <property name="leftMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="topMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="rightMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="bottomMargin">
+                  <number>0</number>
+                 </property>
+                 <item>
+                  <widget class="QLabel" name="lblElbowTitle">
+                   <property name="text">
+                    <string>Elbow Method – Inertia</string>
+                   </property>
+                   <property name="cssClass" stdset="0">
+                    <string>fieldLabel</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+              <item>
+               <widget class="QWidget" name="hostSilhouetteChart">
+                <layout class="QVBoxLayout" name="layoutHostSilhouette">
+                 <property name="leftMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="topMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="rightMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="bottomMargin">
+                  <number>0</number>
+                 </property>
+                 <item>
+                  <widget class="QLabel" name="lblSilhouetteTitle">
+                   <property name="text">
+                    <string>Silhouette Score by K</string>
+                   </property>
+                   <property name="cssClass" stdset="0">
+                    <string>fieldLabel</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </widget>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </item>
+     <item>
+      <widget class="QFrame" name="cardPredict">
+       <property name="minimumSize">
+        <size>
+         <width>400</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>400</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="cssClass" stdset="0">
+        <string>card</string>
+       </property>
+       <layout class="QVBoxLayout" name="layoutPredict" stretch="0,0,0,0,0,1">
+        <property name="spacing">
+         <number>2</number>
+        </property>
+        <property name="leftMargin">
+         <number>20</number>
+        </property>
+        <property name="topMargin">
+         <number>16</number>
+        </property>
+        <property name="rightMargin">
+         <number>20</number>
+        </property>
+        <property name="bottomMargin">
+         <number>16</number>
+        </property>
+        <item>
+         <widget class="QLabel" name="lblPredictTitle">
+          <property name="text">
+           <string>Predict Segment</string>
+          </property>
+          <property name="cssClass" stdset="0">
+           <string>cardTitle</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="lblPredictSubtitle">
+          <property name="text">
+           <string>RFM → log1p → StandardScaler → K-Means → segment</string>
+          </property>
+          <property name="cssClass" stdset="0">
+           <string>cardSubtitle</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="spacerPredictTop">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeType">
+           <enum>QSizePolicy::Fixed</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>8</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <layout class="QVBoxLayout" name="layoutPredictForm">
+          <property name="spacing">
+           <number>4</number>
+          </property>
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <item>
+           <widget class="QLabel" name="lblRecencyCaption">
+            <property name="text">
+             <string>Recency (days since last purchase)</string>
+            </property>
+            <property name="cssClass" stdset="0">
+             <string>fieldLabel</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QSpinBox" name="spinRecency">
+            <property name="maximum">
+             <number>3650</number>
+            </property>
+            <property name="suffix">
+             <string> days</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="lblFrequencyCaption">
+            <property name="text">
+             <string>Frequency (number of invoices)</string>
+            </property>
+            <property name="cssClass" stdset="0">
+             <string>fieldLabel</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QSpinBox" name="spinFrequency">
+            <property name="minimum">
+             <number>1</number>
+            </property>
+            <property name="maximum">
+             <number>10000</number>
+            </property>
+            <property name="suffix">
+             <string> invoice(s)</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="lblMonetaryCaption">
+            <property name="text">
+             <string>Monetary (total spend, £)</string>
+            </property>
+            <property name="cssClass" stdset="0">
+             <string>fieldLabel</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QDoubleSpinBox" name="spinMonetary">
+            <property name="maximum">
+             <double>10000000.0</double>
+            </property>
+            <property name="decimals">
+             <number>2</number>
+            </property>
+            <property name="prefix">
+             <string>£ </string>
+            </property>
+            <property name="singleStep">
+             <double>50.0</double>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="spacerPredictButtons">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Fixed</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>6</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="layoutPredictButtons" stretch="1,0">
+            <property name="spacing">
+             <number>8</number>
+            </property>
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QPushButton" name="btnPredict">
+              <property name="text">
+               <string>Predict Segment</string>
+              </property>
+              <property name="cssClass" stdset="0">
+               <string>primary</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="btnClearPredict">
+              <property name="text">
+               <string>Clear</string>
+              </property>
+              <property name="cssClass" stdset="0">
+               <string>secondary</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <spacer name="spacerPredictMiddle">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeType">
+           <enum>QSizePolicy::Fixed</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>10</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QFrame" name="frameResult">
+          <property name="cssClass" stdset="0">
+           <string>resultBox</string>
+          </property>
+          <layout class="QVBoxLayout" name="layoutResult">
+           <property name="spacing">
+            <number>4</number>
+           </property>
+           <property name="leftMargin">
+            <number>16</number>
+           </property>
+           <property name="topMargin">
+            <number>14</number>
+           </property>
+           <property name="rightMargin">
+            <number>16</number>
+           </property>
+           <property name="bottomMargin">
+            <number>14</number>
+           </property>
+           <item>
+            <widget class="QLabel" name="lblResultCaption">
+             <property name="text">
+              <string>PREDICTED SEGMENT</string>
+             </property>
+             <property name="cssClass" stdset="0">
+              <string>resultCaption</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="lblResultSegment">
+             <property name="text">
+              <string>Enter RFM values and click Predict</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+             <property name="cssClass" stdset="0">
+              <string>resultSegment</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="lblResultSegmentVi">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+             <property name="cssClass" stdset="0">
+              <string>resultSub</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="lblResultDescription">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+             <property name="cssClass" stdset="0">
+              <string>resultBody</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="lblResultStrategyTitle">
+             <property name="text">
+              <string>Suggested action</string>
+             </property>
+             <property name="cssClass" stdset="0">
+              <string>resultCaption</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="lblResultStrategy">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+             <property name="cssClass" stdset="0">
+              <string>resultBody</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="spacerResult">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
