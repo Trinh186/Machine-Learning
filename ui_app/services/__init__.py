@@ -5,4 +5,4 @@ Hiện tại dùng dữ liệu giả. Khi phần DAO / model của các bạn xo
     from . import db_service as service
 """
 
-from . import mock_service as service  # noqa: F401
+from . import hybrid_service as service
