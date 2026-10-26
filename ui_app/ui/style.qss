@@ -163,3 +163,24 @@ QLabel[cssClass="resultCaption"] { color: #9AA3B5; font-size: 8pt; font-weight: 
 QLabel[cssClass="resultSegment"] { color: #111827; font-size: 13pt; font-weight: 700; }
 QLabel[cssClass="resultSub"] { color: #374151; font-size: 9.5pt; font-weight: 600; }
 QLabel[cssClass="resultBody"] { color: #4B5563; font-size: 9pt; }
+
+/* ======================= Task 12: Segmentation, Cluster Analysis & Marketing ======================= */
+QFrame[cssClass="segmentCard"] {
+    background: #FFFFFF; border: 1px solid #E5E8F0; border-radius: 12px;
+}
+QFrame[cssClass="segmentCard"]:hover { border: 1px solid #A5B4F0; }
+QFrame[cssClass="segmentCard"][selected="true"] { border: 2px solid #3B5BDB; background: #F7F9FF; }
+QFrame[cssClass="segmentCard"] QLabel { background: transparent; border: none; }
+QLabel[cssClass="segmentCardTitle"] { font-size: 10.5pt; font-weight: 700; }
+
+QPushButton[cssClass="link"] {
+    background: transparent; border: none; color: #E03131; font-size: 9pt; padding: 4px 6px;
+}
+QPushButton[cssClass="link"]:hover { text-decoration: underline; }
+
+QListWidget[cssClass="actionList"] {
+    background: #FFFFFF; border: 1px solid #E5E8F0; border-radius: 8px; padding: 4px; color: #111827;
+}
+QListWidget[cssClass="actionList"]::item { padding: 7px 8px; border-radius: 6px; }
+QListWidget[cssClass="actionList"]::item:hover { background: #F4F6FB; }
+QListWidget[cssClass="actionList"]::item:selected { background: #EDF2FF; color: #2B48C0; }

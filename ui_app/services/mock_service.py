@@ -92,6 +92,7 @@ def _rfm() -> list[dict]:
     with open(_DATA_DIR / "rfm_customers.csv", encoding="utf-8") as f:
         return [{
             "customer_id": int(r["customer_id"]),
+            "country": r["country"],
             "recency": int(r["recency"]),
             "frequency": int(r["frequency"]),
             "monetary": float(r["monetary"]),
@@ -253,3 +254,161 @@ def predict_segment(recency: float, frequency: float, monetary: float) -> dict:
     distances = {c: math.dist(z, center) for c, center in enumerate(p["centroids"])}
     cluster = min(distances, key=distances.get)
     return {**_SEGMENT_BY_CLUSTER[cluster], "distances": distances}
+
+
+# ----------------------------------------------------------------------------
+# CUSTOMER SEGMENTATION  (Task 12)
+# ----------------------------------------------------------------------------
+_SORTS = {
+    "monetary_desc": (lambda r: r["monetary"], True),
+    "frequency_desc": (lambda r: r["frequency"], True),
+    "recency_asc": (lambda r: r["recency"], False),
+    "recency_desc": (lambda r: r["recency"], True),
+    "customer_id": (lambda r: r["customer_id"], False),
+}
+
+
+def _filter_customers(keyword="", cluster=None, country=None, min_recency=None, max_recency=None,
+                      min_frequency=None, max_frequency=None, sort_by="customer_id") -> list[dict]:
+    kw = (keyword or "").strip()
+    rows = []
+    for r in _rfm():
+        if cluster is not None and r["cluster"] != cluster:
+            continue
+        if country and r["country"] != country:
+            continue
+        if kw and kw not in str(r["customer_id"]):
+            continue
+        if min_recency is not None and r["recency"] < min_recency:
+            continue
+        if max_recency is not None and r["recency"] > max_recency:
+            continue
+        if min_frequency is not None and r["frequency"] < min_frequency:
+            continue
+        if max_frequency is not None and r["frequency"] > max_frequency:
+            continue
+        seg = _SEGMENT_BY_CLUSTER[r["cluster"]]
+        rows.append({**r, "segment_name": seg["segment_name"], "segment_name_en": seg["segment_name_en"]})
+    key, reverse = _SORTS.get(sort_by, _SORTS["customer_id"])
+    rows.sort(key=key, reverse=reverse)
+    return rows
+
+
+def get_customer_countries() -> list[str]:
+    """Quốc gia của khách hàng (ô lọc trang Customer Segmentation), A–Z."""
+    return sorted({r["country"] for r in _rfm()})
+
+
+def get_segment_customers(keyword: str = "", cluster: int | None = None, country: str | None = None,
+                          min_recency: int | None = None, max_recency: int | None = None,
+                          min_frequency: int | None = None, max_frequency: int | None = None,
+                          sort_by: str = "customer_id", page: int = 1, page_size: int = 50) -> dict:
+    """
+    Danh sách khách hàng theo phân khúc (có lọc + sắp xếp + phân trang).
+      sort_by: "monetary_desc" | "frequency_desc" | "recency_asc" | "recency_desc" | "customer_id"
+    Trả về: {"rows": [{customer_id, country, recency, frequency, monetary, cluster,
+                       segment_name, segment_name_en}], "total_rows": int, "total_monetary": float}
+    """
+    rows = _filter_customers(keyword, cluster, country, min_recency, max_recency,
+                             min_frequency, max_frequency, sort_by)
+    total_monetary = sum(r["monetary"] for r in rows)
+    page_rows, total = _paginate(rows, page, page_size)
+    return {"rows": page_rows, "total_rows": total, "total_monetary": total_monetary}
+
+
+def export_customers_csv(file_path: str, **filters) -> int:
+    """
+    Xuất danh sách khách hàng (cùng bộ lọc như get_segment_customers, không phân trang) ra CSV UTF-8
+    (mở được bằng Excel). Trả về số dòng đã xuất.
+    """
+    filters.pop("page", None)
+    filters.pop("page_size", None)
+    rows = _filter_customers(**filters)
+    columns = ["customer_id", "country", "recency", "frequency", "monetary",
+               "cluster", "segment_name", "segment_name_en"]
+    with open(file_path, "w", newline="", encoding="utf-8-sig") as f:
+        writer = csv.DictWriter(f, fieldnames=columns, extrasaction="ignore")
+        writer.writeheader()
+        writer.writerows(rows)
+    return len(rows)
+
+
+# ----------------------------------------------------------------------------
+# CLUSTER ANALYSIS & MARKETING ACTION CENTER  (Task 12)
+# ----------------------------------------------------------------------------
+@lru_cache(maxsize=None)
+def _cluster_profile_rows() -> list[dict]:
+    with open(_DATA_DIR / "cluster_profile.csv", encoding="utf-8") as f:
+        return list(csv.DictReader(f))
+
+
+def get_cluster_profiles() -> list[dict]:
+    """
+    Hồ sơ từng cụm (giống outputs/cluster_profile.csv, mục 3.5), sắp theo doanh thu giảm dần.
+    Mỗi phần tử: cluster, segment_name, segment_name_en, color, customers, customer_pct, revenue,
+      revenue_pct, invoices, recency_mean, recency_median, frequency_mean, frequency_median,
+      monetary_mean, monetary_median, one_time_pct, recency_le_30_pct, recency_gt_90_pct,
+      recency_gt_180_pct, avg_invoice_value, tenure_median, silhouette_mean
+    """
+    out = []
+    for row in _cluster_profile_rows():
+        cluster = int(row["cluster"])
+        item = {"cluster": cluster, **{k: _SEGMENT_BY_CLUSTER[cluster][k]
+                                       for k in ("segment_name", "segment_name_en", "color")}}
+        for k, v in row.items():
+            if k not in ("cluster", "segment_name", "segment_name_en"):
+                item[k] = float(v)
+        item["customers"] = int(item["customers"])
+        item["invoices"] = int(item["invoices"])
+        out.append(item)
+    return out
+
+
+def get_cluster_centroids() -> dict:
+    """Tâm cụm trên thang log1p + StandardScaler (cho snake plot).
+    Trả về: {"features": ["Recency", "Frequency", "Monetary"], "centroids": {cluster: [r, f, m]}}"""
+    p = _model_params()
+    return {"features": ["Recency", "Frequency", "Monetary"],
+            "centroids": {c: list(v) for c, v in enumerate(p["centroids"])}}
+
+
+# Hành động marketing đề xuất cho từng phân khúc. "target" là bộ lọc truyền thẳng vào
+# get_segment_customers / export_customers_csv để lấy danh sách khách cần tiếp cận.
+_MARKETING_ACTIONS = {
+    0: [
+        {"title": "VIP loyalty programme",
+         "description": "Tiered rewards, early access to new products and priority service for the whole segment.",
+         "target": {}, "kpi": "Retention rate, repeat-purchase rate"},
+        {"title": "Personalised offers for frequent buyers",
+         "description": "Product recommendations and bundles based on purchase history for customers with 6+ invoices.",
+         "target": {"min_frequency": 6}, "kpi": "Average order value"},
+        {"title": "Protect at-risk VIPs",
+         "description": "High-value customers who have not bought for over 90 days: personal email or call with a thank-you offer.",
+         "target": {"min_recency": 91}, "kpi": "Reactivation rate within 30 days"},
+        {"title": "Referral campaign",
+         "description": "Recent active VIPs (bought in the last 30 days) invite new customers in exchange for rewards.",
+         "target": {"max_recency": 30}, "kpi": "New customers referred"},
+    ],
+    1: [
+        {"title": "Second-purchase incentive",
+         "description": "One-time buyers receive a time-limited voucher for their second order.",
+         "target": {"max_frequency": 1}, "kpi": "Second-purchase conversion rate"},
+        {"title": "Win-back campaign (90–180 days)",
+         "description": "Customers inactive for 3–6 months: come-back voucher and reminder email series.",
+         "target": {"min_recency": 91, "max_recency": 180}, "kpi": "Return rate, revenue per reactivated customer"},
+        {"title": "Nurture recent customers",
+         "description": "Customers who bought in the last 30 days: newsletter and cross-sell to raise purchase frequency.",
+         "target": {"max_recency": 30}, "kpi": "Purchase frequency over the next 90 days"},
+        {"title": "Low-cost reactivation (180+ days)",
+         "description": "Long-inactive customers: low-cost channels only (email), stop contacting non-responders.",
+         "target": {"min_recency": 181}, "kpi": "Cost per reactivated customer"},
+    ],
+}
+
+
+def get_marketing_actions(cluster: int) -> list[dict]:
+    """
+    Hành động marketing đề xuất cho 1 phân khúc.
+    Mỗi phần tử: {"title", "description", "target": dict bộ lọc, "kpi"}
+    """
+    return [dict(a, target=dict(a["target"])) for a in _MARKETING_ACTIONS.get(cluster, [])]
