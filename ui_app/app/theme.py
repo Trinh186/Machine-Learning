@@ -34,7 +34,7 @@ NAV_ICONS = {
 BUTTON_ICONS = {
     "btnSearch": ("search", "white"),
     "btnRfmSearch": ("search", "white"),
-    "btnPredict": ("sparkle", "white"),
+    "btnPredict": ("calculator", "white"),
     "btnExportTarget": ("download", "white"),
     "btnExportCsv": ("download", "accent"),
     "btnReset": ("reset", "accent"),
