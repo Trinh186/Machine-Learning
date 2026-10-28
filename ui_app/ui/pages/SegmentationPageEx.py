@@ -60,7 +60,7 @@ class SegmentationPageEx(QWidget, Ui_SegmentationPage):
 
         # Thẻ "All customers" + 1 thẻ cho mỗi phân khúc
         all_profile = {"segment_name_en": "All Customers", "segment_name": "Tất cả khách hàng",
-                       "customers": total_c, "revenue": total_r, "color": "#3B5BDB"}
+                       "customers": total_c, "revenue": total_r, "color": "#A23E9C"}
         self.cards = [SegmentCard(None, all_profile, total_c, total_r)]
         self.cards += [SegmentCard(p["cluster"], p, total_c, total_r)
                        for p in sorted(profiles, key=lambda p: p["cluster"])]
@@ -150,7 +150,7 @@ class SegmentationPageEx(QWidget, Ui_SegmentationPage):
                 f"{r['monetary']:,.2f}",
                 f"●  C{r['cluster']} · {r['segment_name_en']}",
             ])
-            colors[(i, 5)] = self.colors.get(r["cluster"], "#111827")
+            colors[(i, 5)] = self.colors.get(r["cluster"], "#2D1B36")
         fill_table(self.tblCustomers, rows, right_cols=NUMBER_COLS, colors=colors)
         self.lblTotalMonetary.setText(f"Total spend: £{result['total_monetary']:,.0f}")
         self.pager.update(result["total_rows"])

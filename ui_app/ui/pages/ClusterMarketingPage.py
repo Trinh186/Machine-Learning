@@ -211,5 +211,5 @@ class Ui_ClusterMarketingPage(object):
         self.lblTargetCount.setProperty("cssClass", _translate("ClusterMarketingPage", "pill"))
         self.btnViewTarget.setText(_translate("ClusterMarketingPage", "View customers"))
         self.btnViewTarget.setProperty("cssClass", _translate("ClusterMarketingPage", "secondary"))
-        self.btnExportTarget.setText(_translate("ClusterMarketingPage", "Export target list (CSV)"))
+        self.btnExportTarget.setText(_translate("ClusterMarketingPage", "Export target CSV"))
         self.btnExportTarget.setProperty("cssClass", _translate("ClusterMarketingPage", "primary"))

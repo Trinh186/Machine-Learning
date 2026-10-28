@@ -502,7 +502,7 @@
           <item>
            <widget class="QPushButton" name="btnExportTarget">
             <property name="text">
-             <string>Export target list (CSV)</string>
+             <string>Export target CSV</string>
             </property>
             <property name="cssClass" stdset="0">
              <string>primary</string>

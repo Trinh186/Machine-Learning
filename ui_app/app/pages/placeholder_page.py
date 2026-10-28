@@ -9,7 +9,7 @@ class PlaceholderPage(QWidget):
         super().__init__(parent)
         layout = QVBoxLayout(self)
         layout.setContentsMargins(28, 20, 28, 24)
-        box = QLabel(f"<b>{title}</b><br><span style='color:#6B7280'>{note}</span>")
+        box = QLabel(f"<b>{title}</b><br><span style='color:#7D6A84'>{note}</span>")
         box.setAlignment(Qt.AlignmentFlag.AlignCenter)
         box.setProperty("cssClass", "placeholder")
         layout.addWidget(box)

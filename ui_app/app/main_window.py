@@ -20,6 +20,7 @@ from app.pages.segmentation_page import SegmentationPage
 from app.pages.transaction_page import TransactionDataPage
 from app.pages.user_management_page import UserManagementPage
 from app.paths import UI_DIR
+from app.theme import apply_icons, logo_html
 
 # key, nút trên menu, tiêu đề, mô tả, chỉ Admin?
 PAGES = [
@@ -69,6 +70,8 @@ class MainWindow(QMainWindow):
         if not self.is_admin:
             self.lblAdminSection.hide()
 
+        apply_icons(self)                      # icon menu + nút (theme hồng – tím)
+        self.lblAppName.setText(logo_html("RFM Insight"))
         self._fill_user_box()
         self._fill_data_range()
         self.btnLogout.clicked.connect(self._confirm_logout)

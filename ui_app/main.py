@@ -4,13 +4,14 @@ from PyQt6.QtWidgets import QApplication, QMainWindow
 
 from ui.LoginMainWindowEx import LoginMainWindowEx
 from app.main_window import MainWindow
-from app.paths import UI_DIR
+from app import theme
 from auth.auth_service import AuthService
 from services import service
 
 
 def load_stylesheet(app: QApplication):
-    app.setStyleSheet((UI_DIR / "style.qss").read_text(encoding="utf-8"))
+    # style.qss + ảnh hoa lá trong ui/assets (xem app/theme.py)
+    theme.load_stylesheet(app)
 class AppController:
     def __init__(self):
         self.auth = AuthService()

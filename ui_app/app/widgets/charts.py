@@ -4,14 +4,14 @@ Cách dùng: tạo widget rồi gọi set_data(...); widget tự co giãn theo k
 """
 
 from PyQt6.QtCore import QRectF, Qt, QPointF
-from PyQt6.QtGui import QColor, QFont, QPainter, QPen
+from PyQt6.QtGui import QColor, QFont, QLinearGradient, QPainter, QPen
 from PyQt6.QtWidgets import QToolTip, QWidget
 
-TEXT_MUTED = QColor("#6B7280")
-TEXT_MAIN = QColor("#111827")
-GRID = QColor("#EEF1F6")
-ACCENT = QColor("#3B5BDB")
-ACCENT_HOVER = QColor("#2B48C0")
+TEXT_MUTED = QColor("#7D6A84")
+TEXT_MAIN = QColor("#2D1B36")
+GRID = QColor("#F5E8F1")
+ACCENT = QColor("#A23E9C")
+ACCENT_HOVER = QColor("#7E2E7E")
 
 
 def short_money(value: float) -> str:
@@ -75,8 +75,14 @@ class BarChart(QWidget):
             rect = QRectF(plot.left() + slot * i + (slot - bar_w) / 2, plot.bottom() - h, bar_w, h)
             self._bar_rects.append(rect)
             p.setPen(Qt.PenStyle.NoPen)
-            p.setBrush(ACCENT_HOVER if i == self._hover else ACCENT)
-            p.drawRoundedRect(rect, 3, 3)
+            if i == self._hover:
+                p.setBrush(ACCENT_HOVER)
+            else:
+                grad = QLinearGradient(rect.topLeft(), rect.bottomLeft())
+                grad.setColorAt(0, QColor("#D0509E"))
+                grad.setColorAt(1, QColor("#8E44B5"))
+                p.setBrush(grad)
+            p.drawRoundedRect(rect, 4, 4)
 
         # nhãn trục X: hiển thị thưa để không chồng chữ
         every = max(1, round(n / max(1, plot.width() // 70)))
@@ -176,7 +182,7 @@ class DonutChart(QWidget):
 class LineChart(QWidget):
     """
     Biểu đồ đường có đánh dấu 1 điểm (vd. K được chọn).
-    set_data(labels, values, highlight_index=None, value_format="{:,.0f}", color="#3B5BDB")
+    set_data(labels, values, highlight_index=None, value_format="{:,.0f}", color="#A23E9C")
     """
 
     def __init__(self, parent=None):
@@ -188,7 +194,7 @@ class LineChart(QWidget):
         self._color = ACCENT
         self.setMinimumHeight(180)
 
-    def set_data(self, labels, values, highlight_index=None, value_format="{:,.0f}", color="#3B5BDB"):
+    def set_data(self, labels, values, highlight_index=None, value_format="{:,.0f}", color="#A23E9C"):
         self._labels = [str(x) for x in labels]
         self._values = [float(v) for v in values]
         self._highlight = highlight_index
@@ -234,11 +240,11 @@ class LineChart(QWidget):
         for i, point in enumerate(pts):
             big = i == self._highlight
             p.setPen(QPen(QColor("#FFFFFF"), 2))
-            p.setBrush(QColor("#E8590C") if big else self._color)
+            p.setBrush(QColor("#E0559B") if big else self._color)
             r = 6.5 if big else 4
             p.drawEllipse(point, r, r)
             if big:
-                p.setPen(QColor("#E8590C"))
+                p.setPen(QColor("#E0559B"))
                 p.drawText(QRectF(point.x() - 60, point.y() - 24, 120, 16), Qt.AlignmentFlag.AlignCenter,
                            f"K = {self._labels[i]}: {self._fmt.format(self._values[i])}")
 
@@ -378,7 +384,7 @@ class MultiLineChart(QWidget):
             p.drawText(QRectF(0, y - 8, left - 6, 16),
                        Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter, f"{v:+.1f}")
         if self._zero:
-            pen = QPen(QColor("#9AA3B5"), 1, Qt.PenStyle.DashLine)
+            pen = QPen(QColor("#AD9AB2"), 1, Qt.PenStyle.DashLine)
             p.setPen(pen)
             p.drawLine(pt(0, 0), QPointF(plot.right(), pt(0, 0).y()))
 

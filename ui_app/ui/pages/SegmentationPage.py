@@ -152,7 +152,7 @@ class Ui_SegmentationPage(object):
         self.lblTotalMonetary.setProperty("cssClass", _translate("SegmentationPage", "pill"))
         self.btnExportCsv.setText(_translate("SegmentationPage", "Export CSV"))
         self.btnExportCsv.setProperty("cssClass", _translate("SegmentationPage", "secondary"))
-        self.txtCustomerSearch.setPlaceholderText(_translate("SegmentationPage", "Search customer ID"))
+        self.txtCustomerSearch.setPlaceholderText(_translate("SegmentationPage", "Customer ID"))
         self.btnSearch.setText(_translate("SegmentationPage", "Search"))
         self.btnSearch.setProperty("cssClass", _translate("SegmentationPage", "primary"))
         self.btnReset.setText(_translate("SegmentationPage", "Reset"))

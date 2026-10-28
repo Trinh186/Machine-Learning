@@ -18,7 +18,7 @@ class SegmentCard(QFrame):
     def __init__(self, cluster, profile: dict, total_customers: int, total_revenue: float, parent=None):
         super().__init__(parent)
         self.cluster = cluster
-        color = profile.get("color", "#3B5BDB")
+        color = profile.get("color", "#A23E9C")
         self.setProperty("cssClass", "segmentCard")
         self.setProperty("selected", False)
         self.setCursor(Qt.CursorShape.PointingHandCursor)
