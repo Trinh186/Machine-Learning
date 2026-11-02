@@ -16,14 +16,14 @@
      <widget class="QLabel" name="lblAppTitle">
       <property name="text"><string>RFM Insight</string></property>
       <property name="alignment"><set>Qt::AlignCenter</set></property>
-      <property name="styleSheet"><string notr="true">font-size: 24pt; font-weight: bold; color: #3B5BDB;</string></property>
+      <property name="styleSheet"><string notr="true">font-size: 24pt; font-weight: bold; color: #A23E9C;</string></property>
      </widget>
     </item>
     <item>
      <widget class="QLabel" name="lblSubtitle">
       <property name="text"><string>Customer Segmentation • Đăng nhập hệ thống</string></property>
       <property name="alignment"><set>Qt::AlignCenter</set></property>
-      <property name="styleSheet"><string notr="true">color: #6B7280; font-size: 10pt;</string></property>
+      <property name="styleSheet"><string notr="true">color: #7D6A84; font-size: 10pt;</string></property>
      </widget>
     </item>
     <item><spacer name="spacerTop"><property name="orientation"><enum>Qt::Vertical</enum></property><property name="sizeHint" stdset="0"><size><width>20</width><height>15</height></size></property></spacer></item>
@@ -53,7 +53,7 @@
      <widget class="QPushButton" name="btnLogin">
       <property name="text"><string>Đăng nhập</string></property>
       <property name="minimumSize"><size><width>0</width><height>43</height></size></property>
-      <property name="styleSheet"><string notr="true">QPushButton{background-color:#3B5BDB;color:white;border:0;border-radius:8px;font-weight:600;} QPushButton:hover{background-color:#2B48C0;}</string></property>
+      <property name="styleSheet"><string notr="true">QPushButton{background:qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #D0509E, stop:1 #8E44B5);color:white;border:0;border-radius:8px;font-weight:600;} QPushButton:hover{background:qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #B8408A, stop:1 #7A3A9E);}</string></property>
      </widget>
     </item>
     <item>

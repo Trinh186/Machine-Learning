@@ -15,6 +15,14 @@ get_segments = mock_service.get_segments
 get_model_info = mock_service.get_model_info
 get_rfm_table = mock_service.get_rfm_table
 
+# Trang Customer Segmentation và Cluster Analysis & Marketing (dữ liệu mẫu)
+get_customer_countries = mock_service.get_customer_countries
+get_segment_customers = mock_service.get_segment_customers
+export_customers_csv = mock_service.export_customers_csv
+get_cluster_profiles = mock_service.get_cluster_profiles
+get_cluster_centroids = mock_service.get_cluster_centroids
+get_marketing_actions = mock_service.get_marketing_actions
+
 
 # Mô hình K-Means thật
 _model_service = RFMModelService()

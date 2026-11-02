@@ -12,14 +12,15 @@ from PyQt6 import uic
 from PyQt6.QtCore import pyqtSignal
 from PyQt6.QtWidgets import QButtonGroup, QMainWindow, QMessageBox
 
-from app.pages.segmentation_page import SegmentationPage
-from app.pages.marketing_page import MarketingPage
+from app.pages.cluster_marketing_page import ClusterMarketingPage
 from app.pages.dashboard_page import DashboardPage
 from app.pages.placeholder_page import PlaceholderPage
 from app.pages.rfm_model_page import RfmModelPage
+from app.pages.segmentation_page import SegmentationPage
 from app.pages.transaction_page import TransactionDataPage
 from app.pages.user_management_page import UserManagementPage
 from app.paths import UI_DIR
+from app.theme import apply_icons, logo_html
 
 # key, nút trên menu, tiêu đề, mô tả, chỉ Admin?
 PAGES = [
@@ -69,6 +70,8 @@ class MainWindow(QMainWindow):
         if not self.is_admin:
             self.lblAdminSection.hide()
 
+        apply_icons(self)                      # icon menu + nút (theme hồng – tím)
+        self.lblAppName.setText(logo_html("RFM Insight"))
         self._fill_user_box()
         self._fill_data_range()
         self.btnLogout.clicked.connect(self._confirm_logout)
@@ -78,30 +81,19 @@ class MainWindow(QMainWindow):
     def _create_page(self, key, title):
         if key == "dashboard":
             return DashboardPage(self.service)
-
         if key == "transactions":
             return TransactionDataPage(self.service)
-
         if key == "rfm_model":
             return RfmModelPage(self.service)
-
         if key == "segmentation":
-         return SegmentationPage()
-
+            return SegmentationPage(self.service)
         if key == "marketing":
-            return MarketingPage()
-
-        if (
-            key == "users"
-            and self.is_admin
-            and self.auth_service is not None
-        ):
+            page = ClusterMarketingPage(self.service)
+            page.view_customers_requested.connect(self._open_action_customers)
+            return page
+        if key == "users" and self.is_admin and self.auth_service is not None:
             return UserManagementPage(self.auth_service)
-
-        return PlaceholderPage(
-        title,
-        "This screen is under construction."
-    )
+        return PlaceholderPage(title, "This screen is under construction.")
 
     # ---------- điều hướng ----------
     def show_page(self, key: str):
@@ -114,6 +106,11 @@ class MainWindow(QMainWindow):
         for k, btn_name, *_ in PAGES:
             if k == key:
                 getattr(self, btn_name).setChecked(True)
+
+    def _open_action_customers(self, cluster, target, title):
+        """Marketing Action Center → mở Customer Segmentation, lọc đúng nhóm khách của hành động."""
+        self._pages["segmentation"].apply_action_target(cluster, target, title)
+        self.show_page("segmentation")
 
     # ---------- thông tin người dùng / dữ liệu ----------
     def _fill_user_box(self):

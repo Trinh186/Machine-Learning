@@ -65,8 +65,8 @@ class RfmModelPageEx(QWidget, Ui_RfmModelPage):
         ks = info.get("k_search") or []
         labels = [row["k"] for row in ks]
         chosen = labels.index(info["k"]) if info["k"] in labels else None
-        self.elbowChart.set_data(labels, [row["inertia"] for row in ks], chosen, "{:,.0f}", "#3B5BDB")
-        self.silhouetteChart.set_data(labels, [row["silhouette"] for row in ks], chosen, "{:.4f}", "#1B7A4E")
+        self.elbowChart.set_data(labels, [row["inertia"] for row in ks], chosen, "{:,.0f}", "#A23E9C")
+        self.silhouetteChart.set_data(labels, [row["silhouette"] for row in ks], chosen, "{:.4f}", "#8E5CC4")
 
     # ---------------------------------------------------------------- RFM table
     def search_rfm(self):
@@ -116,7 +116,7 @@ class RfmModelPageEx(QWidget, Ui_RfmModelPage):
         self._show_result(result)
 
     def _show_result(self, result):
-        color = result.get("color", "#3B5BDB")
+        color = result.get("color", "#A23E9C")
         self.frameResult.setStyleSheet(f"#frameResult {{ border-left: 4px solid {color}; }}")
         self.lblResultCaption.setText("PREDICTED SEGMENT")
         self.lblResultSegment.setText(f"Cluster {result['cluster']} – {result['segment_name_en']}")
