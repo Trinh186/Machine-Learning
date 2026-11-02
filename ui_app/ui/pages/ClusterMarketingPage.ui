@@ -1,0 +1,523 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>ClusterMarketingPage</class>
+ <widget class="QWidget" name="ClusterMarketingPage">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1118</width>
+    <height>744</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Cluster Analysis &amp; Marketing</string>
+  </property>
+  <layout class="QVBoxLayout" name="layoutClusterMarketingPage" stretch="0,1">
+   <property name="spacing">
+    <number>16</number>
+   </property>
+   <property name="leftMargin">
+    <number>28</number>
+   </property>
+   <property name="topMargin">
+    <number>20</number>
+   </property>
+   <property name="rightMargin">
+    <number>28</number>
+   </property>
+   <property name="bottomMargin">
+    <number>24</number>
+   </property>
+   <item>
+    <layout class="QHBoxLayout" name="layoutChartsRow">
+     <property name="spacing">
+      <number>16</number>
+     </property>
+     <property name="leftMargin">
+      <number>0</number>
+     </property>
+     <property name="topMargin">
+      <number>0</number>
+     </property>
+     <property name="rightMargin">
+      <number>0</number>
+     </property>
+     <property name="bottomMargin">
+      <number>0</number>
+     </property>
+     <item>
+      <widget class="QFrame" name="cardShareChart">
+       <property name="cssClass" stdset="0">
+        <string>card</string>
+       </property>
+       <layout class="QVBoxLayout" name="layoutShareChart" stretch="0,0,1">
+        <property name="spacing">
+         <number>2</number>
+        </property>
+        <property name="leftMargin">
+         <number>20</number>
+        </property>
+        <property name="topMargin">
+         <number>16</number>
+        </property>
+        <property name="rightMargin">
+         <number>20</number>
+        </property>
+        <property name="bottomMargin">
+         <number>16</number>
+        </property>
+        <item>
+         <widget class="QLabel" name="lblShareChartTitle">
+          <property name="text">
+           <string>Customers vs Revenue by Segment</string>
+          </property>
+          <property name="cssClass" stdset="0">
+           <string>cardTitle</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="lblShareChartSubtitle">
+          <property name="text">
+           <string>Share of customers, invoices and revenue held by each cluster</string>
+          </property>
+          <property name="cssClass" stdset="0">
+           <string>cardSubtitle</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QWidget" name="hostShareChart">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>210</height>
+           </size>
+          </property>
+          <layout class="QVBoxLayout" name="layoutHostShareChart">
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>8</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+          </layout>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </item>
+     <item>
+      <widget class="QFrame" name="cardSnakeChart">
+       <property name="cssClass" stdset="0">
+        <string>card</string>
+       </property>
+       <layout class="QVBoxLayout" name="layoutSnakeChart" stretch="0,0,1">
+        <property name="spacing">
+         <number>2</number>
+        </property>
+        <property name="leftMargin">
+         <number>20</number>
+        </property>
+        <property name="topMargin">
+         <number>16</number>
+        </property>
+        <property name="rightMargin">
+         <number>20</number>
+        </property>
+        <property name="bottomMargin">
+         <number>16</number>
+        </property>
+        <item>
+         <widget class="QLabel" name="lblSnakeChartTitle">
+          <property name="text">
+           <string>Cluster Centroids (Snake Plot)</string>
+          </property>
+          <property name="cssClass" stdset="0">
+           <string>cardTitle</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="lblSnakeChartSubtitle">
+          <property name="text">
+           <string>Centroid on log1p + StandardScaler scale · 0 = average customer</string>
+          </property>
+          <property name="cssClass" stdset="0">
+           <string>cardSubtitle</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QWidget" name="hostSnakeChart">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>210</height>
+           </size>
+          </property>
+          <layout class="QVBoxLayout" name="layoutHostSnakeChart">
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>8</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+          </layout>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="layoutBottomRow" stretch="1,1">
+     <property name="spacing">
+      <number>16</number>
+     </property>
+     <property name="leftMargin">
+      <number>0</number>
+     </property>
+     <property name="topMargin">
+      <number>0</number>
+     </property>
+     <property name="rightMargin">
+      <number>0</number>
+     </property>
+     <property name="bottomMargin">
+      <number>0</number>
+     </property>
+     <item>
+      <widget class="QFrame" name="cardProfile">
+       <property name="cssClass" stdset="0">
+        <string>card</string>
+       </property>
+       <layout class="QVBoxLayout" name="layoutProfile" stretch="0,0,1">
+        <property name="spacing">
+         <number>6</number>
+        </property>
+        <property name="leftMargin">
+         <number>20</number>
+        </property>
+        <property name="topMargin">
+         <number>16</number>
+        </property>
+        <property name="rightMargin">
+         <number>20</number>
+        </property>
+        <property name="bottomMargin">
+         <number>16</number>
+        </property>
+        <item>
+         <widget class="QLabel" name="lblProfileTitle">
+          <property name="text">
+           <string>Cluster Profile</string>
+          </property>
+          <property name="cssClass" stdset="0">
+           <string>cardTitle</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="lblProfileSubtitle">
+          <property name="text">
+           <string>RFM statistics and behaviour of each cluster (section 3.5)</string>
+          </property>
+          <property name="cssClass" stdset="0">
+           <string>cardSubtitle</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QTableWidget" name="tblProfile">
+          <property name="editTriggers">
+           <set>QAbstractItemView::NoEditTriggers</set>
+          </property>
+          <property name="selectionMode">
+           <enum>QAbstractItemView::NoSelection</enum>
+          </property>
+          <property name="showGrid">
+           <bool>false</bool>
+          </property>
+          <property name="alternatingRowColors">
+           <bool>true</bool>
+          </property>
+          <attribute name="verticalHeaderVisible">
+           <bool>false</bool>
+          </attribute>
+          <attribute name="horizontalHeaderStretchLastSection">
+           <bool>true</bool>
+          </attribute>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </item>
+     <item>
+      <widget class="QFrame" name="cardActions">
+       <property name="cssClass" stdset="0">
+        <string>card</string>
+       </property>
+       <layout class="QVBoxLayout" name="layoutActions" stretch="0,0,0,1,0,0">
+        <property name="spacing">
+         <number>8</number>
+        </property>
+        <property name="leftMargin">
+         <number>20</number>
+        </property>
+        <property name="topMargin">
+         <number>16</number>
+        </property>
+        <property name="rightMargin">
+         <number>20</number>
+        </property>
+        <property name="bottomMargin">
+         <number>16</number>
+        </property>
+        <item>
+         <layout class="QHBoxLayout" name="layoutActionsHeader">
+          <property name="spacing">
+           <number>8</number>
+          </property>
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <item>
+           <widget class="QLabel" name="lblActionsTitle">
+            <property name="text">
+             <string>Marketing Action Center</string>
+            </property>
+            <property name="cssClass" stdset="0">
+             <string>cardTitle</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="spacerActionsHeader">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QComboBox" name="cboActionSegment">
+            <property name="minimumSize">
+             <size>
+              <width>230</width>
+              <height>0</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="QLabel" name="lblSegmentStrategy">
+          <property name="text">
+           <string>Strategy</string>
+          </property>
+          <property name="wordWrap">
+           <bool>true</bool>
+          </property>
+          <property name="cssClass" stdset="0">
+           <string>cardSubtitle</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="lblActionsCaption">
+          <property name="text">
+           <string>Recommended actions</string>
+          </property>
+          <property name="cssClass" stdset="0">
+           <string>fieldLabel</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QListWidget" name="lstActions">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>120</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QFrame" name="frameActionDetail">
+          <property name="cssClass" stdset="0">
+           <string>resultBox</string>
+          </property>
+          <layout class="QVBoxLayout" name="layoutActionDetail">
+           <property name="spacing">
+            <number>4</number>
+           </property>
+           <property name="leftMargin">
+            <number>14</number>
+           </property>
+           <property name="topMargin">
+            <number>10</number>
+           </property>
+           <property name="rightMargin">
+            <number>14</number>
+           </property>
+           <property name="bottomMargin">
+            <number>10</number>
+           </property>
+           <item>
+            <widget class="QLabel" name="lblActionTitle">
+             <property name="text">
+              <string>Select an action</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+             <property name="cssClass" stdset="0">
+              <string>resultSub</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="lblActionDescription">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+             <property name="cssClass" stdset="0">
+              <string>resultBody</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="lblActionTarget">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+             <property name="cssClass" stdset="0">
+              <string>resultBody</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="lblActionKpi">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+             <property name="cssClass" stdset="0">
+              <string>resultBody</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="layoutActionFooter">
+          <property name="spacing">
+           <number>8</number>
+          </property>
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <item>
+           <widget class="QLabel" name="lblTargetCount">
+            <property name="text">
+             <string>0 customers</string>
+            </property>
+            <property name="cssClass" stdset="0">
+             <string>pill</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="spacerActionFooter">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QPushButton" name="btnViewTarget">
+            <property name="text">
+             <string>View customers</string>
+            </property>
+            <property name="cssClass" stdset="0">
+             <string>secondary</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="btnExportTarget">
+            <property name="text">
+             <string>Export target CSV</string>
+            </property>
+            <property name="cssClass" stdset="0">
+             <string>primary</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

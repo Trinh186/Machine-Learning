@@ -1,4 +1,4 @@
-# Form implementation generated from reading ui file 'D:\Machine Learning\ML_261BIM401402\Trinh_Login_Theo_Thay_Patch\ui_template\LoginMainWindow.ui'
+# Form implementation generated from reading ui file 'LoginMainWindow.ui'
 #
 # Created by: PyQt6 UI code generator 6.11.0
 #
@@ -22,12 +22,12 @@ class Ui_LoginMainWindow(object):
         self.outerLayout.setObjectName("outerLayout")
         self.lblAppTitle = QtWidgets.QLabel(parent=self.centralwidget)
         self.lblAppTitle.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
-        self.lblAppTitle.setStyleSheet("font-size: 24pt; font-weight: bold; color: #3B5BDB;")
+        self.lblAppTitle.setStyleSheet("font-size: 24pt; font-weight: bold; color: #A23E9C;")
         self.lblAppTitle.setObjectName("lblAppTitle")
         self.outerLayout.addWidget(self.lblAppTitle)
         self.lblSubtitle = QtWidgets.QLabel(parent=self.centralwidget)
         self.lblSubtitle.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
-        self.lblSubtitle.setStyleSheet("color: #6B7280; font-size: 10pt;")
+        self.lblSubtitle.setStyleSheet("color: #7D6A84; font-size: 10pt;")
         self.lblSubtitle.setObjectName("lblSubtitle")
         self.outerLayout.addWidget(self.lblSubtitle)
         spacerItem = QtWidgets.QSpacerItem(20, 15, QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.Expanding)
@@ -55,7 +55,7 @@ class Ui_LoginMainWindow(object):
         self.outerLayout.addWidget(self.lblError)
         self.btnLogin = QtWidgets.QPushButton(parent=self.centralwidget)
         self.btnLogin.setMinimumSize(QtCore.QSize(0, 43))
-        self.btnLogin.setStyleSheet("QPushButton{background-color:#3B5BDB;color:white;border:0;border-radius:8px;font-weight:600;} QPushButton:hover{background-color:#2B48C0;}")
+        self.btnLogin.setStyleSheet("QPushButton{background:qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #D0509E, stop:1 #8E44B5);color:white;border:0;border-radius:8px;font-weight:600;} QPushButton:hover{background:qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #B8408A, stop:1 #7A3A9E);}")
         self.btnLogin.setObjectName("btnLogin")
         self.outerLayout.addWidget(self.btnLogin)
         self.btnExit = QtWidgets.QPushButton(parent=self.centralwidget)
