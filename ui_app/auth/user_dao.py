@@ -1,35 +1,7 @@
-"""Đọc/ghi tài khoản MySQL. Có thể thay bằng DAO của Hồng khi ghép nhóm."""
-import os
-from pathlib import Path
-
+"""Đọc/ghi tài khoản bằng kết nối và DatabaseError dùng chung."""
 import mysql.connector
-from dotenv import load_dotenv
 
-ROOT = Path(__file__).resolve().parents[1]
-load_dotenv(ROOT / ".env")
-
-
-class DatabaseError(Exception):
-    """Thông báo lỗi CSDL thân thiện với giao diện."""
-
-
-def _connect():
-    config = {
-        "host": os.getenv("DB_HOST", "127.0.0.1"),
-        "port": int(os.getenv("DB_PORT", "3306")),
-        "user": os.getenv("DB_USER", ""),
-        "password": os.getenv("DB_PASSWORD", ""),
-        "database": os.getenv("DB_NAME", "customer_segmentation"),
-        "charset": "utf8mb4",
-        "use_unicode": True,
-        "connection_timeout": 5,
-    }
-    if not config["user"]:
-        raise DatabaseError("Chưa cấu hình DB_USER trong ui_app/.env.")
-    try:
-        return mysql.connector.connect(**config)
-    except mysql.connector.Error as exc:
-        raise DatabaseError("Không thể kết nối MySQL. Kiểm tra MySQL Server và ui_app/.env.") from exc
+from dao.database import get_connection, DatabaseError
 
 
 class UserDAO:
@@ -50,7 +22,7 @@ class UserDAO:
         return self._one(sql, (user_id,))
 
     def _one(self, sql, params):
-        conn = _connect()
+        conn = get_connection()
         try:
             cur = conn.cursor(dictionary=True)
             try:
@@ -68,7 +40,7 @@ class UserDAO:
             SELECT user_id, username, full_name, role, is_active, created_at
             FROM users ORDER BY user_id DESC
         """
-        conn = _connect()
+        conn = get_connection()
         try:
             cur = conn.cursor(dictionary=True)
             try:
@@ -86,7 +58,7 @@ class UserDAO:
             INSERT INTO users (username, password_hash, full_name, role, is_active)
             VALUES (%s, %s, %s, %s, 1)
         """
-        conn = _connect()
+        conn = get_connection()
         try:
             cur = conn.cursor()
             try:
@@ -107,7 +79,7 @@ class UserDAO:
 
     def set_active(self, user_id: int, is_active: bool, actor_id: int):
         """Khóa/mở khóa; chặn tự khóa và chặn khóa Admin hoạt động cuối cùng."""
-        conn = _connect()
+        conn = get_connection()
         try:
             conn.start_transaction()
             cur = conn.cursor(dictionary=True)
