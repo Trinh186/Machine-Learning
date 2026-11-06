@@ -1,0 +1,22 @@
+# Thư viện cho phần xử lý dữ liệu & học máy (customer_segmentation)
+# Python 3.11 – 3.14 (đã chạy thử trên Python 3.14)
+# Cài đặt (tại thư mục customer_segmentation):   pip install -r requirements.txt
+# Dùng cho: preprocessing/data_preprocessor.py, rfm/rfm_analyzer.py, models/clustering_model.py,
+#           models/cluster_evaluation.py, database/import_mysql.py
+
+# Xử lý dữ liệu
+numpy==2.3.5
+pandas==2.3.3
+openpyxl==3.1.5                  # đọc/ghi file .xlsx (Online Retail.xlsx, Online Retail_cleaned.xlsx)
+
+# Học máy & thống kê
+scikit-learn==1.7.2              # StandardScaler, KMeans, silhouette / Davies-Bouldin / Calinski-Harabasz
+scipy==1.16.3                    # kiểm định Kruskal-Wallis (cluster_evaluation.py)
+joblib==1.5.2                    # lưu / nạp model và scaler (outputs/*.joblib)
+
+# Biểu đồ
+matplotlib==3.10.7
+
+# Nạp dữ liệu vào MySQL (import_mysql.py)
+mysql-connector-python==26.10.0
+python-dotenv==1.2.4
