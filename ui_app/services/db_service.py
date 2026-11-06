@@ -1,5 +1,4 @@
 """Service dùng DAO MySQL cho dữ liệu nghiệp vụ, giữ model K-Means hiện có."""
-from datetime import datetime
 import mysql.connector
 
 from dao.database import get_connection, DatabaseError
@@ -18,90 +17,85 @@ _model_service = RFMModelService()
 
 
 
-def get_dashboard_stats():
-    sql = """
-        SELECT
-            (SELECT COUNT(*) FROM customers)
-                AS total_customers,
-            (SELECT COUNT(*) FROM invoices)
-                AS total_invoices,
-            (
-                SELECT COALESCE(
-                    SUM(quantity * unit_price), 0
-                )
-                FROM invoice_details
-            ) AS total_revenue,
-            (SELECT COUNT(*) FROM segments)
-                AS num_segments,
-            (SELECT MIN(invoice_date) FROM invoices)
-                AS date_from,
-            (SELECT MAX(invoice_date) FROM invoices)
-                AS date_to
-    """
+# ---------------------------------------------------------------- Dashboard (Task 6)
+# Doanh thu tính trên invoice_details.total_amount (= quantity × unit_price, DECIMAL 4 chữ số),
+# cùng cột mà trang Transaction Data dùng để tính tổng tiền, nên hai màn hình luôn khớp nhau.
+# invoice_details chỉ chứa dòng mua (CHECK quantity > 0); hoàn hàng chưa khớp của dữ liệu sạch
+# không có trong bảng này (xem customer_segmentation/database/import_mysql.py).
+DASHBOARD_STATS_SQL = """
+    SELECT
+        (SELECT COUNT(DISTINCT customer_id) FROM invoices)          AS total_customers,
+        (SELECT COUNT(*) FROM invoices)                              AS total_invoices,
+        (SELECT COALESCE(SUM(total_amount), 0) FROM invoice_details) AS total_revenue,
+        (SELECT COUNT(*) FROM segments)                              AS num_segments,
+        (SELECT MIN(invoice_date) FROM invoices)                     AS date_from,
+        (SELECT MAX(invoice_date) FROM invoices)                     AS date_to
+"""
 
+MONTHLY_REVENUE_SQL = """
+    SELECT DATE_FORMAT(i.invoice_date, '%Y-%m') AS month,
+           SUM(d.total_amount)                  AS revenue
+    FROM invoice_details d
+    JOIN invoices i ON i.invoice_no = d.invoice_no
+    GROUP BY month
+    ORDER BY month
+"""
+
+
+def get_dashboard_stats():
+    """4 thẻ KPI và khoảng ngày của dữ liệu giao dịch trong MySQL."""
     conn = get_connection()
     try:
         cur = conn.cursor(dictionary=True)
-        cur.execute(sql)
-        row = cur.fetchone()
-
-        return {
-            "total_customers": int(
-                row["total_customers"] or 0
-            ),
-            "total_invoices": int(
-                row["total_invoices"] or 0
-            ),
-            "total_revenue": float(
-                row["total_revenue"] or 0
-            ),
-            "num_segments": int(
-                row["num_segments"] or 0
-            ),
-            "date_from": row["date_from"],
-            "date_to": row["date_to"],
-        }
-
+        try:
+            cur.execute(DASHBOARD_STATS_SQL)
+            row = cur.fetchone()
+        finally:
+            cur.close()
     except mysql.connector.Error as exc:
-        raise DatabaseError(
-            "Không đọc được số liệu Dashboard."
-        ) from exc
+        raise DatabaseError("Không đọc được số liệu Dashboard.") from exc
     finally:
         conn.close()
+
+    if row["date_from"] is None:
+        raise DatabaseError("MySQL chưa có dữ liệu giao dịch. Hãy chạy "
+                            "customer_segmentation/database/import_mysql.py trước.")
+    return {
+        "total_customers": int(row["total_customers"] or 0),
+        "total_invoices": int(row["total_invoices"] or 0),
+        "total_revenue": round(float(row["total_revenue"] or 0), 2),
+        "num_segments": int(row["num_segments"] or 0),
+        "date_from": row["date_from"],
+        "date_to": row["date_to"],
+    }
 
 
 def get_monthly_revenue():
-    sql = """
-        SELECT
-            DATE_FORMAT(i.invoice_date, '%Y-%m') AS month,
-            SUM(d.quantity * d.unit_price) AS revenue
-        FROM invoices i
-        JOIN invoice_details d
-            ON d.invoice_no = i.invoice_no
-        GROUP BY DATE_FORMAT(i.invoice_date, '%Y-%m')
-        ORDER BY month
-    """
-
+    """[("2010-12", 550552.08), ...]: doanh thu theo tháng của ngày lập hóa đơn, tăng dần."""
     conn = get_connection()
     try:
         cur = conn.cursor()
-        cur.execute(sql)
-
-        return [
-            (row[0], float(row[1] or 0))
-            for row in cur.fetchall()
-        ]
-
+        try:
+            cur.execute(MONTHLY_REVENUE_SQL)
+            rows = cur.fetchall()
+        finally:
+            cur.close()
     except mysql.connector.Error as exc:
-        raise DatabaseError(
-            "Không đọc được doanh thu theo tháng."
-        ) from exc
+        raise DatabaseError("Không đọc được doanh thu theo tháng.") from exc
     finally:
         conn.close()
+    return [(month, round(float(revenue or 0), 2)) for month, revenue in rows]
 
 
+def get_segment_summary():
+    """Chỉ số RFM theo phân khúc kèm màu nhận diện (DashboardPage cần khóa "color")."""
+    colors = {int(s["cluster"]): s["color"] for s in _segment_dao.get_segments()}
+    rows = _rfm_dao.get_segment_summary()
+    for row in rows:
+        row["color"] = colors.get(int(row["cluster"]), "#6B7280")
+    return rows
 
-def get_segment_summary(): return _rfm_dao.get_segment_summary()
+
 def get_countries(): return _transaction_dao.get_countries()
 def get_transactions(keyword="", country=None, date_from=None, date_to=None, page=1, page_size=50):
     return _transaction_dao.get_transactions(keyword, country, date_from, date_to, page, page_size)
@@ -128,3 +122,14 @@ def get_customers(keyword="", page=1, page_size=50):
 
 def count_customers():
     return _customer_dao.count_customers()
+
+
+# Các trang Customer Segmentation và Cluster Analysis & Marketing chưa có DAO MySQL;
+# tạm dùng dữ liệu mẫu như hybrid_service để có thể chuyển services/__init__.py sang db_service
+# mà các trang này không bị lỗi thiếu hàm.
+get_customer_countries = mock_service.get_customer_countries
+get_segment_customers = mock_service.get_segment_customers
+export_customers_csv = mock_service.export_customers_csv
+get_cluster_profiles = mock_service.get_cluster_profiles
+get_cluster_centroids = mock_service.get_cluster_centroids
+get_marketing_actions = mock_service.get_marketing_actions
