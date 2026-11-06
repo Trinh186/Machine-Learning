@@ -1,4 +1,17 @@
-PyQt6>=6.5
-mysql-connector-python>=9.0
-bcrypt>=4.0
-python-dotenv>=1.0
+# Thư viện cho ứng dụng PyQt6 (ui_app)
+# Python 3.11 – 3.14 (đã chạy thử trên Python 3.14, Windows wheels có sẵn cho 3.11–3.14)
+# Cài đặt (tại thư mục ui_app):   pip install -r requirements.txt
+
+# Giao diện
+PyQt6==6.11.0                    # cùng phiên bản pyuic6 đã sinh các file ui/*.py
+
+# MySQL, đăng nhập, cấu hình .env
+mysql-connector-python==26.10.0
+bcrypt==5.0.0
+python-dotenv==1.2.4
+
+# Mô hình K-Means (đọc outputs/*.joblib để dự đoán phân khúc)
+numpy==2.3.5
+pandas==2.3.3
+scikit-learn==1.7.2              # model hiện tại lưu bằng 1.6.1 -> chạy được nhưng có cảnh báo
+joblib==1.5.2                    #   InconsistentVersionWarning; train lại với 1.7.2 để hết cảnh báo
