@@ -63,13 +63,13 @@ class SegmentationPageEx(QWidget, Ui_SegmentationPage):
                        "customers": total_c, "revenue": total_r, "color": "#A23E9C"}
         self.cards = [SegmentCard(None, all_profile, total_c, total_r)]
         self.cards += [SegmentCard(p["cluster"], p, total_c, total_r)
-                       for p in sorted(profiles, key=lambda p: p["cluster"])]
+                       for p in sorted(profiles, key=lambda p: p["segment_name_en"])]
         for card in self.cards:
             self.layoutSegmentCards.addWidget(card, 1)
 
         self.cboSegment.addItem("All segments", None)
-        for p in sorted(profiles, key=lambda p: p["cluster"]):
-            self.cboSegment.addItem(f"Cluster {p['cluster']} – {p['segment_name_en']}", p["cluster"])
+        for p in sorted(profiles, key=lambda p: p["segment_name_en"]):
+            self.cboSegment.addItem(p["segment_name_en"], p["cluster"])
         self.cboCountry.addItem("All countries", None)
         for country in self.service.get_customer_countries():
             self.cboCountry.addItem(country, country)
@@ -148,7 +148,7 @@ class SegmentationPageEx(QWidget, Ui_SegmentationPage):
                 f"{r['recency']:,}",
                 f"{r['frequency']:,}",
                 f"{r['monetary']:,.2f}",
-                f"●  C{r['cluster']} · {r['segment_name_en']}",
+                f"●  {r['segment_name_en']}",
             ])
             colors[(i, 5)] = self.colors.get(r["cluster"], "#2D1B36")
         fill_table(self.tblCustomers, rows, right_cols=NUMBER_COLS, colors=colors)

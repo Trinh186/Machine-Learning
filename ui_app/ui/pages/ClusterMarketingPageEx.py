@@ -47,7 +47,7 @@ class ClusterMarketingPageEx(QWidget, Ui_ClusterMarketingPage):
 
     # ---------------------------------------------------------------- setup
     def setupControls(self):
-        self.profiles = sorted(self.service.get_cluster_profiles(), key=lambda p: p["cluster"])
+        self.profiles = sorted(self.service.get_cluster_profiles(), key=lambda p: p["segment_name_en"])
         self.segments = {s["cluster"]: s for s in self.service.get_segments()}
 
         self.shareChart = GroupedBarChart()
@@ -56,7 +56,7 @@ class ClusterMarketingPageEx(QWidget, Ui_ClusterMarketingPage):
         self.hostSnakeChart.layout().addWidget(self.snakeChart, 1)
 
         for p in self.profiles:
-            self.cboActionSegment.addItem(f"Cluster {p['cluster']} – {p['segment_name_en']}", p["cluster"])
+            self.cboActionSegment.addItem(p["segment_name_en"], p["cluster"])
         self.lstActions.setProperty("cssClass", "actionList")
 
     def setupSignalAndSlot(self):
@@ -86,7 +86,7 @@ class ClusterMarketingPageEx(QWidget, Ui_ClusterMarketingPage):
         t = self.tblProfile
         t.setColumnCount(1 + len(self.profiles))
         t.setRowCount(len(PROFILE_ROWS))
-        heads = ["Metric"] + [f"C{p['cluster']} · {p['segment_name_en'].replace(' Customers', '')}"
+        heads = ["Metric"] + [p['segment_name_en'].replace(' Customers', '')
                              for p in self.profiles]
         for c, text in enumerate(heads):
             item = QTableWidgetItem(text)

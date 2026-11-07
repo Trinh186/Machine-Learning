@@ -1,12 +1,14 @@
 """
-mock_service.py — DỮ LIỆU GIẢ để dựng và chạy thử giao diện khi chưa có MySQL / model thật.
+mock_service.py — DỮ LIỆU MẪU để chạy giao diện khi chưa nối MySQL (chế độ Demo).
 
-Nguồn số liệu (để giao diện khớp báo cáo):
-  - datasets/processed/Online Retail_cleaned.xlsx  (mục 3.2) → thống kê Dashboard, 4.000 dòng giao dịch mẫu
-  - RFM theo công thức mục 3.3.1 (Reference Date 2011-12-10) → mock_data/rfm_customers.csv
-  - K-Means K = 2 (log1p + StandardScaler, n_init = 10, random_state = 42) như mục 3.4–3.5
-    → tham số scaler + tâm cụm trong mock_data/model_params.json
-    (kết quả khớp outputs/cluster_profile.csv và cluster_metrics.csv)
+Cập nhật 07/11 theo dữ liệu sạch mới (data_preprocessor của Hồng) và model K-Means train lại của Thư:
+  - Dashboard / Transaction Data: lấy đúng số liệu mà db_service trả về sau khi chạy import_mysql.py
+    (4.324 khách có mua, 18.276 hóa đơn, doanh thu £8.294.883,51; 4.000 dòng giao dịch mẫu)
+  - RFM / phân khúc: customer_clusters.csv + cluster_profile.csv của Thư (4.320 khách)
+  - Model: tâm cụm + scaler + K = 2..10 từ outputs/*.joblib và kmeans_metrics_k2_10.csv
+
+Số hiệu cụm trong file này theo bảng `segments` của MySQL: 0 = High-Value, 1 = Low-Activity.
+(Model K-Means đánh số ngược lại; giao diện chỉ hiển thị TÊN phân khúc nên không bị lệch.)
 
 >>> Khi phần thật xong, tạo services/db_service.py có ĐÚNG các hàm dưới đây
 >>> (cùng tên, cùng tham số, cùng kiểu trả về) rồi đổi 1 dòng import trong services/__init__.py.
@@ -29,8 +31,8 @@ _SEGMENTS = [
         "cluster": 0,
         "segment_name": "Khách hàng giá trị cao",
         "segment_name_en": "High-Value Customers",
-        "description": "Mua gần đây (Recency TB 26,45 ngày), mua thường xuyên (Frequency TB 8,44 hóa đơn), "
-                       "chi tiêu cao (Monetary TB £4.535,74). Chiếm 38,45% khách hàng nhưng 85,13% doanh thu.",
+        "description": "Mua gần đây (Recency TB 26,13 ngày), mua thường xuyên (Frequency TB 8,38 hóa đơn), "
+                       "chi tiêu cao (Monetary TB £4.230,20). Chiếm 38,17% khách hàng nhưng 84,35% doanh thu.",
         "marketing_strategy": "Ưu tiên chăm sóc; chương trình khách hàng thân thiết/VIP và ưu đãi cá nhân hóa "
                               "phù hợp với giá trị mua hàng.",
         "color": "#1B7A4E",
@@ -39,8 +41,8 @@ _SEGMENTS = [
         "cluster": 1,
         "segment_name": "Khách hàng ít hoạt động",
         "segment_name_en": "Low-Activity Customers",
-        "description": "Lâu chưa quay lại (Recency TB 134,67 ngày), mua ít (Frequency TB 1,67 hóa đơn), "
-                       "chi tiêu thấp (Monetary TB £494,98). Chiếm 61,55% khách hàng, 14,87% doanh thu.",
+        "description": "Lâu chưa quay lại (Recency TB 134,70 ngày), mua ít (Frequency TB 1,66 hóa đơn), "
+                       "chi tiêu thấp (Monetary TB £484,48). Chiếm 61,83% khách hàng, 15,65% doanh thu.",
         "marketing_strategy": "Thử nghiệm chiến dịch kích hoạt lại, voucher quay lại và nhắc mua hàng; "
                               "đánh giá hiệu quả theo phản hồi thực tế.",
         "color": "#767676",
@@ -51,17 +53,17 @@ _SEGMENT_BY_CLUSTER = {s["cluster"]: s for s in _SEGMENTS}
 # Bảng 3.5.1 – cluster_metrics.csv
 _MODEL_METRICS = {
     "k": 2,
-    "silhouette": 0.4325,
-    "davies_bouldin": 0.8913,
-    "calinski_harabasz": 4376.83,
-    "inertia": 6476.51,
+    "silhouette": 0.4323,
+    "davies_bouldin": 0.8904,
+    "calinski_harabasz": 4361.19,
+    "inertia": 6447.76,
 }
 
 _MONTHLY = {
-    "2010-12": 570423, "2011-01": 568101, "2011-02": 446085, "2011-03": 594082,
-    "2011-04": 468374, "2011-05": 677355, "2011-06": 660046, "2011-07": 598963,
-    "2011-08": 644051, "2011-09": 950690, "2011-10": 1035642, "2011-11": 1156206,
-    "2011-12": 517190,
+    "2010-12": 550552.08, "2011-01": 454493.19, "2011-02": 435674.73, "2011-03": 571696.40,
+    "2011-04": 447977.99, "2011-05": 647608.16, "2011-06": 639381.57, "2011-07": 581165.78,
+    "2011-08": 614117.00, "2011-09": 924834.25, "2011-10": 964727.88, "2011-11": 1120029.96,
+    "2011-12": 342624.52,
 }
 
 
@@ -117,9 +119,9 @@ def _paginate(rows: list, page: int, page_size: int) -> tuple[list, int]:
 def get_dashboard_stats() -> dict:
     """Số liệu tổng quan cho 4 thẻ KPI trên Dashboard."""
     return {
-        "total_customers": 4338,
-        "total_invoices": 18532,
-        "total_revenue": 8887208.89,         # GBP (£)
+        "total_customers": 4324,             # bảng customers (khách có ít nhất 1 dòng mua)
+        "total_invoices": 18276,
+        "total_revenue": 8294883.51,         # GBP (£), tổng invoice_details
         "num_segments": len(_SEGMENTS),
         "date_from": datetime(2010, 12, 1, 8, 26),
         "date_to": datetime(2011, 12, 9, 12, 50),
