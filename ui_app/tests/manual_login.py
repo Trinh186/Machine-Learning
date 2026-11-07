@@ -1,7 +1,7 @@
 """Chạy thủ công riêng giao diện Login theo cấu trúc Ui -> Ui*.py -> *Ex.py.
 
 Từ thư mục ui_app chạy:
-    python -m tests.test_login
+    python -m tests.manual_login
 
 Không thay thế ui_app/main.py và không được tự chạy khi unittest discover import file.
 """
