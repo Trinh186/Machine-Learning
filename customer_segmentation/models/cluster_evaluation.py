@@ -1,7 +1,11 @@
 """Mục 3.5 - Đánh giá và diễn giải kết quả phân cụm (K-Means, K = 2).
 
+Đánh giá ĐÚNG mô hình đã lưu ở mục 3.4 (không train lại):
+    outputs/kmeans_model.joblib, outputs/rfm_scaler.joblib, outputs/model_info.joblib
+    -> RFM -> log1p -> scaler đã lưu -> kmeans.predict -> tên phân khúc theo model_info["cluster_mapping"]
+
 Đầu vào (theo cấu trúc thư mục chung của nhóm):
-    datasets/processed/Online Retail_cleaned.xlsx  dữ liệu giao dịch sạch (mục 3.2), dùng để tính RFM và thâm niên
+    datasets/processed/Online Retail_cleaned.xlsx  dữ liệu giao dịch sạch (mục 3.2), dùng để tính thâm niên
     datasets/processed/rfm_customers.csv           RFM giá trị gốc của mục 3.3 (nếu có thì dùng thay cho bước tính lại)
     datasets/processed/customer_clusters.csv       nhãn cụm của mục 3.4 (nếu có, dùng để đối chiếu)
 
@@ -15,6 +19,7 @@ Chạy từ thư mục gốc customer_segmentation/:
 """
 from pathlib import Path
 
+import joblib
 import matplotlib
 
 matplotlib.use("Agg")
@@ -32,12 +37,14 @@ from sklearn.metrics import (
     silhouette_samples,
     silhouette_score,
 )
-from sklearn.preprocessing import StandardScaler
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA_DIR = ROOT / "datasets" / "processed"
 OUTPUT_DIR = ROOT / "outputs"
 FIGURE_DIR = OUTPUT_DIR / "figures"
+MODEL_PATH = OUTPUT_DIR / "kmeans_model.joblib"
+SCALER_PATH = OUTPUT_DIR / "rfm_scaler.joblib"
+INFO_PATH = OUTPUT_DIR / "model_info.joblib"
 
 RFM_COLUMNS = ["recency", "frequency", "monetary"]
 N_CLUSTERS = 2
@@ -84,13 +91,50 @@ def load_rfm(transactions: pd.DataFrame) -> pd.DataFrame:
     }).reset_index()
 
 
-def scale_rfm(rfm: pd.DataFrame) -> np.ndarray:
-    """log1p + StandardScaler, đúng quy trình mục 3.3."""
-    return StandardScaler().fit_transform(np.log1p(rfm[RFM_COLUMNS]))
-
-
 def fit_kmeans(x_scaled: np.ndarray, random_state: int = RANDOM_STATE) -> KMeans:
+    """Chỉ dùng cho kiểm tra độ ổn định (ARI); kết quả chính lấy từ mô hình đã lưu."""
     return KMeans(n_clusters=N_CLUSTERS, n_init=N_INIT, random_state=random_state).fit(x_scaled)
+
+
+def load_saved_model():
+    """Nạp K-Means, scaler và thông tin mô hình đã lưu ở mục 3.4."""
+    for path in (MODEL_PATH, SCALER_PATH, INFO_PATH):
+        if not path.exists():
+            raise FileNotFoundError(f"Thiếu {path.relative_to(ROOT)} — chạy models/clustering_model.py --k 2 trước.")
+    model, scaler, info = joblib.load(MODEL_PATH), joblib.load(SCALER_PATH), joblib.load(INFO_PATH)
+    if model.n_clusters != N_CLUSTERS:
+        raise ValueError(f"Mô hình đã lưu có K = {model.n_clusters}, mục 3.5 đánh giá K = {N_CLUSTERS}.")
+    if list(info.get("features", RFM_COLUMNS)) != RFM_COLUMNS or info.get("transform", "log1p") != "log1p":
+        raise ValueError("model_info không khớp quy trình RFM -> log1p -> StandardScaler.")
+    return model, scaler, info
+
+
+def scale_with_saved(rfm: pd.DataFrame, scaler) -> np.ndarray:
+    """log1p + scaler ĐÃ LƯU (không fit lại), đúng như khi mô hình dự đoán khách hàng mới."""
+    return scaler.transform(np.log1p(rfm[RFM_COLUMNS]))
+
+
+def check_model_matches_data(rfm: pd.DataFrame, scaler, info: dict) -> None:
+    """Cảnh báo nếu rfm_customers.csv hiện tại khác dữ liệu đã dùng để train mô hình."""
+    n_model = info.get("n_customers")
+    if n_model is not None and int(n_model) != len(rfm):
+        print(f"  ! Mô hình train trên {n_model} khách, rfm_customers.csv hiện có {len(rfm)} khách.")
+    refit_mean = np.log1p(rfm[RFM_COLUMNS]).mean().to_numpy()
+    if not np.allclose(refit_mean, scaler.mean_, atol=1e-6):
+        print("  ! Trung bình log1p(RFM) hiện tại khác scaler đã lưu -> dữ liệu đã đổi, nên train lại mô hình (mục 3.4).")
+
+
+def segment_names_from_model(rfm: pd.DataFrame, info: dict) -> dict:
+    """Tên phân khúc lấy từ model_info["cluster_mapping"]; nếu thiếu thì gán theo trung vị Monetary."""
+    mapping = info.get("cluster_mapping")
+    if not mapping:
+        return name_segments(rfm)
+    names = {int(c): (m["segment_name_vi"], m["segment_name_en"]) for c, m in mapping.items()}
+    # Kiểm tra chéo: cụm được đặt tên "giá trị cao" phải có trung vị Monetary cao nhất
+    high = rfm.groupby("cluster")["monetary"].median().idxmax()
+    if names[high][1] != SEGMENT_NAMES["high_value"][1]:
+        print("  ! cluster_mapping trong model_info ngược với hồ sơ RFM — kiểm tra lại mục 3.4.")
+    return names
 
 
 def name_segments(rfm: pd.DataFrame) -> dict:
@@ -102,9 +146,10 @@ def name_segments(rfm: pd.DataFrame) -> dict:
 
 def evaluate_model(x_scaled, labels, kmeans) -> pd.DataFrame:
     sil = silhouette_samples(x_scaled, labels)
+    # Độ ổn định: train lại với random_state 0..9 (chỉ để so sánh), đối chiếu với nhãn của mô hình đã lưu
     aris = [adjusted_rand_score(labels, fit_kmeans(x_scaled, s).labels_) for s in range(10)]
     rows = [
-        ("inertia", kmeans.inertia_),
+        ("inertia", -kmeans.score(x_scaled)),       # inertia của mô hình đã lưu trên dữ liệu đánh giá
         ("silhouette", silhouette_score(x_scaled, labels)),
         ("davies_bouldin", davies_bouldin_score(x_scaled, labels)),
         ("calinski_harabasz", calinski_harabasz_score(x_scaled, labels)),
@@ -294,9 +339,12 @@ def main():
     transactions = load_transactions()
     rfm = load_rfm(transactions)
     x_log = np.log1p(rfm[RFM_COLUMNS])
-    x_scaled = scale_rfm(rfm)
-    kmeans = fit_kmeans(x_scaled)
-    labels = kmeans.labels_
+
+    kmeans, scaler, info = load_saved_model()
+    print(f"Đánh giá mô hình đã lưu: {MODEL_PATH.relative_to(ROOT)} (K = {kmeans.n_clusters})")
+    check_model_matches_data(rfm, scaler, info)
+    x_scaled = scale_with_saved(rfm, scaler)
+    labels = kmeans.predict(x_scaled)
     rfm["cluster"] = labels
 
     clusters_path = DATA_DIR / "customer_clusters.csv"
@@ -305,9 +353,10 @@ def main():
         if "cluster" in ref.columns:
             merged = rfm[["customer_id", "cluster"]].merge(ref[["customer_id", "cluster"]], on="customer_id")
             ari = adjusted_rand_score(merged["cluster_x"], merged["cluster_y"])
-            print(f"ARI so với customer_clusters.csv của mục 3.4: {ari:.4f}")
+            same = (merged["cluster_x"] == merged["cluster_y"]).mean() * 100
+            print(f"Đối chiếu customer_clusters.csv của mục 3.4: ARI = {ari:.4f}, trùng nhãn {same:.2f}%")
 
-    names = name_segments(rfm)
+    names = segment_names_from_model(rfm, info)
     rfm["segment_name"] = rfm["cluster"].map(lambda c: names[c][0])
     rfm["segment_name_en"] = rfm["cluster"].map(lambda c: names[c][1])
     rfm = add_tenure(rfm, transactions)
