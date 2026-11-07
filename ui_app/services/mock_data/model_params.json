@@ -7,62 +7,72 @@
  ],
  "transform": "log1p",
  "scaler_mean": [
-  3.85719237,
-  1.34558234,
-  6.58856227
+  3.85894078,
+  1.34017036,
+  6.55540246
  ],
  "scaler_scale": [
-  1.30690941,
-  0.68302494,
-  1.25829286
+  1.30710271,
+  0.67996231,
+  1.24934681
  ],
  "centroids": [
   [
-   -0.80685622,
-   0.96662451,
-   0.90807616
+   -0.81239241,
+   0.97299319,
+   0.91380898
   ],
   [
-   0.50454966,
-   -0.60445722,
-   -0.5678453
+   0.50154814,
+   -0.60069853,
+   -0.56415987
   ]
  ],
  "k_search": [
   {
    "k": 2,
-   "inertia": 6476.51,
-   "silhouette": 0.4325
+   "inertia": 6447.76,
+   "silhouette": 0.4323
   },
   {
    "k": 3,
-   "inertia": 4858.24,
-   "silhouette": 0.3363
+   "inertia": 4818.14,
+   "silhouette": 0.3402
   },
   {
    "k": 4,
-   "inertia": 3925.43,
-   "silhouette": 0.3329
+   "inertia": 3890.46,
+   "silhouette": 0.3391
   },
   {
    "k": 5,
-   "inertia": 3269.27,
-   "silhouette": 0.3181
+   "inertia": 3239.22,
+   "silhouette": 0.3169
   },
   {
    "k": 6,
-   "inertia": 2841.42,
-   "silhouette": 0.3129
+   "inertia": 2814.26,
+   "silhouette": 0.3136
   },
   {
    "k": 7,
-   "inertia": 2532.98,
-   "silhouette": 0.3103
+   "inertia": 2507.58,
+   "silhouette": 0.3012
   },
   {
    "k": 8,
-   "inertia": 2325.08,
-   "silhouette": 0.3021
+   "inertia": 2305.7,
+   "silhouette": 0.2875
+  },
+  {
+   "k": 9,
+   "inertia": 2123.93,
+   "silhouette": 0.2808
+  },
+  {
+   "k": 10,
+   "inertia": 1971.81,
+   "silhouette": 0.2768
   }
  ]
 }

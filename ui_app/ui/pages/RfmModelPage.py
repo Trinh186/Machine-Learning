@@ -364,7 +364,7 @@ class Ui_RfmModelPage(object):
         self.btnRfmNextPage.setText(_translate("RfmModelPage", "Next ›"))
         self.btnRfmNextPage.setProperty("cssClass", _translate("RfmModelPage", "secondary"))
         self.tabsRfmModel.setTabText(self.tabsRfmModel.indexOf(self.tabRfmTable), _translate("RfmModelPage", "Customer RFM"))
-        self.lblChooseKNote.setText(_translate("RfmModelPage", "Elbow (inertia) and Silhouette score for K = 2 … 8. The highlighted point is the K used by the model."))
+        self.lblChooseKNote.setText(_translate("RfmModelPage", "Elbow (inertia) and Silhouette score for K = 2 … 10. The highlighted point is the K used by the model."))
         self.lblChooseKNote.setProperty("cssClass", _translate("RfmModelPage", "cardSubtitle"))
         self.lblElbowTitle.setText(_translate("RfmModelPage", "Elbow Method – Inertia"))
         self.lblElbowTitle.setProperty("cssClass", _translate("RfmModelPage", "fieldLabel"))

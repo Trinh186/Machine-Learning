@@ -34,8 +34,8 @@ class RfmModelPageEx(QWidget, Ui_RfmModelPage):
 
         setup_table(self.tblRfm, HEADERS, right_cols=NUMBER_COLS, stretch_col=4)
         self.cboRfmSegment.addItem("All segments", None)
-        for cluster, seg in sorted(self.segments.items()):
-            self.cboRfmSegment.addItem(f"Cluster {cluster} – {seg['segment_name_en']}", cluster)
+        for cluster, seg in sorted(self.segments.items(), key=lambda kv: kv[1]["segment_name_en"]):
+            self.cboRfmSegment.addItem(seg["segment_name_en"], cluster)
 
         self.rfmPager = Pager(self.cboRfmPageSize, self.btnRfmPrevPage, self.btnRfmNextPage,
                               self.lblRfmPageInfo, self.lblRfmSummary, unit="customers", parent=self)
@@ -69,6 +69,10 @@ class RfmModelPageEx(QWidget, Ui_RfmModelPage):
         chosen = labels.index(info["k"]) if info["k"] in labels else None
         self.elbowChart.set_data(labels, [row["inertia"] for row in ks], chosen, "{:,.0f}", "#A23E9C")
         self.silhouetteChart.set_data(labels, [row["silhouette"] for row in ks], chosen, "{:.4f}", "#8E5CC4")
+        if labels:  # ghi chú tự khớp với dải K của biểu đồ (vd. K = 2 … 10)
+            self.lblChooseKNote.setText(
+                f"Elbow (inertia) and Silhouette score for K = {min(labels)} … {max(labels)}. "
+                "The highlighted point is the K used by the model.")
 
     # ---------------------------------------------------------------- RFM table
     def search_rfm(self):
@@ -86,10 +90,10 @@ class RfmModelPageEx(QWidget, Ui_RfmModelPage):
         for i, r in enumerate(result["rows"]):
             rows.append([
                 str(r["customer_id"]),
-                f"{r['recency']:,}",
-                f"{r['frequency']:,}",
+                f"{int(r['recency']):,}",
+                f"{int(r['frequency']):,}",
                 f"{r['monetary']:,.2f}",
-                f"●  C{r['cluster']} · {r['segment_name_en'].replace(' Customers', '')}",
+                f"●  {r['segment_name_en'].replace(' Customers', '')}",
             ])
             colors[(i, 4)] = self.segments[r["cluster"]]["color"]
         fill_table(self.tblRfm, rows, right_cols=NUMBER_COLS, colors=colors, row_data=result["rows"])
@@ -121,7 +125,7 @@ class RfmModelPageEx(QWidget, Ui_RfmModelPage):
         color = result.get("color", "#A23E9C")
         self.frameResult.setStyleSheet(f"#frameResult {{ border-left: 4px solid {color}; }}")
         self.lblResultCaption.setText("PREDICTED SEGMENT")
-        self.lblResultSegment.setText(f"Cluster {result['cluster']} – {result['segment_name_en']}")
+        self.lblResultSegment.setText(result["segment_name_en"])
         self.lblResultSegment.setStyleSheet(f"color: {color};")
         self.lblResultSegmentVi.setText(result["segment_name"])
         self.lblResultDescription.setText(result.get("description", ""))
