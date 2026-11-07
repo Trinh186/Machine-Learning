@@ -28,7 +28,9 @@ class RfmModelPageEx(QWidget, Ui_RfmModelPage):
 
     # ---------------------------------------------------------------- setup
     def setupControls(self):
-        self.segments = {s["cluster"]: s for s in self.service.get_segments()}
+        self.segments = {
+            s["cluster"]: s for s in self.service.get_model_segments()
+        }
 
         setup_table(self.tblRfm, HEADERS, right_cols=NUMBER_COLS, stretch_col=4)
         self.cboRfmSegment.addItem("All segments", None)
@@ -55,7 +57,7 @@ class RfmModelPageEx(QWidget, Ui_RfmModelPage):
 
     # ---------------------------------------------------------------- model info
     def load_model_info(self):
-        info = self.service.get_model_info()
+        info = self.service.get_real_model_info()
         self.lblMetricKValue.setText(str(info["k"]))
         self.lblMetricKNote.setText(f"{info['n_customers']:,} customers · ref. date {info['reference_date']:%d/%m/%Y}")
         self.lblMetricSilhouetteValue.setText(f"{info['silhouette']:.4f}")
@@ -67,6 +69,10 @@ class RfmModelPageEx(QWidget, Ui_RfmModelPage):
         chosen = labels.index(info["k"]) if info["k"] in labels else None
         self.elbowChart.set_data(labels, [row["inertia"] for row in ks], chosen, "{:,.0f}", "#A23E9C")
         self.silhouetteChart.set_data(labels, [row["silhouette"] for row in ks], chosen, "{:.4f}", "#8E5CC4")
+        if labels:  # ghi chú tự khớp với dải K của biểu đồ (vd. K = 2 … 10)
+            self.lblChooseKNote.setText(
+                f"Elbow (inertia) and Silhouette score for K = {min(labels)} … {max(labels)}. "
+                "The highlighted point is the K used by the model.")
 
     # ---------------------------------------------------------------- RFM table
     def search_rfm(self):
@@ -74,7 +80,7 @@ class RfmModelPageEx(QWidget, Ui_RfmModelPage):
         self.load_rfm_page()
 
     def load_rfm_page(self):
-        result = self.service.get_rfm_table(
+        result = self.service.get_real_rfm_table(
             keyword=self.txtRfmSearch.text(),
             cluster=self.cboRfmSegment.currentData(),
             page=self.rfmPager.page,
@@ -84,8 +90,8 @@ class RfmModelPageEx(QWidget, Ui_RfmModelPage):
         for i, r in enumerate(result["rows"]):
             rows.append([
                 str(r["customer_id"]),
-                f"{r['recency']:,}",
-                f"{r['frequency']:,}",
+                f"{int(r['recency']):,}",
+                f"{int(r['frequency']):,}",
                 f"{r['monetary']:,.2f}",
                 f"●  C{r['cluster']} · {r['segment_name_en'].replace(' Customers', '')}",
             ])

@@ -548,7 +548,7 @@
             <item>
              <widget class="QLabel" name="lblChooseKNote">
               <property name="text">
-               <string>Elbow (inertia) and Silhouette score for K = 2 … 8. The highlighted point is the K used by the model.</string>
+               <string>Elbow (inertia) and Silhouette score for K = 2 … 10. The highlighted point is the K used by the model.</string>
               </property>
               <property name="wordWrap">
                <bool>true</bool>
