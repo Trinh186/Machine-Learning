@@ -15,3 +15,6 @@ numpy==2.3.5
 pandas==2.3.3
 scikit-learn==1.7.2              # model hiện tại lưu bằng 1.6.1 -> chạy được nhưng có cảnh báo
 joblib==1.5.2                    #   InconsistentVersionWarning; train lại với 1.7.2 để hết cảnh báo
+
+# Chỉ dùng cho tests/test_dashboard_stats.py (pandas đọc file Online Retail_cleaned.xlsx)
+openpyxl==3.1.5

@@ -2,6 +2,9 @@
 from .database import get_connection, DatabaseError
 import mysql.connector
 
+HIGH_VALUE_COLOR = "#1B7A4E"
+LOW_ACTIVITY_COLOR = "#767676"
+
 
 class SegmentDAO:
     """Truy vấn phân khúc và chiến lược marketing từ MySQL."""
@@ -26,12 +29,9 @@ class SegmentDAO:
                 rows = cur.fetchall()
 
                 for row in rows:
-                    cluster = int(row["cluster"])
-                    row["color"] = (
-                        "#3B5BDB"
-                        if cluster == 0
-                        else "#0CA6A6"
-                    )
+                    # Cùng màu với chế độ Demo (mock_service); chọn theo tên để không phụ thuộc số hiệu cụm
+                    name_en = (row.get("segment_name_en") or "").lower()
+                    row["color"] = HIGH_VALUE_COLOR if "high" in name_en else LOW_ACTIVITY_COLOR
 
                 return rows
             finally:

@@ -30,6 +30,9 @@ class DashboardPage(QWidget):
 
         # --- 4 thẻ KPI ---
         self.lblKpiCustomersValue.setText(f"{stats['total_customers']:,}")
+        # Thẻ đếm mọi khách có mua; vài khách bị loại khỏi RFM (tổng chi ≤ 0 sau khi trừ hàng trả lại)
+        segmented = sum(s["customers"] for s in segments)
+        self.lblKpiCustomersNote.setText(f"{segmented:,} segmented by RFM")
         self.lblKpiInvoicesValue.setText(f"{stats['total_invoices']:,}")
         self.lblKpiRevenueValue.setText(f"£{stats['total_revenue'] / 1_000_000:,.2f}M")
         self.lblKpiRevenueNote.setText(
