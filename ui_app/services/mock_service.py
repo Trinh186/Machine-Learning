@@ -11,7 +11,7 @@ Số hiệu cụm trong file này theo bảng `segments` của MySQL: 0 = High-V
 (Model K-Means đánh số ngược lại; giao diện chỉ hiển thị TÊN phân khúc nên không bị lệch.)
 
 >>> Khi phần thật xong, tạo services/db_service.py có ĐÚNG các hàm dưới đây
->>> (cùng tên, cùng tham số, cùng kiểu trả về) rồi đổi 1 dòng import trong services/__init__.py.
+>>> (cùng tên, cùng tham số, cùng kiểu trả về) rồi đổi 1 dòng importtrong services/__init__.py.
 """
 
 from __future__ import annotations
@@ -25,6 +25,9 @@ from pathlib import Path
 
 _DATA_DIR = Path(__file__).resolve().parent / "mock_data"
 
+from segment_colors import segment_color
+
+
 # Giống bảng `segments` trong customer_segmentation/database/database.sql
 _SEGMENTS = [
     {
@@ -35,7 +38,7 @@ _SEGMENTS = [
                        "chi tiêu cao (Monetary TB £4.230,20). Chiếm 38,17% khách hàng nhưng 84,35% doanh thu.",
         "marketing_strategy": "Ưu tiên chăm sóc; chương trình khách hàng thân thiết/VIP và ưu đãi cá nhân hóa "
                               "phù hợp với giá trị mua hàng.",
-        "color": "#1B7A4E",
+        "color": segment_color("High-Value Customers"),
     },
     {
         "cluster": 1,
@@ -45,7 +48,7 @@ _SEGMENTS = [
                        "chi tiêu thấp (Monetary TB £484,48). Chiếm 61,83% khách hàng, 15,65% doanh thu.",
         "marketing_strategy": "Thử nghiệm chiến dịch kích hoạt lại, voucher quay lại và nhắc mua hàng; "
                               "đánh giá hiệu quả theo phản hồi thực tế.",
-        "color": "#767676",
+        "color": segment_color("Low-Activity Customers"),
     },
 ]
 _SEGMENT_BY_CLUSTER = {s["cluster"]: s for s in _SEGMENTS}
