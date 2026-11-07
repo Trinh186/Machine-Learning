@@ -225,3 +225,9 @@ QPushButton:disabled { color: #CFB9C9; border-color: #F0DDEB; background: #FFFFF
 QCheckBox::indicator:checked, QRadioButton::indicator:checked { background: #A23E9C; }
 QProgressBar { background: #FAE8F4; border: none; border-radius: 6px; }
 QProgressBar::chunk { background: #A23E9C; border-radius: 6px; }
+
+/* Thanh cảnh báo MySQL trên MainWindow: state = offline (đỏ hồng) | empty (vàng) */
+QFrame[cssClass="dbBanner"] { background: #FDECEF; border: 1px solid #F2B5C4; border-radius: 10px; }
+QFrame[cssClass="dbBanner"] QLabel { background: transparent; border: none; color: #8E2A4A; font-size: 9pt; font-weight: 600; }
+QFrame[cssClass="dbBanner"][state="empty"] { background: #FFF5E3; border-color: #EFD3A0; }
+QFrame[cssClass="dbBanner"][state="empty"] QLabel { color: #7A5312; }
