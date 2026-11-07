@@ -100,17 +100,24 @@ def get_countries(): return _transaction_dao.get_countries()
 def get_transactions(keyword="", country=None, date_from=None, date_to=None, page=1, page_size=50):
     return _transaction_dao.get_transactions(keyword, country, date_from, date_to, page, page_size)
 def get_segments(): return _segment_dao.get_segments()
-def get_model_info(): return mock_service.get_model_info()
+def get_model_info():
+    """Task 11: đọc metrics K=2..10 và metrics mô hình cuối từ file kết quả thật."""
+    return _model_service.get_model_info()
 def get_rfm_table(keyword="", cluster=None, page=1, page_size=50):
     return _rfm_dao.get_rfm_table(keyword, cluster, page, page_size)
 
 
 def predict_segment(recency, frequency, monetary):
-    cluster = _model_service.predict_cluster(recency, frequency, monetary)
-    segments = {int(s["cluster"]): s for s in get_segments()}
-    if cluster not in segments:
-        raise ValueError(f"Không tìm thấy thông tin cho Cluster {cluster} trong MySQL.")
-    return dict(segments[cluster])
+    """Task 8: dùng mapping được lưu trong model_info.joblib, không hardcode cluster ID."""
+    prediction = _model_service.predict_segment(recency, frequency, monetary)
+    segments = {s["segment_name_en"]: s for s in get_segments()}
+    details = segments.get(prediction["segment_name_en"])
+    if details is None:
+        raise ValueError(
+            "Không tìm thấy phân khúc "
+            f"{prediction['segment_name_en']} trong bảng segments của MySQL."
+        )
+    return {**details, **prediction}
 
 def get_customers(keyword="", page=1, page_size=50):
     return _customer_dao.list_customers(
