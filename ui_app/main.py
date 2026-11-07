@@ -25,6 +25,7 @@ class AppController:
         self.login_form.showWindow()
 
     def open_main(self, user):
+        service.check()          # MySQL có dữ liệu chưa? (rỗng -> MainWindow hiện cảnh báo)
         self.main_window = MainWindow(
             user=user, service=service, auth_service=self.auth,
         )

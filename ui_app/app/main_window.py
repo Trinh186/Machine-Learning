@@ -8,9 +8,11 @@ Cách Login (Task 7) mở cửa sổ này sau khi đăng nhập thành công:
     win.show()
 """
 
+from datetime import datetime
+
 from PyQt6 import uic
 from PyQt6.QtCore import pyqtSignal
-from PyQt6.QtWidgets import QButtonGroup, QMainWindow, QMessageBox
+from PyQt6.QtWidgets import QApplication, QButtonGroup, QMainWindow, QMessageBox
 
 from app.pages.cluster_marketing_page import ClusterMarketingPage
 from app.pages.dashboard_page import DashboardPage
@@ -21,6 +23,10 @@ from app.pages.transaction_page import TransactionDataPage
 from app.pages.user_management_page import UserManagementPage
 from app.paths import UI_DIR
 from app.theme import apply_icons, logo_html
+from services.db_health import EMPTY, OK
+
+# Các trang đọc dữ liệu qua service: tạo lại khi MySQL kết nối lại được
+DATA_PAGES = ("dashboard", "transactions", "rfm_model", "segmentation", "marketing")
 
 # key, nút trên menu, tiêu đề, mô tả, chỉ Admin?
 PAGES = [
@@ -49,6 +55,7 @@ class MainWindow(QMainWindow):
         self.service = service
         self.auth_service = auth_service
         self.is_admin = str(user.get("role", "")).lower() == "admin"
+        self._setup_db_status()
 
         self._pages = {}          # key -> widget trong stackPages
         self._meta = {}           # key -> (title, subtitle)
@@ -76,6 +83,66 @@ class MainWindow(QMainWindow):
         self._fill_data_range()
         self.btnLogout.clicked.connect(self._confirm_logout)
         self.show_page("dashboard")
+
+    # ---------- thanh cảnh báo MySQL ----------
+    def _setup_db_status(self):
+        self.hostDbStatus.hide()
+        self.btnDbRetry.clicked.connect(self._retry_database)
+        if hasattr(self.service, "add_listener"):
+            self.service.add_listener(self._on_db_status)
+            self._on_db_status(self.service.status, self.service.message)
+
+    def _on_db_status(self, status, message):
+        if status == OK:
+            self.hostDbStatus.hide()
+            return
+        if status == EMPTY:
+            head = "Database MySQL chưa có dữ liệu – đang hiển thị dữ liệu mẫu."
+        else:
+            head = "Không kết nối được MySQL – đang hiển thị dữ liệu mẫu."
+        self.lblDbStatus.setText(f"{head}  {message}".strip())
+        self.frameDbStatus.setProperty("state", status)
+        self.frameDbStatus.style().unpolish(self.frameDbStatus)
+        self.frameDbStatus.style().polish(self.frameDbStatus)
+        self.hostDbStatus.show()
+
+    def _retry_database(self):
+        self.btnDbRetry.setEnabled(False)
+        self.btnDbRetry.setText("Đang kiểm tra...")
+        QApplication.processEvents()
+        try:
+            status = self.service.check()
+        finally:
+            self.btnDbRetry.setText("Thử lại")
+            self.btnDbRetry.setEnabled(True)
+        if status == OK:
+            self._reload_data_pages()
+        else:
+            self._on_db_status(status, self.service.message)
+            self.lblDbStatus.setText(self.lblDbStatus.text()
+                                     + f"  (Kiểm tra lúc {datetime.now():%H:%M:%S})")
+
+    def _reload_data_pages(self):
+        """Tạo lại các trang dữ liệu để đọc lại từ MySQL, giữ nguyên trang đang xem."""
+        current = next((k for k, w in self._pages.items() if w is self.stackPages.currentWidget()), "dashboard")
+        for key in DATA_PAGES:
+            old = self._pages.get(key)
+            if old is None:
+                continue
+            index = self.stackPages.indexOf(old)
+            new = self._create_page(key, self._meta[key][0])
+            self.stackPages.insertWidget(index, new)
+            self.stackPages.removeWidget(old)
+            old.deleteLater()
+            self._pages[key] = new
+        apply_icons(self)
+        self._fill_data_range()
+        self.show_page(current)
+
+    def closeEvent(self, event):
+        if hasattr(self.service, "remove_listener"):
+            self.service.remove_listener(self._on_db_status)
+        super().closeEvent(event)
 
     # ---------- tạo trang ----------
     def _create_page(self, key, title):
