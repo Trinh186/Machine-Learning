@@ -1,0 +1,6 @@
+metric,value
+inertia,6447.756237354542
+silhouette,0.43228584172746404
+davies_bouldin,0.8904306157138798
+calinski_harabasz,4361.186672069387
+negative_silhouette_count,25.0

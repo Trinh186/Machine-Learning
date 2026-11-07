@@ -28,7 +28,9 @@ class RfmModelPageEx(QWidget, Ui_RfmModelPage):
 
     # ---------------------------------------------------------------- setup
     def setupControls(self):
-        self.segments = {s["cluster"]: s for s in self.service.get_segments()}
+        self.segments = {
+            s["cluster"]: s for s in self.service.get_model_segments()
+        }
 
         setup_table(self.tblRfm, HEADERS, right_cols=NUMBER_COLS, stretch_col=4)
         self.cboRfmSegment.addItem("All segments", None)
@@ -55,7 +57,7 @@ class RfmModelPageEx(QWidget, Ui_RfmModelPage):
 
     # ---------------------------------------------------------------- model info
     def load_model_info(self):
-        info = self.service.get_model_info()
+        info = self.service.get_real_model_info()
         self.lblMetricKValue.setText(str(info["k"]))
         self.lblMetricKNote.setText(f"{info['n_customers']:,} customers · ref. date {info['reference_date']:%d/%m/%Y}")
         self.lblMetricSilhouetteValue.setText(f"{info['silhouette']:.4f}")
@@ -74,7 +76,7 @@ class RfmModelPageEx(QWidget, Ui_RfmModelPage):
         self.load_rfm_page()
 
     def load_rfm_page(self):
-        result = self.service.get_rfm_table(
+        result = self.service.get_real_rfm_table(
             keyword=self.txtRfmSearch.text(),
             cluster=self.cboRfmSegment.currentData(),
             page=self.rfmPager.page,
