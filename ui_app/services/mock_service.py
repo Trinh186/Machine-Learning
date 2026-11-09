@@ -34,8 +34,8 @@ _SEGMENTS = [
         "cluster": 0,
         "segment_name": "Khách hàng giá trị cao",
         "segment_name_en": "High-Value Customers",
-        "description": "Mua gần đây (Recency TB 26,13 ngày), mua thường xuyên (Frequency TB 8,38 hóa đơn), "
-                       "chi tiêu cao (Monetary TB £4.230,20). Chiếm 38,17% khách hàng nhưng 84,35% doanh thu.",
+        "description": "Nhóm khách hàng mua gần đây, mua thường xuyên và chi tiêu nhiều: trung bình 26 ngày kể từ lần mua cuối, "
+                       "8,4 hóa đơn và 4.230 £ mỗi khách. Chỉ chiếm 38,2% số khách hàng nhưng mang lại 84,4% doanh thu.",
         "marketing_strategy": "Ưu tiên chăm sóc; chương trình khách hàng thân thiết/VIP và ưu đãi cá nhân hóa "
                               "phù hợp với giá trị mua hàng.",
         "color": segment_color("High-Value Customers"),
@@ -44,8 +44,8 @@ _SEGMENTS = [
         "cluster": 1,
         "segment_name": "Khách hàng ít hoạt động",
         "segment_name_en": "Low-Activity Customers",
-        "description": "Lâu chưa quay lại (Recency TB 134,70 ngày), mua ít (Frequency TB 1,66 hóa đơn), "
-                       "chi tiêu thấp (Monetary TB £484,48). Chiếm 61,83% khách hàng, 15,65% doanh thu.",
+        "description": "Nhóm khách hàng đã lâu chưa quay lại, mua ít và chi tiêu thấp: trung bình 135 ngày kể từ lần mua cuối, "
+                       "1,7 hóa đơn và 484 £ mỗi khách; 56% mới mua đúng một lần. Chiếm 61,8% số khách hàng nhưng chỉ tạo ra 15,6% doanh thu.",
         "marketing_strategy": "Thử nghiệm chiến dịch kích hoạt lại, voucher quay lại và nhắc mua hàng; "
                               "đánh giá hiệu quả theo phản hồi thực tế.",
         "color": segment_color("Low-Activity Customers"),

@@ -206,8 +206,8 @@ CREATE TABLE `segments` (
 LOCK TABLES `segments` WRITE;
 /*!40000 ALTER TABLE `segments` DISABLE KEYS */;
 INSERT INTO `segments` (`cluster`, `segment_name`, `segment_name_en`, `description`, `marketing_strategy`) VALUES
-  (0, 'Khách hàng giá trị cao', 'High-Value Customers', 'Gồm 1.649 khách hàng, chiếm 38,17% khách hàng và 84,35% doanh thu. Recency trung bình 26,13 ngày, Frequency trung bình 8,38 hóa đơn, Monetary trung bình 4.230,20 GBP.', 'Ưu tiên chăm sóc; chương trình khách hàng thân thiết/VIP và ưu đãi cá nhân hóa phù hợp với giá trị mua hàng.'),
-  (1, 'Khách hàng ít hoạt động', 'Low-Activity Customers', 'Gồm 2.671 khách hàng, chiếm 61,83% khách hàng và 15,65% doanh thu. Recency trung bình 134,70 ngày, Frequency trung bình 1,66 hóa đơn, Monetary trung bình 484,48 GBP.', 'Thử nghiệm chiến dịch kích hoạt lại, voucher quay lại và nhắc mua hàng; đánh giá hiệu quả theo phản hồi thực tế.');
+  (0, 'Khách hàng giá trị cao', 'High-Value Customers', 'Nhóm khách hàng mua gần đây, mua thường xuyên và chi tiêu nhiều: trung bình 26 ngày kể từ lần mua cuối, 8,4 hóa đơn và 4.230 £ mỗi khách. Chỉ chiếm 38,2% số khách hàng nhưng mang lại 84,4% doanh thu.', 'Ưu tiên chăm sóc; chương trình khách hàng thân thiết/VIP và ưu đãi cá nhân hóa phù hợp với giá trị mua hàng.'),
+  (1, 'Khách hàng ít hoạt động', 'Low-Activity Customers', 'Nhóm khách hàng đã lâu chưa quay lại, mua ít và chi tiêu thấp: trung bình 135 ngày kể từ lần mua cuối, 1,7 hóa đơn và 484 £ mỗi khách; 56% mới mua đúng một lần. Chiếm 61,8% số khách hàng nhưng chỉ tạo ra 15,6% doanh thu.', 'Thử nghiệm chiến dịch kích hoạt lại, voucher quay lại và nhắc mua hàng; đánh giá hiệu quả theo phản hồi thực tế.');
 /*!40000 ALTER TABLE `segments` ENABLE KEYS */;
 UNLOCK TABLES;
 
