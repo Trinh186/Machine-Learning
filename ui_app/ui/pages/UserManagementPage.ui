@@ -25,7 +25,7 @@
     <widget class="QGroupBox" name="groupAddUser">
      <property name="title"><string>Thêm tài khoản mới</string></property>
      <layout class="QGridLayout" name="gridAddUser">
-      <item row="0" column="0"><widget class="QLabel" name="lblNewUser"><property name="text"><string>Username</string></property></widget></item>
+      <item row="0" column="0"><widget class="QLabel" name="lblNewUser"><property name="text"><string>Tên đăng nhập</string></property></widget></item>
       <item row="0" column="1"><widget class="QLabel" name="lblNewName"><property name="text"><string>Họ tên</string></property></widget></item>
       <item row="0" column="2"><widget class="QLabel" name="lblNewPassword"><property name="text"><string>Mật khẩu</string></property></widget></item>
       <item row="0" column="3"><widget class="QLabel" name="lblNewRole"><property name="text"><string>Vai trò</string></property></widget></item>
@@ -51,7 +51,7 @@
      <property name="alternatingRowColors"><bool>true</bool></property>
      <property name="sortingEnabled"><bool>false</bool></property>
      <column><property name="text"><string>ID</string></property></column>
-     <column><property name="text"><string>Username</string></property></column>
+     <column><property name="text"><string>Tên đăng nhập</string></property></column>
      <column><property name="text"><string>Họ tên</string></property></column>
      <column><property name="text"><string>Vai trò</string></property></column>
      <column><property name="text"><string>Trạng thái</string></property></column>

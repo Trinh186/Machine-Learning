@@ -8,6 +8,7 @@ import numpy as np
 import pandas as pd
 
 from . import mock_service
+from segment_colors import segment_color
 
 
 # ============================================================
@@ -230,7 +231,7 @@ class RFMModelService:
                     "marketing_strategy",
                     "Theo dõi hành vi mua hàng và xây dựng chiến dịch phù hợp."
                 ),
-                "color": details.get("color", "#767676")
+                "color": details.get("color", segment_color(segment_name_en))
             })
 
         return segments

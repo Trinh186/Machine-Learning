@@ -6,6 +6,7 @@ from PyQt6.QtGui import QColor
 from PyQt6.QtWidgets import QHeaderView, QTableWidgetItem, QWidget
 
 from app.paths import UI_DIR
+from app.theme import segment_label
 from app.widgets.charts import BarChart, DonutChart
 
 
@@ -32,20 +33,20 @@ class DashboardPage(QWidget):
         self.lblKpiCustomersValue.setText(f"{stats['total_customers']:,}")
         # Thẻ đếm mọi khách có mua; vài khách bị loại khỏi RFM (tổng chi ≤ 0 sau khi trừ hàng trả lại)
         segmented = sum(s["customers"] for s in segments)
-        self.lblKpiCustomersNote.setText(f"{segmented:,} segmented by RFM")
+        self.lblKpiCustomersNote.setText(f"{segmented:,} khách được phân khúc RFM")
         self.lblKpiInvoicesValue.setText(f"{stats['total_invoices']:,}")
         self.lblKpiRevenueValue.setText(f"£{stats['total_revenue'] / 1_000_000:,.2f}M")
         self.lblKpiRevenueNote.setText(
             f"{stats['date_from']:%m/%Y} – {stats['date_to']:%m/%Y}")
         self.lblKpiSegmentsValue.setText(str(stats["num_segments"]))
-        self.lblKpiSegmentsNote.setText(f"K-Means clustering, K = {stats['num_segments']}")
+        self.lblKpiSegmentsNote.setText(f"Phân cụm K-Means, K = {stats['num_segments']}")
 
         # --- biểu đồ ---
         monthly = self.service.get_monthly_revenue()
         self.revenueChart.set_data([self._month_label(m) for m, _ in monthly],
                                    [v for _, v in monthly])
         self.segmentChart.set_data(
-            [(s.get("segment_name_en") or s["segment_name"], s["customers"], s["color"]) for s in segments], "customers")
+            [(segment_label(s, short=True), s["customers"], s["color"]) for s in segments], "khách hàng")
 
         # --- bảng tóm tắt phân khúc ---
         self._fill_segment_table(segments)
@@ -56,8 +57,8 @@ class DashboardPage(QWidget):
         return f"{mon}/{year[2:]}"
 
     def _fill_segment_table(self, segments):
-        headers = ["Segment", "Customers", "Share", "Recency (days)",
-                   "Frequency", "Monetary (£)", "Revenue (£)", "Revenue Share"]
+        headers = ["Phân khúc", "Khách hàng", "Tỷ lệ", "Recency (ngày)",
+                   "Frequency", "Monetary (£)", "Doanh thu (£)", "Tỷ trọng DT"]
         total_c = sum(s["customers"] for s in segments) or 1
         total_r = sum(s["revenue"] for s in segments) or 1
 
@@ -71,7 +72,7 @@ class DashboardPage(QWidget):
         t.setRowCount(len(segments))
         for row, s in enumerate(segments):
             values = [
-                f"●  {s.get('segment_name_en') or s['segment_name']}",
+                f"●  {segment_label(s)}",
                 f"{s['customers']:,}",
                 f"{s['customers'] / total_c:.1%}",
                 f"{s['avg_recency']:,.1f}",
