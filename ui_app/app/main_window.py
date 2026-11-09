@@ -11,7 +11,7 @@ Cách Login (Task 7) mở cửa sổ này sau khi đăng nhập thành công:
 from datetime import datetime
 
 from PyQt6 import uic
-from PyQt6.QtCore import pyqtSignal
+from PyQt6.QtCore import QTimer, pyqtSignal
 from PyQt6.QtWidgets import QApplication, QButtonGroup, QMainWindow, QMessageBox
 
 from app.pages.cluster_marketing_page import ClusterMarketingPage
@@ -23,7 +23,7 @@ from app.pages.transaction_page import TransactionDataPage
 from app.pages.user_management_page import UserManagementPage
 from app.paths import UI_DIR
 from app.theme import apply_icons, logo_html
-from services.db_health import EMPTY, OK
+from services.db_health import DEMO, EMPTY, OK
 
 # Các trang đọc dữ liệu qua service: tạo lại khi MySQL kết nối lại được
 DATA_PAGES = ("dashboard", "transactions", "rfm_model", "segmentation", "marketing")
@@ -90,10 +90,17 @@ class MainWindow(QMainWindow):
         self.btnDbRetry.clicked.connect(self._retry_database)
         if hasattr(self.service, "add_listener"):
             self.service.add_listener(self._on_db_status)
-            self._on_db_status(self.service.status, self.service.message)
+            self._show_db_status(self.service.status, self.service.message)
 
     def _on_db_status(self, status, message):
-        if status == OK:
+        """Trạng thái MySQL đổi trong lúc dùng app: cập nhật thanh cảnh báo, tạo lại các trang
+        để toàn bộ dữ liệu trên màn hình lấy từ cùng một nguồn."""
+        self._show_db_status(status, message)
+        if status != OK and getattr(self, "_pages", None):   # trở lại OK thì _retry_database tự tải lại
+            QTimer.singleShot(0, self._reload_data_pages)
+
+    def _show_db_status(self, status, message):
+        if status in (OK, DEMO):
             self.hostDbStatus.hide()
             return
         if status == EMPTY:
@@ -118,7 +125,7 @@ class MainWindow(QMainWindow):
         if status == OK:
             self._reload_data_pages()
         else:
-            self._on_db_status(status, self.service.message)
+            self._show_db_status(status, self.service.message)
             self.lblDbStatus.setText(self.lblDbStatus.text()
                                      + f"  (Kiểm tra lúc {datetime.now():%H:%M:%S})")
 

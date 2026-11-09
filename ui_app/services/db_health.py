@@ -12,6 +12,7 @@ import mysql.connector
 from dao.database import DatabaseError, get_connection
 
 OK, OFFLINE, EMPTY = "ok", "offline", "empty"
+DEMO = "demo"            # chế độ Demo: không dùng MySQL
 
 # Các bảng giao diện đọc, theo thứ tự database.sql / import_mysql.py tạo và nạp
 REQUIRED_TABLES = ("segments", "customers", "invoices", "invoice_details",

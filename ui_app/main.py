@@ -55,6 +55,7 @@ def main():
             "username": "demo", "full_name": "Demo " + role.title(),
             "role": role,
         }
+        service.use_demo()       # không dùng MySQL
         window = MainWindow(user=fake, service=service)
         window.logout_requested.connect(app.quit)
         window.show()
