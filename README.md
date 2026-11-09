@@ -1,3 +1,9 @@
+# RFM Insight – Phân khúc khách hàng bằng RFM và K-Means (Nhóm 09)
+
+Ứng dụng PyQt6 + MySQL phân khúc khách hàng của bộ dữ liệu Online Retail (UCI) bằng RFM → log1p → StandardScaler → K-Means (K = 2).
+
+![Màn hình Tổng quan](ui_app/docs/dashboard_preview.png)
+
 ## Cách chạy nhanh (không cần cài gì trước)
 
 **Windows:** bấm đúp file **`CHAY_APP.bat`** ở thư mục gốc `Machine-Learning`.
@@ -81,6 +87,17 @@ python models/cluster_evaluation.py           # đánh giá model đã lưu, v�
 python database/import_mysql.py               # nạp lại MySQL
 ```
 
+## Dữ liệu trong repo
+
+| Tệp | Dung lượng | Dùng cho |
+|---|---|---|
+| `datasets/raw/Online Retail.xlsx` | ~23 MB | Dữ liệu gốc, đầu vào của `data_preprocessor.py` |
+| `datasets/processed/Online Retail_cleaned.xlsx` | ~19 MB | Dữ liệu sạch, đầu vào của `rfm_analyzer.py`, `import_mysql.py` và test Dashboard |
+| `datasets/processed/rfm_customers.csv`, `customer_clusters.csv` | < 100 KB | RFM và nhãn cụm của 4.320 khách hàng |
+| `outputs/*.joblib` | < 10 KB | Model K-Means, bộ chuẩn hóa và bảng ánh xạ cụm → phân khúc mà app dùng |
+
+Hai tệp Excel được giữ lại để clone về là chạy được ngay (nạp MySQL, chạy test) mà không phải tải hay xử lý lại dữ liệu. Cả hai đều dưới giới hạn 100 MB của GitHub. Xóa chúng khỏi thư mục hiện tại cũng không làm repo nhẹ đi, vì chúng vẫn nằm trong lịch sử commit.
+
 ## Project Structure
 
 ```text
@@ -109,6 +126,7 @@ Machine-Learning/
 ├── ui_app/                             → Ứng dụng PyQt6
 │   ├── main.py                         → Điểm chạy app (python main.py, thêm --demo nếu không có MySQL)
 │   ├── segment_colors.py               → Màu của từng phân khúc (dùng chung cho app và hình báo cáo)
+│   ├── docs/                           → Ảnh chụp giao diện dùng trong README
 │   ├── ui/                             → File Qt Designer: *.ui → *.py (pyuic6) → *Ex.py, style.qss, assets/
 │   ├── app/                            → MainWindow, các trang (pages/), biểu đồ và widget dùng chung
 │   ├── auth/                           → Đăng nhập, phân quyền, quản lý tài khoản
