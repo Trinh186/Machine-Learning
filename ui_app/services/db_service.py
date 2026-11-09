@@ -18,6 +18,7 @@ from dao.rfm_dao import RFMDAO
 from dao.segment_dao import SegmentDAO
 from . import mock_service
 from .rfm_model_service import FEATURES, RFMModelService
+from segment_colors import segment_color
 
 _transaction_dao = TransactionDAO()
 _customer_dao = CustomerDAO()
@@ -102,7 +103,7 @@ def get_segment_summary():
     colors = {int(s["cluster"]): s["color"] for s in _segment_dao.get_segments()}
     rows = _rfm_dao.get_segment_summary()
     for row in rows:
-        row["color"] = colors.get(int(row["cluster"]), "#6B7280")
+        row["color"] = colors.get(int(row["cluster"]), segment_color(row.get("segment_name_en")))
     return rows
 
 
@@ -321,7 +322,7 @@ def get_cluster_profiles():
             "cluster": int(c),
             "segment_name": seg.get("segment_name", f"Cụm {c}"),
             "segment_name_en": seg.get("segment_name_en", f"Cluster {c}"),
-            "color": seg.get("color", "#767676"),
+            "color": seg.get("color", segment_color(seg.get("segment_name_en"))),
             "customers": int(m.sum()),
             "customer_pct": float(m.sum() / total_customers * 100),
             "revenue": revenue,

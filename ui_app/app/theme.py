@@ -48,6 +48,16 @@ BUTTON_ICONS = {
 }
 
 
+def segment_label(segment: dict, short: bool = False) -> str:
+    """Tên phân khúc hiển thị trên giao diện (tiếng Việt).
+    short=True bỏ chữ "Khách hàng" ở đầu: "Khách hàng giá trị cao" -> "Giá trị cao"."""
+    name = segment.get("segment_name") or segment.get("segment_name_en") or ""
+    if short and name.lower().startswith("khách hàng "):
+        rest = name[len("khách hàng "):]
+        name = rest[:1].upper() + rest[1:]
+    return name
+
+
 def icon(name: str, variant: str = "accent") -> QIcon:
     return QIcon(str(ICON_DIR / f"{name}_{variant}.svg"))
 

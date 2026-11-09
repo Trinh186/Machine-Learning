@@ -73,9 +73,9 @@ class Ui_LoginMainWindow(object):
         _translate = QtCore.QCoreApplication.translate
         LoginMainWindow.setWindowTitle(_translate("LoginMainWindow", "Đăng nhập — RFM Insight"))
         self.lblAppTitle.setText(_translate("LoginMainWindow", "RFM Insight"))
-        self.lblSubtitle.setText(_translate("LoginMainWindow", "Customer Segmentation • Đăng nhập hệ thống"))
+        self.lblSubtitle.setText(_translate("LoginMainWindow", "Phân khúc khách hàng • Đăng nhập hệ thống"))
         self.lblUsername.setText(_translate("LoginMainWindow", "Tên đăng nhập"))
-        self.txtUsername.setPlaceholderText(_translate("LoginMainWindow", "Nhập username"))
+        self.txtUsername.setPlaceholderText(_translate("LoginMainWindow", "Nhập tên đăng nhập"))
         self.lblPassword.setText(_translate("LoginMainWindow", "Mật khẩu"))
         self.txtPassword.setPlaceholderText(_translate("LoginMainWindow", "Nhập mật khẩu"))
         self.btnLogin.setText(_translate("LoginMainWindow", "Đăng nhập"))

@@ -70,7 +70,7 @@
         <item>
          <widget class="QLabel" name="lblShareChartTitle">
           <property name="text">
-           <string>Customers vs Revenue by Segment</string>
+           <string>Khách hàng và doanh thu theo phân khúc</string>
           </property>
           <property name="cssClass" stdset="0">
            <string>cardTitle</string>
@@ -80,7 +80,7 @@
         <item>
          <widget class="QLabel" name="lblShareChartSubtitle">
           <property name="text">
-           <string>Share of customers, invoices and revenue held by each cluster</string>
+           <string>Tỷ lệ khách hàng, hóa đơn và doanh thu của từng cụm</string>
           </property>
           <property name="cssClass" stdset="0">
            <string>cardSubtitle</string>
@@ -138,7 +138,7 @@
         <item>
          <widget class="QLabel" name="lblSnakeChartTitle">
           <property name="text">
-           <string>Cluster Centroids (Snake Plot)</string>
+           <string>Tâm cụm (Snake plot)</string>
           </property>
           <property name="cssClass" stdset="0">
            <string>cardTitle</string>
@@ -148,7 +148,7 @@
         <item>
          <widget class="QLabel" name="lblSnakeChartSubtitle">
           <property name="text">
-           <string>Centroid on log1p + StandardScaler scale · 0 = average customer</string>
+           <string>Tâm cụm trên thang log1p + StandardScaler · 0 = khách hàng trung bình</string>
           </property>
           <property name="cssClass" stdset="0">
            <string>cardSubtitle</string>
@@ -225,7 +225,7 @@
         <item>
          <widget class="QLabel" name="lblProfileTitle">
           <property name="text">
-           <string>Cluster Profile</string>
+           <string>Hồ sơ cụm</string>
           </property>
           <property name="cssClass" stdset="0">
            <string>cardTitle</string>
@@ -235,7 +235,7 @@
         <item>
          <widget class="QLabel" name="lblProfileSubtitle">
           <property name="text">
-           <string>RFM statistics and behaviour of each cluster (section 3.5)</string>
+           <string>Thống kê RFM và hành vi của từng cụm (mục 3.5)</string>
           </property>
           <property name="cssClass" stdset="0">
            <string>cardSubtitle</string>
@@ -308,7 +308,7 @@
           <item>
            <widget class="QLabel" name="lblActionsTitle">
             <property name="text">
-             <string>Marketing Action Center</string>
+             <string>Trung tâm hành động Marketing</string>
             </property>
             <property name="cssClass" stdset="0">
              <string>cardTitle</string>
@@ -343,7 +343,7 @@
         <item>
          <widget class="QLabel" name="lblSegmentStrategy">
           <property name="text">
-           <string>Strategy</string>
+           <string>Chiến lược</string>
           </property>
           <property name="wordWrap">
            <bool>true</bool>
@@ -356,7 +356,7 @@
         <item>
          <widget class="QLabel" name="lblActionsCaption">
           <property name="text">
-           <string>Recommended actions</string>
+           <string>Hành động đề xuất</string>
           </property>
           <property name="cssClass" stdset="0">
            <string>fieldLabel</string>
@@ -397,7 +397,7 @@
            <item>
             <widget class="QLabel" name="lblActionTitle">
              <property name="text">
-              <string>Select an action</string>
+              <string>Chọn một hành động</string>
              </property>
              <property name="wordWrap">
               <bool>true</bool>
@@ -469,7 +469,7 @@
           <item>
            <widget class="QLabel" name="lblTargetCount">
             <property name="text">
-             <string>0 customers</string>
+             <string>0 khách hàng</string>
             </property>
             <property name="cssClass" stdset="0">
              <string>pill</string>
@@ -492,7 +492,7 @@
           <item>
            <widget class="QPushButton" name="btnViewTarget">
             <property name="text">
-             <string>View customers</string>
+             <string>Xem khách hàng</string>
             </property>
             <property name="cssClass" stdset="0">
              <string>secondary</string>
@@ -502,7 +502,7 @@
           <item>
            <widget class="QPushButton" name="btnExportTarget">
             <property name="text">
-             <string>Export target CSV</string>
+             <string>Xuất CSV nhóm mục tiêu</string>
             </property>
             <property name="cssClass" stdset="0">
              <string>primary</string>

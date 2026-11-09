@@ -9,10 +9,10 @@ from PyQt6.QtWidgets import QMessageBox, QWidget
 from app.widgets.table_helpers import Pager, fill_table, setup_table
 from ui.pages.TransactionDataPage import Ui_TransactionDataPage
 
-HEADERS = ["Invoice No", "Invoice Date", "Customer ID", "Country", "Stock Code",
-           "Description", "Quantity", "Unit Price (£)", "Total (£)"]
+HEADERS = ["Số hóa đơn", "Ngày lập", "Mã KH", "Quốc gia", "Mã hàng",
+           "Mô tả", "Số lượng", "Đơn giá (£)", "Thành tiền (£)"]
 NUMBER_COLS = (2, 6, 7, 8)
-ALL_COUNTRIES = "All countries"
+ALL_COUNTRIES = "Tất cả quốc gia"
 
 
 class TransactionDataPageEx(QWidget, Ui_TransactionDataPage):
@@ -40,7 +40,7 @@ class TransactionDataPageEx(QWidget, Ui_TransactionDataPage):
 
         self.pager = Pager(self.cboTransactionsPageSize, self.btnTransactionsPrevPage,
                            self.btnTransactionsNextPage, self.lblTransactionsPageInfo,
-                           self.lblTransactionsSummary, unit="transaction lines", parent=self)
+                           self.lblTransactionsSummary, unit="dòng giao dịch", parent=self)
 
     def setupSignalAndSlot(self):
         self.btnSearch.clicked.connect(self.search)
@@ -61,7 +61,7 @@ class TransactionDataPageEx(QWidget, Ui_TransactionDataPage):
 
     def search(self):
         if self.dateFrom.date() > self.dateTo.date():
-            QMessageBox.warning(self, "Invalid date range", "'From date' must be before 'To date'.")
+            QMessageBox.warning(self, "Khoảng ngày không hợp lệ", "'Từ ngày' phải trước hoặc bằng 'Đến ngày'.")
             return
         self.pager.reset()
         self.load_page()
@@ -87,5 +87,5 @@ class TransactionDataPageEx(QWidget, Ui_TransactionDataPage):
             f"{r['total_amount']:,.2f}",
         ] for r in result["rows"]]
         fill_table(self.tblTransactions, rows, right_cols=NUMBER_COLS)
-        self.lblTotalAmount.setText(f"Total amount: £{result['total_amount']:,.2f}")
+        self.lblTotalAmount.setText(f"Tổng tiền: £{result['total_amount']:,.2f}")
         self.pager.update(result["total_rows"])

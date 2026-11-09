@@ -1,6 +1,8 @@
 """Thẻ phân khúc bấm được (trang Customer Segmentation). Số thẻ phụ thuộc K nên tạo bằng code."""
 
 from PyQt6.QtCore import Qt, pyqtSignal
+
+from app.theme import segment_label
 from PyQt6.QtWidgets import QFrame, QLabel, QVBoxLayout
 
 
@@ -28,27 +30,24 @@ class SegmentCard(QFrame):
         lay.setContentsMargins(18, 14, 18, 14)
         lay.setSpacing(2)
 
-        title = QLabel(f"●  {profile['segment_name_en']}")
+        title = QLabel(f"●  {segment_label(profile)}")
         title.setProperty("cssClass", "segmentCardTitle")
         title.setStyleSheet(f"color: {color};")
-        sub = QLabel(profile.get("segment_name", ""))
-        sub.setProperty("cssClass", "kpiNote")
         value = QLabel(f"{profile['customers']:,}")
         value.setProperty("cssClass", "kpiValue")
         share = profile["customers"] / total_customers if total_customers else 0
         rev_share = profile["revenue"] / total_revenue if total_revenue else 0
-        line1 = QLabel(f"customers · {share:.1%}")
+        line1 = QLabel(f"khách hàng · {share:.1%}")
         line1.setProperty("cssClass", "kpiTitle")
-        line2 = QLabel(f"Revenue {_money(profile['revenue'])} · {rev_share:.1%} of total")
+        line2 = QLabel(f"Doanh thu {_money(profile['revenue'])} · {rev_share:.1%} tổng")
         line2.setProperty("cssClass", "cardSubtitle")
         lay.addWidget(title)
-        lay.addWidget(sub)
         lay.addSpacing(4)
         lay.addWidget(value)
         lay.addWidget(line1)
         lay.addWidget(line2)
         if "recency_mean" in profile:
-            line3 = QLabel(f"Avg R {profile['recency_mean']:.0f} days · F {profile['frequency_mean']:.1f}"
+            line3 = QLabel(f"TB: R {profile['recency_mean']:.0f} ngày · F {profile['frequency_mean']:.1f}"
                            f" · M {_money(profile['monetary_mean'])}")
             line3.setProperty("cssClass", "kpiNote")
             lay.addWidget(line3)

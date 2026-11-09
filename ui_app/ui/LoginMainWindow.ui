@@ -21,7 +21,7 @@
     </item>
     <item>
      <widget class="QLabel" name="lblSubtitle">
-      <property name="text"><string>Customer Segmentation • Đăng nhập hệ thống</string></property>
+      <property name="text"><string>Phân khúc khách hàng • Đăng nhập hệ thống</string></property>
       <property name="alignment"><set>Qt::AlignCenter</set></property>
       <property name="styleSheet"><string notr="true">color: #7D6A84; font-size: 10pt;</string></property>
      </widget>
@@ -30,7 +30,7 @@
     <item><widget class="QLabel" name="lblUsername"><property name="text"><string>Tên đăng nhập</string></property></widget></item>
     <item>
      <widget class="QLineEdit" name="txtUsername">
-      <property name="placeholderText"><string>Nhập username</string></property>
+      <property name="placeholderText"><string>Nhập tên đăng nhập</string></property>
       <property name="minimumSize"><size><width>0</width><height>42</height></size></property>
      </widget>
     </item>

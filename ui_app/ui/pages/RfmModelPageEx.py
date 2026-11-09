@@ -9,9 +9,10 @@ from PyQt6.QtWidgets import QMessageBox, QWidget
 
 from app.widgets.charts import LineChart
 from app.widgets.table_helpers import Pager, fill_table, setup_table
+from app.theme import segment_label
 from ui.pages.RfmModelPage import Ui_RfmModelPage
 
-HEADERS = ["Customer ID", "Recency (days)", "Frequency", "Monetary (£)", "Segment"]
+HEADERS = ["Mã KH", "Recency (ngày)", "Frequency", "Monetary (£)", "Phân khúc"]
 NUMBER_COLS = (1, 2, 3)
 
 
@@ -33,12 +34,12 @@ class RfmModelPageEx(QWidget, Ui_RfmModelPage):
         }
 
         setup_table(self.tblRfm, HEADERS, right_cols=NUMBER_COLS, stretch_col=4)
-        self.cboRfmSegment.addItem("All segments", None)
+        self.cboRfmSegment.addItem("Tất cả phân khúc", None)
         for cluster, seg in sorted(self.segments.items(), key=lambda kv: kv[1]["segment_name_en"]):
-            self.cboRfmSegment.addItem(seg["segment_name_en"], cluster)
+            self.cboRfmSegment.addItem(segment_label(seg), cluster)
 
         self.rfmPager = Pager(self.cboRfmPageSize, self.btnRfmPrevPage, self.btnRfmNextPage,
-                              self.lblRfmPageInfo, self.lblRfmSummary, unit="customers", parent=self)
+                              self.lblRfmPageInfo, self.lblRfmSummary, unit="khách hàng", parent=self)
 
         # Biểu đồ chọn K: gắn vào 2 khung host đặt sẵn trong Qt Designer
         self.elbowChart = LineChart()
@@ -59,7 +60,7 @@ class RfmModelPageEx(QWidget, Ui_RfmModelPage):
     def load_model_info(self):
         info = self.service.get_real_model_info()
         self.lblMetricKValue.setText(str(info["k"]))
-        self.lblMetricKNote.setText(f"{info['n_customers']:,} customers · ref. date {info['reference_date']:%d/%m/%Y}")
+        self.lblMetricKNote.setText(f"{info['n_customers']:,} khách hàng · ngày tham chiếu {info['reference_date']:%d/%m/%Y}")
         self.lblMetricSilhouetteValue.setText(f"{info['silhouette']:.4f}")
         self.lblMetricDaviesBouldinValue.setText(f"{info['davies_bouldin']:.4f}")
         self.lblMetricCalinskiValue.setText(f"{info['calinski_harabasz']:,.2f}")
@@ -71,8 +72,8 @@ class RfmModelPageEx(QWidget, Ui_RfmModelPage):
         self.silhouetteChart.set_data(labels, [row["silhouette"] for row in ks], chosen, "{:.4f}", "#8E5CC4")
         if labels:  # ghi chú tự khớp với dải K của biểu đồ (vd. K = 2 … 10)
             self.lblChooseKNote.setText(
-                f"Elbow (inertia) and Silhouette score for K = {min(labels)} … {max(labels)}. "
-                "The highlighted point is the K used by the model.")
+                f"Elbow (inertia) và hệ số Silhouette với K = {min(labels)} … {max(labels)}. "
+                "Điểm được tô đậm là K mà mô hình sử dụng.")
 
     # ---------------------------------------------------------------- RFM table
     def search_rfm(self):
@@ -93,7 +94,7 @@ class RfmModelPageEx(QWidget, Ui_RfmModelPage):
                 f"{int(r['recency']):,}",
                 f"{int(r['frequency']):,}",
                 f"{r['monetary']:,.2f}",
-                f"●  {r['segment_name_en'].replace(' Customers', '')}",
+                f"●  {segment_label(self.segments.get(r['cluster'], r), short=True)}",
             ])
             colors[(i, 4)] = self.segments[r["cluster"]]["color"]
         fill_table(self.tblRfm, rows, right_cols=NUMBER_COLS, colors=colors, row_data=result["rows"])
@@ -109,7 +110,7 @@ class RfmModelPageEx(QWidget, Ui_RfmModelPage):
         self.spinFrequency.setValue(int(r["frequency"]))
         self.spinMonetary.setValue(float(r["monetary"]))
         self.predict()
-        self.lblResultCaption.setText(f"PREDICTED SEGMENT · CUSTOMER {r['customer_id']}")
+        self.lblResultCaption.setText(f"PHÂN KHÚC DỰ ĐOÁN · KHÁCH HÀNG {r['customer_id']}")
 
     # ---------------------------------------------------------------- predict
     def predict(self):
@@ -117,17 +118,17 @@ class RfmModelPageEx(QWidget, Ui_RfmModelPage):
             result = self.service.predict_segment(
                 self.spinRecency.value(), self.spinFrequency.value(), self.spinMonetary.value())
         except ValueError as exc:
-            QMessageBox.warning(self, "Invalid input", str(exc))
+            QMessageBox.warning(self, "Dữ liệu không hợp lệ", str(exc))
             return
         self._show_result(result)
 
     def _show_result(self, result):
         color = result.get("color", "#A23E9C")
         self.frameResult.setStyleSheet(f"#frameResult {{ border-left: 4px solid {color}; }}")
-        self.lblResultCaption.setText("PREDICTED SEGMENT")
-        self.lblResultSegment.setText(result["segment_name_en"])
+        self.lblResultCaption.setText("PHÂN KHÚC DỰ ĐOÁN")
+        self.lblResultSegment.setText(segment_label(result))
         self.lblResultSegment.setStyleSheet(f"color: {color};")
-        self.lblResultSegmentVi.setText(result["segment_name"])
+        self.lblResultSegmentVi.setText("")
         self.lblResultDescription.setText(result.get("description", ""))
         self.lblResultStrategyTitle.show()
         self.lblResultStrategy.setText(result.get("marketing_strategy", ""))
@@ -137,10 +138,10 @@ class RfmModelPageEx(QWidget, Ui_RfmModelPage):
         self.spinFrequency.setValue(1)
         self.spinMonetary.setValue(0)
         self.frameResult.setStyleSheet("")
-        self.lblResultCaption.setText("PREDICTED SEGMENT")
-        self.lblResultSegment.setText("Enter RFM values and click Predict Segment")
+        self.lblResultCaption.setText("PHÂN KHÚC DỰ ĐOÁN")
+        self.lblResultSegment.setText("Nhập giá trị RFM rồi bấm Dự đoán phân khúc")
         self.lblResultSegment.setStyleSheet("")
         self.lblResultSegmentVi.setText("")
-        self.lblResultDescription.setText("Tip: double-click a customer in the table to fill in their RFM values.")
+        self.lblResultDescription.setText("Mẹo: nhấp đúp một khách hàng trong bảng để điền sẵn giá trị RFM.")
         self.lblResultStrategyTitle.hide()
         self.lblResultStrategy.setText("")

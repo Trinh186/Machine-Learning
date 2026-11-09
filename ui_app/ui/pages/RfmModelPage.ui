@@ -70,7 +70,7 @@
         <item>
          <widget class="QLabel" name="lblMetricKTitle">
           <property name="text">
-           <string>Number of Clusters (K)</string>
+           <string>Số cụm (K)</string>
           </property>
           <property name="cssClass" stdset="0">
            <string>kpiTitle</string>
@@ -90,7 +90,7 @@
         <item>
          <widget class="QLabel" name="lblMetricKNote">
           <property name="text">
-           <string>K-Means on log1p + StandardScaler</string>
+           <string>K-Means trên log1p + StandardScaler</string>
           </property>
           <property name="cssClass" stdset="0">
            <string>kpiNote</string>
@@ -124,7 +124,7 @@
         <item>
          <widget class="QLabel" name="lblMetricSilhouetteTitle">
           <property name="text">
-           <string>Silhouette Score</string>
+           <string>Hệ số Silhouette</string>
           </property>
           <property name="cssClass" stdset="0">
            <string>kpiTitle</string>
@@ -144,7 +144,7 @@
         <item>
          <widget class="QLabel" name="lblMetricSilhouetteNote">
           <property name="text">
-           <string>Higher is better (max 1)</string>
+           <string>Càng cao càng tốt (tối đa 1)</string>
           </property>
           <property name="cssClass" stdset="0">
            <string>kpiNote</string>
@@ -178,7 +178,7 @@
         <item>
          <widget class="QLabel" name="lblMetricDaviesBouldinTitle">
           <property name="text">
-           <string>Davies–Bouldin Index</string>
+           <string>Chỉ số Davies–Bouldin</string>
           </property>
           <property name="cssClass" stdset="0">
            <string>kpiTitle</string>
@@ -198,7 +198,7 @@
         <item>
          <widget class="QLabel" name="lblMetricDaviesBouldinNote">
           <property name="text">
-           <string>Lower is better</string>
+           <string>Càng thấp càng tốt</string>
           </property>
           <property name="cssClass" stdset="0">
            <string>kpiNote</string>
@@ -232,7 +232,7 @@
         <item>
          <widget class="QLabel" name="lblMetricCalinskiTitle">
           <property name="text">
-           <string>Calinski–Harabasz Index</string>
+           <string>Chỉ số Calinski–Harabasz</string>
           </property>
           <property name="cssClass" stdset="0">
            <string>kpiTitle</string>
@@ -252,7 +252,7 @@
         <item>
          <widget class="QLabel" name="lblMetricCalinskiNote">
           <property name="text">
-           <string>Higher is better</string>
+           <string>Càng cao càng tốt</string>
           </property>
           <property name="cssClass" stdset="0">
            <string>kpiNote</string>
@@ -305,7 +305,7 @@
         <item>
          <widget class="QLabel" name="lblRfmDataTitle">
           <property name="text">
-           <string>Customer RFM &amp; Model</string>
+           <string>RFM khách hàng &amp; mô hình</string>
           </property>
           <property name="cssClass" stdset="0">
            <string>cardTitle</string>
@@ -315,7 +315,7 @@
         <item>
          <widget class="QLabel" name="lblRfmDataSubtitle">
           <property name="text">
-           <string>Recency (days since last purchase), Frequency (invoices), Monetary (£) per customer</string>
+           <string>Recency (số ngày từ lần mua cuối), Frequency (số hóa đơn), Monetary (£) của từng khách hàng</string>
           </property>
           <property name="cssClass" stdset="0">
            <string>cardSubtitle</string>
@@ -329,7 +329,7 @@
           </property>
           <widget class="QWidget" name="tabRfmTable">
            <attribute name="title">
-            <string>Customer RFM</string>
+            <string>RFM khách hàng</string>
            </attribute>
            <layout class="QVBoxLayout" name="layoutRfmTab" stretch="0,1,0,0">
             <property name="spacing">
@@ -370,7 +370,7 @@
                  <bool>true</bool>
                 </property>
                 <property name="placeholderText">
-                 <string>Search customer ID</string>
+                 <string>Tìm mã khách hàng</string>
                 </property>
                </widget>
               </item>
@@ -387,7 +387,7 @@
               <item>
                <widget class="QPushButton" name="btnRfmSearch">
                 <property name="text">
-                 <string>Search</string>
+                 <string>Tìm kiếm</string>
                 </property>
                 <property name="cssClass" stdset="0">
                  <string>primary</string>
@@ -424,7 +424,7 @@
             <item>
              <widget class="QLabel" name="lblRfmHint">
               <property name="text">
-               <string>Tip: double-click a customer to load their RFM values into Predict Segment.</string>
+               <string>Mẹo: nhấp đúp một khách hàng để đưa giá trị RFM sang ô Dự đoán phân khúc.</string>
               </property>
               <property name="cssClass" stdset="0">
                <string>hint</string>
@@ -451,7 +451,7 @@
               <item>
                <widget class="QLabel" name="lblRfmSummary">
                 <property name="text">
-                 <string>Showing 0 of 0 rows</string>
+                 <string>Đang hiển thị 0 / 0 dòng</string>
                 </property>
                 <property name="cssClass" stdset="0">
                  <string>cardSubtitle</string>
@@ -474,7 +474,7 @@
               <item>
                <widget class="QLabel" name="lblRfmPageSizeCaption">
                 <property name="text">
-                 <string>Rows per page</string>
+                 <string>Số dòng mỗi trang</string>
                 </property>
                 <property name="cssClass" stdset="0">
                  <string>cardSubtitle</string>
@@ -494,7 +494,7 @@
               <item>
                <widget class="QPushButton" name="btnRfmPrevPage">
                 <property name="text">
-                 <string>‹ Prev</string>
+                 <string>‹ Trước</string>
                 </property>
                 <property name="cssClass" stdset="0">
                  <string>secondary</string>
@@ -504,7 +504,7 @@
               <item>
                <widget class="QLabel" name="lblRfmPageInfo">
                 <property name="text">
-                 <string>Page 1 / 1</string>
+                 <string>Trang 1 / 1</string>
                 </property>
                 <property name="cssClass" stdset="0">
                  <string>pageInfo</string>
@@ -514,7 +514,7 @@
               <item>
                <widget class="QPushButton" name="btnRfmNextPage">
                 <property name="text">
-                 <string>Next ›</string>
+                 <string>Sau ›</string>
                 </property>
                 <property name="cssClass" stdset="0">
                  <string>secondary</string>
@@ -527,7 +527,7 @@
           </widget>
           <widget class="QWidget" name="tabChooseK">
            <attribute name="title">
-            <string>Choosing K</string>
+            <string>Chọn K</string>
            </attribute>
            <layout class="QVBoxLayout" name="layoutChooseKTab" stretch="0,1">
             <property name="spacing">
@@ -548,7 +548,7 @@
             <item>
              <widget class="QLabel" name="lblChooseKNote">
               <property name="text">
-               <string>Elbow (inertia) and Silhouette score for K = 2 … 10. The highlighted point is the K used by the model.</string>
+               <string>Elbow (inertia) và hệ số Silhouette với K = 2 … 10. Điểm được tô đậm là K mà mô hình sử dụng.</string>
               </property>
               <property name="wordWrap">
                <bool>true</bool>
@@ -593,7 +593,7 @@
                  <item>
                   <widget class="QLabel" name="lblElbowTitle">
                    <property name="text">
-                    <string>Elbow Method – Inertia</string>
+                    <string>Phương pháp Elbow – Inertia</string>
                    </property>
                    <property name="cssClass" stdset="0">
                     <string>fieldLabel</string>
@@ -621,7 +621,7 @@
                  <item>
                   <widget class="QLabel" name="lblSilhouetteTitle">
                    <property name="text">
-                    <string>Silhouette Score by K</string>
+                    <string>Hệ số Silhouette theo K</string>
                    </property>
                    <property name="cssClass" stdset="0">
                     <string>fieldLabel</string>
@@ -676,7 +676,7 @@
         <item>
          <widget class="QLabel" name="lblPredictTitle">
           <property name="text">
-           <string>Predict Segment</string>
+           <string>Dự đoán phân khúc</string>
           </property>
           <property name="cssClass" stdset="0">
            <string>cardTitle</string>
@@ -686,7 +686,7 @@
         <item>
          <widget class="QLabel" name="lblPredictSubtitle">
           <property name="text">
-           <string>RFM → log1p → StandardScaler → K-Means → segment</string>
+           <string>RFM → log1p → StandardScaler → K-Means → phân khúc</string>
           </property>
           <property name="cssClass" stdset="0">
            <string>cardSubtitle</string>
@@ -729,7 +729,7 @@
           <item>
            <widget class="QLabel" name="lblRecencyCaption">
             <property name="text">
-             <string>Recency (days since last purchase)</string>
+             <string>Recency (số ngày từ lần mua cuối)</string>
             </property>
             <property name="cssClass" stdset="0">
              <string>fieldLabel</string>
@@ -742,14 +742,14 @@
              <number>3650</number>
             </property>
             <property name="suffix">
-             <string> days</string>
+             <string> ngày</string>
             </property>
            </widget>
           </item>
           <item>
            <widget class="QLabel" name="lblFrequencyCaption">
             <property name="text">
-             <string>Frequency (number of invoices)</string>
+             <string>Frequency (số hóa đơn)</string>
             </property>
             <property name="cssClass" stdset="0">
              <string>fieldLabel</string>
@@ -765,14 +765,14 @@
              <number>10000</number>
             </property>
             <property name="suffix">
-             <string> invoice(s)</string>
+             <string> hóa đơn</string>
             </property>
            </widget>
           </item>
           <item>
            <widget class="QLabel" name="lblMonetaryCaption">
             <property name="text">
-             <string>Monetary (total spend, £)</string>
+             <string>Monetary (tổng chi tiêu, £)</string>
             </property>
             <property name="cssClass" stdset="0">
              <string>fieldLabel</string>
@@ -831,7 +831,7 @@
             <item>
              <widget class="QPushButton" name="btnPredict">
               <property name="text">
-               <string>Predict Segment</string>
+               <string>Dự đoán phân khúc</string>
               </property>
               <property name="cssClass" stdset="0">
                <string>primary</string>
@@ -841,7 +841,7 @@
             <item>
              <widget class="QPushButton" name="btnClearPredict">
               <property name="text">
-               <string>Clear</string>
+               <string>Xóa</string>
               </property>
               <property name="cssClass" stdset="0">
                <string>secondary</string>
@@ -892,7 +892,7 @@
            <item>
             <widget class="QLabel" name="lblResultCaption">
              <property name="text">
-              <string>PREDICTED SEGMENT</string>
+              <string>PHÂN KHÚC DỰ ĐOÁN</string>
              </property>
              <property name="cssClass" stdset="0">
               <string>resultCaption</string>
@@ -902,7 +902,7 @@
            <item>
             <widget class="QLabel" name="lblResultSegment">
              <property name="text">
-              <string>Enter RFM values and click Predict</string>
+              <string>Nhập giá trị RFM rồi bấm Dự đoán</string>
              </property>
              <property name="wordWrap">
               <bool>true</bool>
@@ -941,7 +941,7 @@
            <item>
             <widget class="QLabel" name="lblResultStrategyTitle">
              <property name="text">
-              <string>Suggested action</string>
+              <string>Hành động đề xuất</string>
              </property>
              <property name="cssClass" stdset="0">
               <string>resultCaption</string>

@@ -122,7 +122,7 @@ class DonutChart(QWidget):
         self._caption = ""
         self.setMinimumHeight(200)
 
-    def set_data(self, items, center_caption="customers"):
+    def set_data(self, items, center_caption="khách hàng"):
         self._items = [(lab, float(v), QColor(c)) for lab, v, c in items]
         self._caption = center_caption
         self.update()

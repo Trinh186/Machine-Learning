@@ -32,8 +32,8 @@ class UserManagementPageEx(QWidget, Ui_UserManagementPage):
         self.refresh()
 
     def setupControls(self):
-        self.cboNewRole.addItem("Admin", "admin")
-        self.cboNewRole.addItem("User", "user")
+        self.cboNewRole.addItem("Quản trị viên", "admin")
+        self.cboNewRole.addItem("Người dùng", "user")
         self.cboNewRole.setCurrentIndex(1)
 
         self.tblUsers.setEditTriggers(QAbstractItemView.EditTrigger.NoEditTriggers)
@@ -64,7 +64,7 @@ class UserManagementPageEx(QWidget, Ui_UserManagementPage):
                 str(user["user_id"]),
                 user["username"],
                 user["full_name"],
-                str(user["role"]).title(),
+                "Quản trị viên" if str(user["role"]).lower() == "admin" else "Người dùng",
                 "Hoạt động" if user["is_active"] else "Đã khóa",
                 str(user["created_at"]),
             ]
