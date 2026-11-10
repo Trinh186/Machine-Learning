@@ -1,0 +1,874 @@
+{
+  "cases": [
+    {
+      "id": "AUTH-01",
+      "name": "Admin đăng nhập đúng",
+      "expected": "Mở MainWindow; menu User Management có thể truy cập",
+      "module": "Xác thực",
+      "priority": "P0"
+    },
+    {
+      "id": "AUTH-02",
+      "name": "User đăng nhập đúng",
+      "expected": "Đăng nhập thành công; hiển thị trang chính và KHÔNG có nút/menu Quản lý tài khoản.",
+      "module": "Xác thực",
+      "priority": "P0"
+    },
+    {
+      "id": "AUTH-03",
+      "name": "Sai mật khẩu",
+      "expected": "Thông báo xác thực không hợp lệ; không vào MainWindow",
+      "module": "Xác thực",
+      "priority": "P0"
+    },
+    {
+      "id": "AUTH-04",
+      "name": "Bỏ trống username/password",
+      "expected": "Hiển thị yêu cầu nhập đủ thông tin; không tạo phiên",
+      "module": "Xác thực",
+      "priority": "P1"
+    },
+    {
+      "id": "AUTH-05",
+      "name": "Tài khoản bị khóa không thể đăng nhập",
+      "expected": "Báo tài khoản bị khóa; không truy cập MainWindow",
+      "module": "Xác thực",
+      "priority": "P0"
+    },
+    {
+      "id": "AUTH-06",
+      "name": "Đăng xuất và kết thúc phiên",
+      "expected": "Quay về Login; quyền phiên cũ không còn",
+      "module": "Xác thực",
+      "priority": "P0"
+    },
+    {
+      "id": "AUTH-07",
+      "name": "User không được gọi chức năng Admin",
+      "expected": "Menu Admin ẩn; logic từ chối AuthorizationError",
+      "module": "Phân quyền",
+      "priority": "P0"
+    },
+    {
+      "id": "AUTH-08",
+      "name": "Phiên Admin không còn hợp lệ",
+      "expected": "Phiên bị vô hiệu hóa; thao tác Admin bị từ chối",
+      "module": "Phân quyền",
+      "priority": "P0"
+    },
+    {
+      "id": "AUTH-09",
+      "name": "Mật khẩu lưu hash, không plaintext",
+      "expected": "Không chứa mật khẩu thô; bcrypt checkpw đúng",
+      "module": "Bảo mật",
+      "priority": "P0"
+    },
+    {
+      "id": "AUTH-10",
+      "name": "Cấu hình MySQL không hardcode",
+      "expected": "Kết nối dùng biến môi trường/.env; không commit mật khẩu thật",
+      "module": "Bảo mật",
+      "priority": "P1"
+    },
+    {
+      "id": "USER-01",
+      "name": "Admin xem danh sách tài khoản",
+      "expected": "Hiện username, họ tên, vai trò, trạng thái",
+      "module": "Quản lý tài khoản",
+      "priority": "P0"
+    },
+    {
+      "id": "USER-02",
+      "name": "Tạo tài khoản User hợp lệ",
+      "expected": "Bảng users thêm 1 dòng, role=user, mật khẩu được băm",
+      "module": "Quản lý tài khoản",
+      "priority": "P0"
+    },
+    {
+      "id": "USER-03",
+      "name": "Tạo tài khoản Admin",
+      "expected": "Tạo thành công, role=admin, trạng thái active",
+      "module": "Quản lý tài khoản",
+      "priority": "P1"
+    },
+    {
+      "id": "USER-04",
+      "name": "Không tạo username trùng",
+      "expected": "Thông báo trùng; DB không tạo bản ghi trùng",
+      "module": "Quản lý tài khoản",
+      "priority": "P0"
+    },
+    {
+      "id": "USER-05",
+      "name": "Kiểm tra định dạng username",
+      "expected": "Từ chối theo định dạng 3–50 ký tự hợp lệ",
+      "module": "Quản lý tài khoản",
+      "priority": "P1"
+    },
+    {
+      "id": "USER-06",
+      "name": "Admin khóa tài khoản User",
+      "expected": "is_active=0; tài khoản không đăng nhập được",
+      "module": "Quản lý tài khoản",
+      "priority": "P0"
+    },
+    {
+      "id": "USER-07",
+      "name": "Admin mở khóa User",
+      "expected": "is_active=1; đăng nhập được bằng mật khẩu hợp lệ",
+      "module": "Quản lý tài khoản",
+      "priority": "P0"
+    },
+    {
+      "id": "USER-08",
+      "name": "Không tự khóa tài khoản",
+      "expected": "Từ chối, is_active không đổi",
+      "module": "Quản lý tài khoản",
+      "priority": "P1"
+    },
+    {
+      "id": "USER-09",
+      "name": "Không khóa Admin cuối cùng",
+      "expected": "Từ chối; vẫn còn Admin active",
+      "module": "Quản lý tài khoản",
+      "priority": "P1"
+    },
+    {
+      "id": "DASH-01",
+      "name": "Hiển thị bốn thẻ KPI",
+      "expected": "Hiện tổng khách mua, hóa đơn, doanh thu, số phân khúc; số khớp SQL",
+      "module": "Dashboard",
+      "priority": "P0"
+    },
+    {
+      "id": "DASH-02",
+      "name": "Biểu đồ doanh thu theo tháng",
+      "expected": "Cột biểu đồ đúng kỳ, thứ tự, số tiền theo tháng",
+      "module": "Dashboard",
+      "priority": "P0"
+    },
+    {
+      "id": "DASH-03",
+      "name": "Biểu đồ tỷ lệ khách theo cụm",
+      "expected": "Tổng khách các cụm = số RFM hợp lệ; tỷ lệ tổng ~100%",
+      "module": "Dashboard",
+      "priority": "P0"
+    },
+    {
+      "id": "DASH-04",
+      "name": "Đối chiếu KPI và SQL MySQL",
+      "expected": "Số liệu giao diện khớp nguồn SQL, không lấy giá trị mock khi DB OK",
+      "module": "Dashboard",
+      "priority": "P0"
+    },
+    {
+      "id": "DASH-05",
+      "name": "Đếm khách mua khác số khách đủ RFM",
+      "expected": "Có phân biệt hai số lượng; không gộp nhầm",
+      "module": "Dashboard",
+      "priority": "P1"
+    },
+    {
+      "id": "DATA-01",
+      "name": "Bảng 9 cột dòng giao dịch",
+      "expected": "Hiển thị 9 cột; quantity, price, amount đúng",
+      "module": "Giao dịch",
+      "priority": "P0"
+    },
+    {
+      "id": "DATA-02",
+      "name": "Tìm theo mã hóa đơn",
+      "expected": "Chỉ hiện dòng khớp; tổng dòng và tổng tiền lọc chính xác",
+      "module": "Giao dịch",
+      "priority": "P0"
+    },
+    {
+      "id": "DATA-03",
+      "name": "Tìm theo CustomerID hoặc StockCode",
+      "expected": "Kết quả bao gồm các dòng liên quan, không lỗi",
+      "module": "Giao dịch",
+      "priority": "P1"
+    },
+    {
+      "id": "DATA-04",
+      "name": "Lọc theo quốc gia",
+      "expected": "Mọi dòng thuộc quốc gia đã chọn",
+      "module": "Giao dịch",
+      "priority": "P0"
+    },
+    {
+      "id": "DATA-05",
+      "name": "Lọc khoảng ngày tính cả hai đầu",
+      "expected": "Bao gồm dữ liệu ngày bắt đầu và ngày kết thúc",
+      "module": "Giao dịch",
+      "priority": "P0"
+    },
+    {
+      "id": "DATA-06",
+      "name": "Ngày bắt đầu lớn hơn ngày kết thúc",
+      "expected": "Cảnh báo khoảng ngày không hợp lệ; không truy vấn sai",
+      "module": "Giao dịch",
+      "priority": "P0"
+    },
+    {
+      "id": "DATA-07",
+      "name": "Phân trang 25/50/100",
+      "expected": "Đủ số dòng mỗi trang; không lặp hoặc bỏ sót khi đổi trang",
+      "module": "Giao dịch",
+      "priority": "P1"
+    },
+    {
+      "id": "DATA-08",
+      "name": "Tổng tiền tính trên toàn bộ bộ lọc",
+      "expected": "Tổng tiền không đổi khi chuyển trang, khớp SQL",
+      "module": "Giao dịch",
+      "priority": "P0"
+    },
+    {
+      "id": "DATA-09",
+      "name": "Từ khóa không có dữ liệu",
+      "expected": "Bảng rỗng, tổng dòng 0; ứng dụng không crash",
+      "module": "Giao dịch",
+      "priority": "P1"
+    },
+    {
+      "id": "RFM-01",
+      "name": "Bảng RFM từ dữ liệu đã lưu",
+      "expected": "R,F,M đúng; không tính lại RFM từ transaction khi mở trang",
+      "module": "RFM & Model",
+      "priority": "P0"
+    },
+    {
+      "id": "RFM-02",
+      "name": "Tìm khách hàng theo Customer ID",
+      "expected": "Khớp danh sách và phân khúc; không bị lặp",
+      "module": "RFM & Model",
+      "priority": "P1"
+    },
+    {
+      "id": "RFM-03",
+      "name": "Lọc RFM theo phân khúc",
+      "expected": "Bảng hiển thị đúng khách của cụm đã chọn",
+      "module": "RFM & Model",
+      "priority": "P1"
+    },
+    {
+      "id": "RFM-04",
+      "name": "Thông tin mô hình đã lưu",
+      "expected": "K = 2; các chỉ số đúng model đã lưu",
+      "module": "RFM & Model",
+      "priority": "P0"
+    },
+    {
+      "id": "RFM-05",
+      "name": "Biểu đồ chọn K",
+      "expected": "Hai đồ thị hiển thị đủ dải K, điểm K=2 được đánh dấu",
+      "module": "RFM & Model",
+      "priority": "P1"
+    },
+    {
+      "id": "RFM-06",
+      "name": "Predict RFM hợp lệ",
+      "expected": "Trả một trong hai phân khúc, khớp kết quả trực tiếp model+mapping; không suy đoán sẵn ID",
+      "module": "Predict",
+      "priority": "P0"
+    },
+    {
+      "id": "RFM-07",
+      "name": "Predict lặp lại cho kết quả giống nhau",
+      "expected": "Cùng tên phân khúc; cùng dự đoán trên model đã lưu",
+      "module": "Predict",
+      "priority": "P0"
+    },
+    {
+      "id": "RFM-08",
+      "name": "RFM biên hợp lệ",
+      "expected": "Nhận kết quả hợp lệ, không ValueError",
+      "module": "Predict",
+      "priority": "P0"
+    },
+    {
+      "id": "RFM-09",
+      "name": "Recency âm bị từ chối ở tầng model",
+      "expected": "Báo ValueError; không dự đoán",
+      "module": "Predict",
+      "priority": "P0"
+    },
+    {
+      "id": "RFM-10",
+      "name": "Frequency nhỏ hơn 1 bị từ chối",
+      "expected": "Báo ValueError; không dự đoán",
+      "module": "Predict",
+      "priority": "P0"
+    },
+    {
+      "id": "RFM-11",
+      "name": "Monetary âm bị từ chối",
+      "expected": "Báo ValueError; không dự đoán",
+      "module": "Predict",
+      "priority": "P0"
+    },
+    {
+      "id": "RFM-12",
+      "name": "Nhấp đúp khách trong RFM để Predict",
+      "expected": "Điền R,F,M vào input; Predict và hiển thị tên cụm đúng",
+      "module": "Predict",
+      "priority": "P1"
+    },
+    {
+      "id": "SEG-01",
+      "name": "Hiển thị đúng 2 thẻ phân khúc",
+      "expected": "Hai nhóm K=2 và thẻ tổng hợp; số khách/tỷ trọng đúng",
+      "module": "Segmentation",
+      "priority": "P0"
+    },
+    {
+      "id": "SEG-02",
+      "name": "Thông tin đặc trưng RFM",
+      "expected": "Tên phân khúc, tỷ lệ và các chỉ số RFM nhất quán",
+      "module": "Segmentation",
+      "priority": "P1"
+    },
+    {
+      "id": "SEG-03",
+      "name": "Bấm thẻ cụm lọc đúng khách",
+      "expected": "Chỉ hiển thị khách thuộc cụm đã chọn",
+      "module": "Segmentation",
+      "priority": "P0"
+    },
+    {
+      "id": "SEG-04",
+      "name": "Tìm Customer ID",
+      "expected": "Danh sách trả khách tương ứng, giữ các filter đang chọn",
+      "module": "Segmentation",
+      "priority": "P1"
+    },
+    {
+      "id": "SEG-05",
+      "name": "Lọc theo quốc gia",
+      "expected": "Tất cả hàng đúng quốc gia đã chọn",
+      "module": "Segmentation",
+      "priority": "P1"
+    },
+    {
+      "id": "SEG-06",
+      "name": "Sắp xếp Monetary/Frequency/Recency",
+      "expected": "Các cột được sắp xếp đúng thứ tự đã chọn",
+      "module": "Segmentation",
+      "priority": "P1"
+    },
+    {
+      "id": "SEG-07",
+      "name": "Phân trang danh sách khách",
+      "expected": "Không trùng ID; tổng dòng không đổi theo trang",
+      "module": "Segmentation",
+      "priority": "P1"
+    },
+    {
+      "id": "SEG-08",
+      "name": "Reset bộ lọc",
+      "expected": "Quay về All segments/countries; hiển thị tập mặc định",
+      "module": "Segmentation",
+      "priority": "P1"
+    },
+    {
+      "id": "CL-01",
+      "name": "So sánh RFM và quy mô cụm",
+      "expected": "Mean/median RFM, số khách, tỷ lệ tính đúng theo data",
+      "module": "Cluster Analysis",
+      "priority": "P0"
+    },
+    {
+      "id": "CL-02",
+      "name": "Doanh thu và tỷ trọng từng cụm",
+      "expected": "Tỷ trọng hai cụm ~100%; dùng Monetary ròng RFM, không đồng nhất với gross sales dashboard",
+      "module": "Cluster Analysis",
+      "priority": "P0"
+    },
+    {
+      "id": "CL-03",
+      "name": "Tên cụm và hai biểu đồ",
+      "expected": "Tên cụm đúng; biểu đồ hiển thị 2 cụm theo mapping DB",
+      "module": "Cluster Analysis",
+      "priority": "P1"
+    },
+    {
+      "id": "MKT-01",
+      "name": "Chọn phân khúc và xem chiến lược",
+      "expected": "Đúng mô tả chiến lược theo tên phân khúc",
+      "module": "Marketing",
+      "priority": "P0"
+    },
+    {
+      "id": "MKT-02",
+      "name": "Danh sách marketing action",
+      "expected": "Hiển thị title/description/target/KPI, số khách mục tiêu",
+      "module": "Marketing",
+      "priority": "P1"
+    },
+    {
+      "id": "MKT-03",
+      "name": "View target đưa bộ lọc sang Segmentation",
+      "expected": "Segmentation nhận đúng cluster và điều kiện lọc; số khách khớp",
+      "module": "Marketing",
+      "priority": "P0"
+    },
+    {
+      "id": "MKT-04",
+      "name": "Export CSV từ action marketing",
+      "expected": "Tạo CSV UTF-8-SIG với dòng dữ liệu và header đúng, không xuất quá phạm vi lọc",
+      "module": "Marketing",
+      "priority": "P0"
+    },
+    {
+      "id": "MKT-05",
+      "name": "Số dòng CSV khớp số khách mục tiêu",
+      "expected": "Số dòng đúng; mọi khách thuộc cluster và target",
+      "module": "Marketing",
+      "priority": "P0"
+    },
+    {
+      "id": "MKT-06",
+      "name": "Hủy hộp thoại lưu CSV",
+      "expected": "Không tạo file; giao diện không lỗi",
+      "module": "Marketing",
+      "priority": "P1"
+    },
+    {
+      "id": "DB-01",
+      "name": "Đủ 8 bảng và khóa ngoại",
+      "expected": "8 bảng có cấu trúc liên kết như Data Dictionary; không có dòng mồ côi",
+      "module": "MySQL",
+      "priority": "P0"
+    },
+    {
+      "id": "DB-02",
+      "name": "Kết nối chung qua .env",
+      "expected": "Truy vấn SELECT 1 được; không phải hardcode credentials",
+      "module": "MySQL",
+      "priority": "P0"
+    },
+    {
+      "id": "DB-03",
+      "name": "Dry-run import không ghi DB",
+      "expected": "Các kiểm tra tiền nạp hiển thị; không thay đổi số dòng DB",
+      "module": "Nhập dữ liệu",
+      "priority": "P0"
+    },
+    {
+      "id": "DB-04",
+      "name": "Import trên database thử nghiệm",
+      "expected": "Bảng nghiệp vụ đồng bộ; rollback khi lỗi; không thay bảng users/segments",
+      "module": "Nhập dữ liệu",
+      "priority": "P0"
+    },
+    {
+      "id": "DB-05",
+      "name": "So sánh tập khách RFM và nhãn MySQL",
+      "expected": "Hai bảng có cùng 4.320 khách hợp lệ theo bộ dữ liệu chốt hiện tại",
+      "module": "Nhập dữ liệu",
+      "priority": "P0"
+    },
+    {
+      "id": "ML-01",
+      "name": "Thiếu cột đầu vào thì báo lỗi",
+      "expected": "ValueError chỉ rõ thiếu cột; không tạo output sai",
+      "module": "ML - Tiền xử lý",
+      "priority": "P1"
+    },
+    {
+      "id": "ML-02",
+      "name": "Loại bản ghi trùng và dữ liệu sai",
+      "expected": "Trùng theo 8 cột bị loại; ID/Ngày không hợp lệ bị loại",
+      "module": "ML - Tiền xử lý",
+      "priority": "P0"
+    },
+    {
+      "id": "ML-03",
+      "name": "Giữ hoàn hàng chưa đối soát",
+      "expected": "Phần chưa đối soát được giữ âm; tổng tiền theo khách được bảo toàn",
+      "module": "ML - Tiền xử lý",
+      "priority": "P1"
+    },
+    {
+      "id": "ML-04",
+      "name": "Recency/Frequency lấy từ dòng mua",
+      "expected": "R từ lần mua cuối; F là số InvoiceNo mua phân biệt",
+      "module": "ML - RFM",
+      "priority": "P0"
+    },
+    {
+      "id": "ML-05",
+      "name": "Monetary là giá trị ròng",
+      "expected": "Monetary=sum tất cả TotalAmount sau cleaning, gồm hoàn hàng âm",
+      "module": "ML - RFM",
+      "priority": "P0"
+    },
+    {
+      "id": "ML-06",
+      "name": "Loại khách Monetary <=0",
+      "expected": "Không đưa vào RFM; có ghi lý do loại",
+      "module": "ML - RFM",
+      "priority": "P0"
+    },
+    {
+      "id": "ML-07",
+      "name": "Ngày tham chiếu RFM nhất quán",
+      "expected": "Reference Date = ngày giao dịch cuối +1 ngày (mốc hiện tại 10/12/2011)",
+      "module": "ML - RFM",
+      "priority": "P0"
+    },
+    {
+      "id": "ML-08",
+      "name": "Chuỗi tiền xử lý log1p → scaler",
+      "expected": "Kết quả bằng nhau trong sai số số thực; đúng thứ tự đặc trưng",
+      "module": "ML - Chuẩn hóa",
+      "priority": "P0"
+    },
+    {
+      "id": "ML-09",
+      "name": "Thử K=2..10 và lưu K cuối=2",
+      "expected": "Tạo metrics K2-10, model 2 cụm, model_info có K=2; không ghi đè artefact chính",
+      "module": "ML - Huấn luyện",
+      "priority": "P0"
+    },
+    {
+      "id": "ML-10",
+      "name": "Các metric nội tại K-Means",
+      "expected": "Silhouette, DBI, CHI, Inertia đúng bộ kết quả; giải thích chọn K=2",
+      "module": "ML - Đánh giá",
+      "priority": "P0"
+    },
+    {
+      "id": "ML-11",
+      "name": "Đánh giá model đã lưu không train lại",
+      "expected": "Đánh giá trên mô hình đã lưu, model file không bị thay đổi",
+      "module": "ML - Đánh giá",
+      "priority": "P0"
+    },
+    {
+      "id": "ML-12",
+      "name": "Predict dùng mô hình/scaler đã lưu",
+      "expected": "Cùng cluster gốc, cùng phân khúc sau mapping; không fit lại mô hình",
+      "module": "ML - Tích hợp",
+      "priority": "P0"
+    },
+    {
+      "id": "ML-13",
+      "name": "Ánh xạ cluster model ↔ MySQL theo tên",
+      "expected": "High-Value của model ↔ High-Value trong DB; không ghép sai ID",
+      "module": "ML - Tích hợp",
+      "priority": "P0"
+    },
+    {
+      "id": "ML-14",
+      "name": "Thiếu artefact model báo lỗi xác định",
+      "expected": "Báo lỗi thiếu model/scaler, không sinh dự đoán giả",
+      "module": "ML - Tích hợp",
+      "priority": "P1"
+    },
+    {
+      "id": "SYS-01",
+      "name": "MySQL ngắt kết nối khi app chạy",
+      "expected": "App không crash; SafeService cảnh báo OFFLINE và dữ liệu dự phòng được phân biệt",
+      "module": "Tính ổn định",
+      "priority": "P0"
+    },
+    {
+      "id": "SYS-02",
+      "name": "Database rỗng và nút Thử lại",
+      "expected": "Cảnh báo EMPTY; sau khi có dữ liệu, trang cập nhật nguồn thật",
+      "module": "Tính ổn định",
+      "priority": "P0"
+    },
+    {
+      "id": "SYS-03",
+      "name": "Điều hướng qua lại không crash",
+      "expected": "Không tràn màn hình/hỏng chart; Admin/User đúng quyền",
+      "module": "Tính ổn định",
+      "priority": "P1"
+    },
+    {
+      "id": "SEC-01",
+      "name": "Chặn truy cập không xác thực",
+      "expected": "Bản phát hành phải vô hiệu hóa Demo hoặc giới hạn môi trường test; không được bypass Admin",
+      "module": "Bảo mật",
+      "priority": "P0"
+    },
+    {
+      "id": "ARCH-01",
+      "name": "Kiểm tra cấu trúc mã nguồn theo module",
+      "expected": "Các khối chức năng nằm tại module tương ứng; ghi nhận các trường hợp lẫn trách nhiệm để sửa.",
+      "module": "Kiến trúc & quy ước",
+      "priority": "P2"
+    },
+    {
+      "id": "ARCH-02",
+      "name": "Kiểm tra quy ước tên biến, lớp, hằng",
+      "expected": "Class dùng PascalCase; hàm/biến dùng snake_case; hằng dùng UPPER_SNAKE_CASE trong mã nhóm quản lý.",
+      "module": "Kiến trúc & quy ước",
+      "priority": "P2"
+    }
+  ],
+  "flows": {
+    "F01": {
+      "name": "Full: Login → Dashboard → Logout",
+      "steps": [
+        {
+          "n": 1,
+          "action": "Khởi chạy ứng dụng Full",
+          "expected": "Hiện Login, không vào MainWindow trước xác thực",
+          "cases": [
+            "AUTH-01"
+          ]
+        },
+        {
+          "n": 2,
+          "action": "Đăng nhập Admin",
+          "expected": "Đăng nhập thành công; menu theo vai trò",
+          "cases": [
+            "AUTH-01"
+          ]
+        },
+        {
+          "n": 3,
+          "action": "Mở Dashboard và đối chiếu KPI",
+          "expected": "Dữ liệu KPI khớp SQL",
+          "cases": [
+            "DASH-01",
+            "DASH-04"
+          ]
+        },
+        {
+          "n": 4,
+          "action": "Đăng xuất",
+          "expected": "Trở về Login, phiên Admin kết thúc",
+          "cases": [
+            "AUTH-06"
+          ]
+        }
+      ]
+    },
+    "F02": {
+      "name": "Tạo User → khóa → mở khóa",
+      "steps": [
+        {
+          "n": 1,
+          "action": "Login Admin",
+          "expected": "Mở User Management",
+          "cases": [
+            "USER-01"
+          ]
+        },
+        {
+          "n": 2,
+          "action": "Thêm tài khoản User thử",
+          "expected": "Tài khoản mới xuất hiện, password hash",
+          "cases": [
+            "USER-02"
+          ]
+        },
+        {
+          "n": 3,
+          "action": "Khóa tài khoản vừa tạo",
+          "expected": "is_active=0, User không login được",
+          "cases": [
+            "USER-06",
+            "AUTH-05"
+          ]
+        },
+        {
+          "n": 4,
+          "action": "Mở khóa và đăng nhập lại",
+          "expected": "is_active=1, User login được",
+          "cases": [
+            "USER-07"
+          ]
+        }
+      ]
+    },
+    "F03": {
+      "name": "Pipeline ML → Model → dự đoán",
+      "steps": [
+        {
+          "n": 1,
+          "action": "Tiền xử lý dữ liệu thô",
+          "expected": "Xuất dữ liệu sạch và báo cáo loại bỏ/hoàn hàng",
+          "cases": [
+            "ML-02",
+            "ML-03"
+          ]
+        },
+        {
+          "n": 2,
+          "action": "Tạo RFM và scaler",
+          "expected": "R,F,M đúng quy tắc, có file scaler/CSV",
+          "cases": [
+            "ML-04",
+            "ML-05",
+            "ML-08"
+          ]
+        },
+        {
+          "n": 3,
+          "action": "Đánh giá K và huấn luyện K=2",
+          "expected": "metrics và joblibs K2 được tạo đồng bộ",
+          "cases": [
+            "ML-09",
+            "ML-10"
+          ]
+        },
+        {
+          "n": 4,
+          "action": "Dự đoán cùng một khách hàng",
+          "expected": "Dự đoán nhất quán với model offline",
+          "cases": [
+            "RFM-06",
+            "ML-12"
+          ]
+        }
+      ]
+    },
+    "F04": {
+      "name": "Import MySQL → Dashboard → Transaction",
+      "steps": [
+        {
+          "n": 1,
+          "action": "Dry-run kiểm tra data",
+          "expected": "Tất cả kiểm tra đầu vào đạt, chưa ghi DB",
+          "cases": [
+            "DB-03"
+          ]
+        },
+        {
+          "n": 2,
+          "action": "Import thử nghiệm",
+          "expected": "Các bảng có FK hợp lệ và đủ dữ liệu",
+          "cases": [
+            "DB-04",
+            "DB-05"
+          ]
+        },
+        {
+          "n": 3,
+          "action": "Xem Dashboard",
+          "expected": "KPI và biểu đồ theo SQL vừa nạp",
+          "cases": [
+            "DASH-01",
+            "DASH-02"
+          ]
+        },
+        {
+          "n": 4,
+          "action": "Xem và lọc giao dịch",
+          "expected": "Dòng và tổng tiền khớp bảng SQL",
+          "cases": [
+            "DATA-01",
+            "DATA-08"
+          ]
+        }
+      ]
+    },
+    "F05": {
+      "name": "Marketing → danh sách → CSV",
+      "steps": [
+        {
+          "n": 1,
+          "action": "Mở Marketing Action Center",
+          "expected": "Chiến lược và số khách mục tiêu khớp",
+          "cases": [
+            "MKT-01",
+            "MKT-02"
+          ]
+        },
+        {
+          "n": 2,
+          "action": "Chọn action cụ thể",
+          "expected": "Hiện mục tiêu/KPI và tổng khách",
+          "cases": [
+            "MKT-02"
+          ]
+        },
+        {
+          "n": 3,
+          "action": "View customers",
+          "expected": "Chuyển Segmentation với bộ lọc của action",
+          "cases": [
+            "MKT-03"
+          ]
+        },
+        {
+          "n": 4,
+          "action": "Xuất CSV",
+          "expected": "CSV có đúng khách đã lọc và đúng số dòng",
+          "cases": [
+            "MKT-04",
+            "MKT-05"
+          ]
+        }
+      ]
+    },
+    "F06": {
+      "name": "MySQL offline → recover",
+      "steps": [
+        {
+          "n": 1,
+          "action": "Đăng nhập Full mode",
+          "expected": "Mở Dashboard dùng SQL thật",
+          "cases": [
+            "DASH-04"
+          ]
+        },
+        {
+          "n": 2,
+          "action": "Mô phỏng DB tạm mất kết nối",
+          "expected": "App không crash; báo OFFLINE/dữ liệu dự phòng",
+          "cases": [
+            "SYS-01"
+          ]
+        },
+        {
+          "n": 3,
+          "action": "Khôi phục MySQL và bấm Retry",
+          "expected": "Trở về trạng thái dữ liệu thật",
+          "cases": [
+            "SYS-02"
+          ]
+        }
+      ]
+    },
+    "F07": {
+      "name": "Kiểm thử quyền Demo trước bàn giao",
+      "steps": [
+        {
+          "n": 1,
+          "action": "Kiểm tra chế độ bình thường",
+          "expected": "Không vượt qua Login nếu chưa xác thực",
+          "cases": [
+            "AUTH-01",
+            "AUTH-07"
+          ]
+        },
+        {
+          "n": 2,
+          "action": "Thử --demo theo chính sách Task 16",
+          "expected": "Không được vào Admin không cần đăng nhập trong bản bàn giao",
+          "cases": [
+            "SEC-01"
+          ]
+        },
+        {
+          "n": 3,
+          "action": "Test lại Admin/User và Logout",
+          "expected": "Không phá vỡ AuthService và role restrictions",
+          "cases": [
+            "AUTH-02",
+            "AUTH-06",
+            "AUTH-07"
+          ]
+        }
+      ]
+    }
+  },
+  "source": "RFM_Insight_Test_Cases (1).xlsx; sửa kỳ vọng Demo theo bản trinh-auth-fixes"
+}
