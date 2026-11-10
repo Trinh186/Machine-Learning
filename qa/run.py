@@ -625,7 +625,7 @@ class QA:
             else:self.security(cid)
             partial={'AUTH-01','AUTH-02','AUTH-06','USER-01','USER-02','USER-03','USER-06','USER-07',
                      'DASH-03','DASH-05','SEG-01','SEG-02','SEG-04','SEG-05','SEG-06','SEG-07',
-                     'CL-01','CL-02','MKT-01','MKT-02','ML-09','RFM-04','RFM-05'}
+                     'CL-01','CL-02','MKT-01','MKT-02','ML-09','ML-07','SYS-01','RFM-04','RFM-05'}
             if cid in partial:
                 return 'SKIP','Đã xác minh một phần bằng assert; chưa chứng minh toàn bộ thao tác GUI/DB theo Excel'
             return 'PASS','Verified by executable assertion'
