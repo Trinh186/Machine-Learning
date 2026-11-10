@@ -570,14 +570,14 @@
     {
       "id": "SYS-01",
       "name": "MySQL ngắt kết nối khi app chạy",
-      "expected": "App không crash; SafeService cảnh báo OFFLINE và dữ liệu dự phòng được phân biệt",
+      "expected": "SafeService đánh dấu OFFLINE, không chuyển sang mock/dữ liệu Demo; lỗi MySQL được báo có kiểm soát.",
       "module": "Tính ổn định",
       "priority": "P0"
     },
     {
       "id": "SYS-02",
-      "name": "Database rỗng và nút Thử lại",
-      "expected": "Cảnh báo EMPTY; sau khi có dữ liệu, trang cập nhật nguồn thật",
+      "name": "Chặn mở ứng dụng khi MySQL chưa có dữ liệu",
+      "expected": "Sau đăng nhập hợp lệ, hiển thị MySQL not ready; không mở MainWindow khi dữ liệu MySQL rỗng. Khôi phục dữ liệu và đăng nhập lại.",
       "module": "Tính ổn định",
       "priority": "P0"
     },
@@ -591,7 +591,7 @@
     {
       "id": "SEC-01",
       "name": "Chặn truy cập không xác thực",
-      "expected": "Bản phát hành phải vô hiệu hóa Demo hoặc giới hạn môi trường test; không được bypass Admin",
+      "expected": "main.py --demo và launcher.py --demo trả mã 2; không được bỏ qua xác thực hay vào Admin.",
       "module": "Bảo mật",
       "priority": "P0"
     },
@@ -809,7 +809,7 @@
       ]
     },
     "F06": {
-      "name": "MySQL offline → recover",
+      "name": "MySQL offline → chặn truy vấn → khôi phục và đăng nhập lại",
       "steps": [
         {
           "n": 1,
@@ -822,15 +822,15 @@
         {
           "n": 2,
           "action": "Mô phỏng DB tạm mất kết nối",
-          "expected": "App không crash; báo OFFLINE/dữ liệu dự phòng",
+          "expected": "Chuyển trạng thái OFFLINE, không lấy dữ liệu mẫu; xử lý lỗi có kiểm soát",
           "cases": [
             "SYS-01"
           ]
         },
         {
           "n": 3,
-          "action": "Khôi phục MySQL và bấm Retry",
-          "expected": "Trở về trạng thái dữ liệu thật",
+          "action": "Khôi phục MySQL, mở lại app và đăng nhập lại",
+          "expected": "MySQL OK, ứng dụng chỉ hiển thị dữ liệu thật",
           "cases": [
             "SYS-02"
           ]
@@ -838,12 +838,12 @@
       ]
     },
     "F07": {
-      "name": "Kiểm thử quyền Demo trước bàn giao",
+      "name": "Đăng nhập chính thức và ngăn bypass --demo",
       "steps": [
         {
           "n": 1,
-          "action": "Kiểm tra chế độ bình thường",
-          "expected": "Không vượt qua Login nếu chưa xác thực",
+          "action": "Kiểm tra khởi chạy chính thức",
+          "expected": "Chỉ vào MainWindow sau xác thực và khi MySQL sẵn sàng",
           "cases": [
             "AUTH-01",
             "AUTH-07"
@@ -852,7 +852,7 @@
         {
           "n": 2,
           "action": "Thử --demo theo chính sách Task 16",
-          "expected": "Không được vào Admin không cần đăng nhập trong bản bàn giao",
+          "expected": "Chế độ --demo bị từ chối mã 2, không vào Admin",
           "cases": [
             "SEC-01"
           ]
@@ -870,5 +870,5 @@
       ]
     }
   },
-  "source": "RFM_Insight_Test_Cases (1).xlsx; sửa kỳ vọng Demo theo bản trinh-auth-fixes"
+  "source": "RFM_Insight_Test_Cases (1).xlsx; kỳ vọng SYS/SEC/F06/F07 điều chỉnh theo bản MySQL-only"
 }
