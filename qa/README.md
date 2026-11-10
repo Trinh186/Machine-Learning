@@ -4,7 +4,9 @@ Nguồn: `RFM_Insight_Test_Cases (1).xlsx` do nhóm cung cấp. Ma trận trong 
 
 ## Chạy ngay sau khi pull nhánh `test`
 
-Đứng ở thư mục gốc repo:
+Trên Windows, sau khi `git checkout test` hoặc `git pull` tại nhánh `test`, chạy **`RUN_QA.bat`** ở thư mục gốc: script tự tạo `.venv` nếu cần, cài thư viện dự án, chạy QA offscreen và ghi `qa/results.json`. Internet và đủ dung lượng ổ đĩa chỉ cần cho lần cài thư viện đầu tiên.
+
+Hoặc chạy thủ công tại thư mục gốc repo:
 
 ```powershell
 $env:PYTHONUTF8 = "1"
