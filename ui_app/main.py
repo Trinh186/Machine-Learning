@@ -1,12 +1,19 @@
 import sys
 
-from PyQt6.QtWidgets import QApplication, QMainWindow
+if "--demo" in sys.argv[1:]:
+    print("Che do Demo da bi vo hieu hoa.", file=sys.stderr)
+    sys.exit(2)
+
+
+from PyQt6.QtWidgets import QApplication, QMainWindow, QMessageBox
 
 from ui.LoginMainWindowEx import LoginMainWindowEx
 from app.main_window import MainWindow
 from app import theme
 from auth.auth_service import AuthService
 from services import service
+from dao.database import DatabaseError
+from services.db_health import OK
 
 
 def load_stylesheet(app: QApplication):
@@ -25,7 +32,14 @@ class AppController:
         self.login_form.showWindow()
 
     def open_main(self, user):
-        service.check()          # MySQL có dữ liệu chưa? (rỗng -> MainWindow hiện cảnh báo)
+        if service.check() != OK:
+            self.auth.logout()
+            QMessageBox.critical(
+                self.login_window,
+                "MySQL not ready",
+                "Official mode requires MySQL data.\n" + service.message
+            )
+            return
         self.main_window = MainWindow(
             user=user, service=service, auth_service=self.auth,
         )
@@ -49,18 +63,28 @@ def main():
     app.setStyle("Fusion")
     load_stylesheet(app)
 
-    if "--demo" in sys.argv:
-        role = "user" if "--role" in sys.argv else "admin"
-        fake = {
-            "username": "demo", "full_name": "Demo " + role.title(),
-            "role": role,
-        }
-        window = MainWindow(user=fake, service=service)
-        window.logout_requested.connect(app.quit)
-        window.show()
-    else:
-        controller = AppController()
-        controller.show_login()
+    def handle_gui_error(exc_type, exc_value, exc_tb):
+        import traceback
+        traceback.print_exception(exc_type, exc_value, exc_tb)
+
+        if issubclass(exc_type, DatabaseError):
+            message = (
+                "Mat ket noi MySQL. Ung dung se dong de tranh "
+                "hien thi du lieu khong day du."
+            )
+        else:
+            message = (
+                "Ung dung gap loi. Vui long xem chi tiet "
+                "trong terminal."
+            )
+
+        QMessageBox.critical(None, "RFM Insight - Loi", message)
+        app.quit()
+
+    sys.excepthook = handle_gui_error
+
+    controller = AppController()
+    controller.show_login()
 
     sys.exit(app.exec())
 

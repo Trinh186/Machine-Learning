@@ -1,4 +1,4 @@
-"""
+﻿"""
 Lớp dịch vụ (service layer): giao diện CHỈ gọi dữ liệu qua đây, không gọi MySQL trực tiếp.
 
 Hiện tại dùng hybrid_service (dữ liệu mẫu + model K-Means thật). Khi phần DAO xong,
@@ -13,4 +13,4 @@ from . import hybrid_service as _data_service
 from . import mock_service as _fallback_service
 from .safe_service import SafeService
 
-service = SafeService(_data_service, fallback=_fallback_service)
+service = SafeService(_data_service, fallback=None)
