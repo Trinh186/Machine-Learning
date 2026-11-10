@@ -12,6 +12,11 @@ if not exist ".venv\Scripts\python.exe" (
     )
 )
 
+if not exist ".venv\tmp" mkdir ".venv\tmp"
+set "TMP=%cd%\.venv\tmp"
+set "TEMP=%cd%\.venv\tmp"
+set "PIP_NO_CACHE_DIR=1"
+
 ".venv\Scripts\python.exe" -X utf8 -m pip install --disable-pip-version-check -r "ui_app\requirements.txt" -r "customer_segmentation\requirements.txt"
 if errorlevel 1 (
     echo Cai dat thu vien that bai. Kiem tra Internet, dung luong o dia va Python.
