@@ -34,8 +34,8 @@ _SEGMENTS = [
         "cluster": 0,
         "segment_name": "Khách hàng giá trị cao",
         "segment_name_en": "High-Value Customers",
-        "description": "Mua gần đây (Recency TB 26,13 ngày), mua thường xuyên (Frequency TB 8,38 hóa đơn), "
-                       "chi tiêu cao (Monetary TB £4.230,20). Chiếm 38,17% khách hàng nhưng 84,35% doanh thu.",
+        "description": "Nhóm khách hàng mua gần đây, mua thường xuyên và chi tiêu nhiều: trung bình 26 ngày kể từ lần mua cuối, "
+                       "8,4 hóa đơn và 4.230 £ mỗi khách. Chỉ chiếm 38,2% số khách hàng nhưng mang lại 84,4% doanh thu.",
         "marketing_strategy": "Ưu tiên chăm sóc; chương trình khách hàng thân thiết/VIP và ưu đãi cá nhân hóa "
                               "phù hợp với giá trị mua hàng.",
         "color": segment_color("High-Value Customers"),
@@ -44,8 +44,8 @@ _SEGMENTS = [
         "cluster": 1,
         "segment_name": "Khách hàng ít hoạt động",
         "segment_name_en": "Low-Activity Customers",
-        "description": "Lâu chưa quay lại (Recency TB 134,70 ngày), mua ít (Frequency TB 1,66 hóa đơn), "
-                       "chi tiêu thấp (Monetary TB £484,48). Chiếm 61,83% khách hàng, 15,65% doanh thu.",
+        "description": "Nhóm khách hàng đã lâu chưa quay lại, mua ít và chi tiêu thấp: trung bình 135 ngày kể từ lần mua cuối, "
+                       "1,7 hóa đơn và 484 £ mỗi khách; 56% mới mua đúng một lần. Chiếm 61,8% số khách hàng nhưng chỉ tạo ra 15,6% doanh thu.",
         "marketing_strategy": "Thử nghiệm chiến dịch kích hoạt lại, voucher quay lại và nhắc mua hàng; "
                               "đánh giá hiệu quả theo phản hồi thực tế.",
         "color": segment_color("Low-Activity Customers"),
@@ -247,11 +247,11 @@ def predict_segment(recency: float, frequency: float, monetary: float) -> dict:
              distances: {cluster: khoảng cách tới tâm cụm}}
     """
     if recency < 0:
-        raise ValueError("Recency must be ≥ 0 days.")
+        raise ValueError("Recency không được âm.")
     if frequency < 1:
-        raise ValueError("Frequency must be at least 1 invoice.")
+        raise ValueError("Frequency phải từ 1 trở lên.")
     if monetary < 0:
-        raise ValueError("Monetary must be ≥ 0.")
+        raise ValueError("Monetary không được âm.")
 
     p = _model_params()
     z = [(math.log1p(v) - m) / s
@@ -381,32 +381,32 @@ def get_cluster_centroids() -> dict:
 # get_segment_customers / export_customers_csv để lấy danh sách khách cần tiếp cận.
 _MARKETING_ACTIONS = {
     0: [
-        {"title": "VIP loyalty programme",
-         "description": "Tiered rewards, early access to new products and priority service for the whole segment.",
-         "target": {}, "kpi": "Retention rate, repeat-purchase rate"},
-        {"title": "Personalised offers for frequent buyers",
-         "description": "Product recommendations and bundles based on purchase history for customers with 6+ invoices.",
-         "target": {"min_frequency": 6}, "kpi": "Average order value"},
-        {"title": "Protect at-risk VIPs",
-         "description": "High-value customers who have not bought for over 90 days: personal email or call with a thank-you offer.",
-         "target": {"min_recency": 91}, "kpi": "Reactivation rate within 30 days"},
-        {"title": "Referral campaign",
-         "description": "Recent active VIPs (bought in the last 30 days) invite new customers in exchange for rewards.",
-         "target": {"max_recency": 30}, "kpi": "New customers referred"},
+        {"title": "Chương trình khách hàng thân thiết VIP",
+         "description": "Tích điểm theo hạng, ưu tiên mua sản phẩm mới và chăm sóc riêng cho toàn bộ nhóm.",
+         "target": {}, "kpi": "Tỷ lệ giữ chân, tỷ lệ mua lại"},
+        {"title": "Ưu đãi cá nhân hóa cho khách mua thường xuyên",
+         "description": "Gợi ý sản phẩm và combo theo lịch sử mua cho khách có từ 6 hóa đơn trở lên.",
+         "target": {"min_frequency": 6}, "kpi": "Giá trị trung bình mỗi đơn"},
+        {"title": "Giữ chân khách VIP có nguy cơ rời bỏ",
+         "description": "Khách giá trị cao đã hơn 90 ngày chưa mua: gửi email hoặc gọi điện kèm ưu đãi tri ân.",
+         "target": {"min_recency": 91}, "kpi": "Tỷ lệ quay lại trong 30 ngày"},
+        {"title": "Chương trình giới thiệu bạn bè",
+         "description": "Khách VIP vừa mua trong 30 ngày gần nhất giới thiệu khách mới để nhận thưởng.",
+         "target": {"max_recency": 30}, "kpi": "Số khách mới được giới thiệu"},
     ],
     1: [
-        {"title": "Second-purchase incentive",
-         "description": "One-time buyers receive a time-limited voucher for their second order.",
-         "target": {"max_frequency": 1}, "kpi": "Second-purchase conversion rate"},
-        {"title": "Win-back campaign (90–180 days)",
-         "description": "Customers inactive for 3–6 months: come-back voucher and reminder email series.",
-         "target": {"min_recency": 91, "max_recency": 180}, "kpi": "Return rate, revenue per reactivated customer"},
-        {"title": "Nurture recent customers",
-         "description": "Customers who bought in the last 30 days: newsletter and cross-sell to raise purchase frequency.",
-         "target": {"max_recency": 30}, "kpi": "Purchase frequency over the next 90 days"},
-        {"title": "Low-cost reactivation (180+ days)",
-         "description": "Long-inactive customers: low-cost channels only (email), stop contacting non-responders.",
-         "target": {"min_recency": 181}, "kpi": "Cost per reactivated customer"},
+        {"title": "Khuyến khích mua lần hai",
+         "description": "Khách mới mua một lần nhận voucher có thời hạn cho đơn hàng thứ hai.",
+         "target": {"max_frequency": 1}, "kpi": "Tỷ lệ mua lần hai"},
+        {"title": "Chiến dịch kéo khách quay lại (90–180 ngày)",
+         "description": "Khách 3–6 tháng chưa mua: voucher quay lại và chuỗi email nhắc mua hàng.",
+         "target": {"min_recency": 91, "max_recency": 180}, "kpi": "Tỷ lệ quay lại, doanh thu mỗi khách quay lại"},
+        {"title": "Chăm sóc khách vừa mua",
+         "description": "Khách mua trong 30 ngày gần nhất: gửi bản tin và bán chéo để tăng tần suất mua.",
+         "target": {"max_recency": 30}, "kpi": "Tần suất mua trong 90 ngày tới"},
+        {"title": "Kích hoạt lại chi phí thấp (trên 180 ngày)",
+         "description": "Khách lâu không mua: chỉ dùng kênh chi phí thấp (email), ngừng liên hệ khách không phản hồi.",
+         "target": {"min_recency": 181}, "kpi": "Chi phí cho mỗi khách quay lại"},
     ],
 }
 

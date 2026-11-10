@@ -37,7 +37,7 @@
        </item>
        <item>
         <widget class="QLabel" name="lblAppSubtitle">
-         <property name="text"><string>Customer Segmentation System</string></property>
+         <property name="text"><string>Hệ thống phân khúc khách hàng</string></property>
         </widget>
        </item>
        <item>
@@ -49,40 +49,40 @@
        </item>
        <item>
         <widget class="QLabel" name="lblMenuSection">
-         <property name="text"><string>ANALYTICS</string></property>
+         <property name="text"><string>PHÂN TÍCH</string></property>
         </widget>
        </item>
        <item>
         <widget class="QPushButton" name="btnNavDashboard">
-         <property name="text"><string>Dashboard</string></property>
+         <property name="text"><string>Tổng quan</string></property>
          <property name="checkable"><bool>true</bool></property>
          <property name="cssClass" stdset="0"><string>navButton</string></property>
         </widget>
        </item>
        <item>
         <widget class="QPushButton" name="btnNavTransactions">
-         <property name="text"><string>Transaction Data</string></property>
+         <property name="text"><string>Dữ liệu giao dịch</string></property>
          <property name="checkable"><bool>true</bool></property>
          <property name="cssClass" stdset="0"><string>navButton</string></property>
         </widget>
        </item>
        <item>
         <widget class="QPushButton" name="btnNavRfmModel">
-         <property name="text"><string>RFM &amp;&amp; Model</string></property>
+         <property name="text"><string>RFM &amp;&amp; Mô hình</string></property>
          <property name="checkable"><bool>true</bool></property>
          <property name="cssClass" stdset="0"><string>navButton</string></property>
         </widget>
        </item>
        <item>
         <widget class="QPushButton" name="btnNavSegmentation">
-         <property name="text"><string>Customer Segmentation</string></property>
+         <property name="text"><string>Phân khúc khách hàng</string></property>
          <property name="checkable"><bool>true</bool></property>
          <property name="cssClass" stdset="0"><string>navButton</string></property>
         </widget>
        </item>
        <item>
         <widget class="QPushButton" name="btnNavMarketing">
-         <property name="text"><string>Cluster Analysis &amp;&amp; Marketing</string></property>
+         <property name="text"><string>Phân tích cụm &amp;&amp; Marketing</string></property>
          <property name="checkable"><bool>true</bool></property>
          <property name="cssClass" stdset="0"><string>navButton</string></property>
         </widget>
@@ -96,12 +96,12 @@
        </item>
        <item>
         <widget class="QLabel" name="lblAdminSection">
-         <property name="text"><string>ADMINISTRATION</string></property>
+         <property name="text"><string>QUẢN TRỊ</string></property>
         </widget>
        </item>
        <item>
         <widget class="QPushButton" name="btnNavUsers">
-         <property name="text"><string>User Management</string></property>
+         <property name="text"><string>Quản lý tài khoản</string></property>
          <property name="checkable"><bool>true</bool></property>
          <property name="cssClass" stdset="0"><string>navButton</string></property>
         </widget>
@@ -122,12 +122,12 @@
           <property name="bottomMargin"><number>12</number></property>
           <item>
            <widget class="QLabel" name="lblUserName">
-            <property name="text"><string>Full Name</string></property>
+            <property name="text"><string>Họ tên</string></property>
            </widget>
           </item>
           <item>
            <widget class="QLabel" name="lblUserRole">
-            <property name="text"><string>Role</string></property>
+            <property name="text"><string>Vai trò</string></property>
            </widget>
           </item>
           <item>
@@ -139,7 +139,7 @@
           </item>
           <item>
            <widget class="QPushButton" name="btnLogout">
-            <property name="text"><string>Log out</string></property>
+            <property name="text"><string>Đăng xuất</string></property>
            </widget>
           </item>
          </layout>
@@ -172,12 +172,12 @@
             <property name="spacing"><number>2</number></property>
             <item>
              <widget class="QLabel" name="lblPageTitle">
-              <property name="text"><string>Dashboard</string></property>
+              <property name="text"><string>Tổng quan</string></property>
              </widget>
             </item>
             <item>
              <widget class="QLabel" name="lblPageSubtitle">
-              <property name="text"><string>Page description</string></property>
+              <property name="text"><string>Mô tả trang</string></property>
              </widget>
             </item>
            </layout>
@@ -191,7 +191,7 @@
           <item>
            <widget class="QLabel" name="lblDataRange">
             <property name="maximumSize"><size><width>16777215</width><height>30</height></size></property>
-            <property name="text"><string>Data: dd/mm/yyyy – dd/mm/yyyy</string></property>
+            <property name="text"><string>Dữ liệu: dd/mm/yyyy – dd/mm/yyyy</string></property>
            </widget>
           </item>
          </layout>

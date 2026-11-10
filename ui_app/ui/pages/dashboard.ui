@@ -58,7 +58,7 @@
         <item>
          <widget class="QLabel" name="lblKpiCustomersTitle">
           <property name="text">
-           <string>Total Customers</string>
+           <string>Tổng khách hàng</string>
           </property>
           <property name="cssClass" stdset="0">
            <string>kpiTitle</string>
@@ -78,7 +78,7 @@
         <item>
          <widget class="QLabel" name="lblKpiCustomersNote">
           <property name="text">
-           <string>After data cleaning</string>
+           <string>Sau khi làm sạch dữ liệu</string>
           </property>
           <property name="cssClass" stdset="0">
            <string>kpiNote</string>
@@ -112,7 +112,7 @@
         <item>
          <widget class="QLabel" name="lblKpiInvoicesTitle">
           <property name="text">
-           <string>Total Invoices</string>
+           <string>Tổng hóa đơn</string>
           </property>
           <property name="cssClass" stdset="0">
            <string>kpiTitle</string>
@@ -132,7 +132,7 @@
         <item>
          <widget class="QLabel" name="lblKpiInvoicesNote">
           <property name="text">
-           <string>Valid purchase invoices</string>
+           <string>Hóa đơn mua hợp lệ</string>
           </property>
           <property name="cssClass" stdset="0">
            <string>kpiNote</string>
@@ -166,7 +166,7 @@
         <item>
          <widget class="QLabel" name="lblKpiRevenueTitle">
           <property name="text">
-           <string>Total Revenue</string>
+           <string>Tổng doanh thu</string>
           </property>
           <property name="cssClass" stdset="0">
            <string>kpiTitle</string>
@@ -186,7 +186,7 @@
         <item>
          <widget class="QLabel" name="lblKpiRevenueNote">
           <property name="text">
-           <string>Quantity × Price</string>
+           <string>Số lượng × Đơn giá</string>
           </property>
           <property name="cssClass" stdset="0">
            <string>kpiNote</string>
@@ -220,7 +220,7 @@
         <item>
          <widget class="QLabel" name="lblKpiSegmentsTitle">
           <property name="text">
-           <string>Customer Segments</string>
+           <string>Số phân khúc</string>
           </property>
           <property name="cssClass" stdset="0">
            <string>kpiTitle</string>
@@ -240,7 +240,7 @@
         <item>
          <widget class="QLabel" name="lblKpiSegmentsNote">
           <property name="text">
-           <string>K-Means clustering</string>
+           <string>Phân cụm K-Means</string>
           </property>
           <property name="cssClass" stdset="0">
            <string>kpiNote</string>
@@ -281,7 +281,7 @@
         <item>
          <widget class="QLabel" name="lblRevenueChartTitle">
           <property name="text">
-           <string>Monthly Revenue</string>
+           <string>Doanh thu theo tháng</string>
           </property>
           <property name="cssClass" stdset="0">
            <string>cardTitle</string>
@@ -291,7 +291,7 @@
         <item>
          <widget class="QLabel" name="lblRevenueChartSubtitle">
           <property name="text">
-           <string>Total revenue per month (£)</string>
+           <string>Tổng doanh thu mỗi tháng (£)</string>
           </property>
           <property name="cssClass" stdset="0">
            <string>cardSubtitle</string>
@@ -352,7 +352,7 @@
         <item>
          <widget class="QLabel" name="lblSegmentChartTitle">
           <property name="text">
-           <string>Customers by Segment</string>
+           <string>Khách hàng theo phân khúc</string>
           </property>
           <property name="cssClass" stdset="0">
            <string>cardTitle</string>
@@ -362,7 +362,7 @@
         <item>
          <widget class="QLabel" name="lblSegmentChartSubtitle">
           <property name="text">
-           <string>Share of customers in each cluster</string>
+           <string>Tỷ lệ khách hàng của từng cụm</string>
           </property>
           <property name="cssClass" stdset="0">
            <string>cardSubtitle</string>
@@ -425,7 +425,7 @@
       <item>
        <widget class="QLabel" name="lblSegmentTableTitle">
         <property name="text">
-         <string>Segment Summary</string>
+         <string>Tóm tắt phân khúc</string>
         </property>
         <property name="cssClass" stdset="0">
          <string>cardTitle</string>
@@ -435,7 +435,7 @@
       <item>
        <widget class="QLabel" name="lblSegmentTableSubtitle">
         <property name="text">
-         <string>Average RFM values and revenue contribution of each segment</string>
+         <string>RFM trung bình và đóng góp doanh thu của từng phân khúc</string>
         </property>
         <property name="cssClass" stdset="0">
          <string>cardSubtitle</string>

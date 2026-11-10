@@ -83,9 +83,9 @@ class Pager(QObject):
         self.total = total
         first = 0 if total == 0 else (self.page - 1) * self.page_size + 1
         last = min(self.page * self.page_size, total)
-        text = f"{first:,}–{last:,} of {total:,} {self.unit}"
+        text = f"{first:,}–{last:,} / {total:,} {self.unit}"
         self.lbl_summary.setText(text + (f"  ·  {extra}" if extra else ""))
-        self.lbl_page.setText(f"Page {self.page:,} / {self.page_count:,}")
+        self.lbl_page.setText(f"Trang {self.page:,} / {self.page_count:,}")
         self.btn_prev.setEnabled(self.page > 1)
         self.btn_next.setEnabled(self.page < self.page_count)
 

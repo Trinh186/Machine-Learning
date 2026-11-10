@@ -53,7 +53,7 @@
       <item>
        <widget class="QLabel" name="lblFiltersTitle">
         <property name="text">
-         <string>Search &amp; Filter</string>
+         <string>Tìm kiếm &amp; lọc</string>
         </property>
         <property name="cssClass" stdset="0">
          <string>cardTitle</string>
@@ -83,7 +83,7 @@
         <item row="0" column="0">
          <widget class="QLabel" name="lblSearchCaption">
           <property name="text">
-           <string>Keyword</string>
+           <string>Từ khóa</string>
           </property>
           <property name="cssClass" stdset="0">
            <string>fieldLabel</string>
@@ -93,7 +93,7 @@
         <item row="0" column="1">
          <widget class="QLabel" name="lblCountryCaption">
           <property name="text">
-           <string>Country</string>
+           <string>Quốc gia</string>
           </property>
           <property name="cssClass" stdset="0">
            <string>fieldLabel</string>
@@ -103,7 +103,7 @@
         <item row="0" column="2">
          <widget class="QLabel" name="lblDateFromCaption">
           <property name="text">
-           <string>From date</string>
+           <string>Từ ngày</string>
           </property>
           <property name="cssClass" stdset="0">
            <string>fieldLabel</string>
@@ -113,7 +113,7 @@
         <item row="0" column="3">
          <widget class="QLabel" name="lblDateToCaption">
           <property name="text">
-           <string>To date</string>
+           <string>Đến ngày</string>
           </property>
           <property name="cssClass" stdset="0">
            <string>fieldLabel</string>
@@ -126,7 +126,7 @@
            <bool>true</bool>
           </property>
           <property name="placeholderText">
-           <string>Invoice no., customer ID, stock code or product name</string>
+           <string>Số hóa đơn, mã khách hàng, mã hàng hoặc tên sản phẩm</string>
           </property>
          </widget>
         </item>
@@ -163,7 +163,7 @@
         <item row="1" column="4">
          <widget class="QPushButton" name="btnSearch">
           <property name="text">
-           <string>Search</string>
+           <string>Tìm kiếm</string>
           </property>
           <property name="cssClass" stdset="0">
            <string>primary</string>
@@ -173,7 +173,7 @@
         <item row="1" column="5">
          <widget class="QPushButton" name="btnReset">
           <property name="text">
-           <string>Reset</string>
+           <string>Đặt lại</string>
           </property>
           <property name="cssClass" stdset="0">
            <string>secondary</string>
@@ -223,7 +223,7 @@
         <item>
          <widget class="QLabel" name="lblTransactionsTitle">
           <property name="text">
-           <string>Transaction Lines</string>
+           <string>Các dòng giao dịch</string>
           </property>
           <property name="cssClass" stdset="0">
            <string>cardTitle</string>
@@ -246,7 +246,7 @@
         <item>
          <widget class="QLabel" name="lblTotalAmount">
           <property name="text">
-           <string>Total amount: £0</string>
+           <string>Tổng tiền: £0</string>
           </property>
           <property name="cssClass" stdset="0">
            <string>pill</string>
@@ -300,7 +300,7 @@
         <item>
          <widget class="QLabel" name="lblTransactionsSummary">
           <property name="text">
-           <string>Showing 0 of 0 rows</string>
+           <string>Đang hiển thị 0 / 0 dòng</string>
           </property>
           <property name="cssClass" stdset="0">
            <string>cardSubtitle</string>
@@ -323,7 +323,7 @@
         <item>
          <widget class="QLabel" name="lblTransactionsPageSizeCaption">
           <property name="text">
-           <string>Rows per page</string>
+           <string>Số dòng mỗi trang</string>
           </property>
           <property name="cssClass" stdset="0">
            <string>cardSubtitle</string>
@@ -343,7 +343,7 @@
         <item>
          <widget class="QPushButton" name="btnTransactionsPrevPage">
           <property name="text">
-           <string>‹ Prev</string>
+           <string>‹ Trước</string>
           </property>
           <property name="cssClass" stdset="0">
            <string>secondary</string>
@@ -353,7 +353,7 @@
         <item>
          <widget class="QLabel" name="lblTransactionsPageInfo">
           <property name="text">
-           <string>Page 1 / 1</string>
+           <string>Trang 1 / 1</string>
           </property>
           <property name="cssClass" stdset="0">
            <string>pageInfo</string>
@@ -363,7 +363,7 @@
         <item>
          <widget class="QPushButton" name="btnTransactionsNextPage">
           <property name="text">
-           <string>Next ›</string>
+           <string>Sau ›</string>
           </property>
           <property name="cssClass" stdset="0">
            <string>secondary</string>

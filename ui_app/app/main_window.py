@@ -30,18 +30,18 @@ DATA_PAGES = ("dashboard", "transactions", "rfm_model", "segmentation", "marketi
 
 # key, nút trên menu, tiêu đề, mô tả, chỉ Admin?
 PAGES = [
-    ("dashboard", "btnNavDashboard", "Dashboard",
-     "Overview of customers, revenue and segments", False),
-    ("transactions", "btnNavTransactions", "Transaction Data",
-     "Browse, search and filter transaction records", False),
-    ("rfm_model", "btnNavRfmModel", "RFM & Model",
-     "RFM values, K-Means evaluation and segment prediction", False),
-    ("segmentation", "btnNavSegmentation", "Customer Segmentation",
-     "Customers grouped by segment", False),
-    ("marketing", "btnNavMarketing", "Cluster Analysis & Marketing Action Center",
-     "Cluster profiles and recommended marketing actions", False),
-    ("users", "btnNavUsers", "User Management",
-     "View, add, lock and unlock user accounts", True),
+    ("dashboard", "btnNavDashboard", "Tổng quan",
+     "Tổng quan khách hàng, doanh thu và phân khúc", False),
+    ("transactions", "btnNavTransactions", "Dữ liệu giao dịch",
+     "Xem, tìm kiếm và lọc các dòng giao dịch", False),
+    ("rfm_model", "btnNavRfmModel", "RFM & Mô hình",
+     "Giá trị RFM, đánh giá K-Means và dự đoán phân khúc", False),
+    ("segmentation", "btnNavSegmentation", "Phân khúc khách hàng",
+     "Danh sách khách hàng theo từng phân khúc", False),
+    ("marketing", "btnNavMarketing", "Phân tích cụm & Trung tâm hành động Marketing",
+     "Hồ sơ cụm và các hành động marketing đề xuất", False),
+    ("users", "btnNavUsers", "Quản lý tài khoản",
+     "Xem, thêm, khóa và mở khóa tài khoản", True),
 ]
 
 
@@ -90,16 +90,21 @@ class MainWindow(QMainWindow):
         self.btnDbRetry.clicked.connect(self._retry_database)
         if hasattr(self.service, "add_listener"):
             self.service.add_listener(self._on_db_status)
-            self._on_db_status(self.service.status, self.service.message)
+            self._show_db_status(self.service.status, self.service.message)
 
     def _on_db_status(self, status, message):
+        """Trạng thái MySQL đổi trong lúc dùng app: cập nhật thanh cảnh báo, tạo lại các trang
+        để toàn bộ dữ liệu trên màn hình lấy từ cùng một nguồn."""
+        self._show_db_status(status, message)
+
+    def _show_db_status(self, status, message):
         if status == OK:
             self.hostDbStatus.hide()
             return
         if status == EMPTY:
-            head = "Database MySQL chưa có dữ liệu – đang hiển thị dữ liệu mẫu."
+            head = "Database MySQL chưa có dữ liệu – không sử dụng dữ liệu mẫu."
         else:
-            head = "Không kết nối được MySQL – đang hiển thị dữ liệu mẫu."
+            head = "Không kết nối được MySQL – không sử dụng dữ liệu mẫu."
         self.lblDbStatus.setText(f"{head}  {message}".strip())
         self.frameDbStatus.setProperty("state", status)
         self.frameDbStatus.style().unpolish(self.frameDbStatus)
@@ -118,7 +123,7 @@ class MainWindow(QMainWindow):
         if status == OK:
             self._reload_data_pages()
         else:
-            self._on_db_status(status, self.service.message)
+            self._show_db_status(status, self.service.message)
             self.lblDbStatus.setText(self.lblDbStatus.text()
                                      + f"  (Kiểm tra lúc {datetime.now():%H:%M:%S})")
 
@@ -160,7 +165,7 @@ class MainWindow(QMainWindow):
             return page
         if key == "users" and self.is_admin and self.auth_service is not None:
             return UserManagementPage(self.auth_service)
-        return PlaceholderPage(title, "This screen is under construction.")
+        return PlaceholderPage(title, "Màn hình này đang được xây dựng.")
 
     # ---------- điều hướng ----------
     def show_page(self, key: str):
@@ -182,12 +187,12 @@ class MainWindow(QMainWindow):
     # ---------- thông tin người dùng / dữ liệu ----------
     def _fill_user_box(self):
         self.lblUserName.setText(self.user.get("full_name") or self.user.get("username", ""))
-        self.lblUserRole.setText("Administrator" if self.is_admin else "User")
+        self.lblUserRole.setText("Quản trị viên" if self.is_admin else "Người dùng")
 
     def _fill_data_range(self):
         stats = self.service.get_dashboard_stats()
         self.lblDataRange.setText(
-            f"Data: {stats['date_from']:%d/%m/%Y} – {stats['date_to']:%d/%m/%Y}")
+            f"Dữ liệu: {stats['date_from']:%d/%m/%Y} – {stats['date_to']:%d/%m/%Y}")
 
     # ---------- Đăng xuất ----------
     def _confirm_logout(self):
