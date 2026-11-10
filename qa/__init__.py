@@ -1,0 +1,1 @@
+"""Independent QA runner for RFM Insight; no production DB writes."""
