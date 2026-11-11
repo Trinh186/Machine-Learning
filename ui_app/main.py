@@ -36,8 +36,8 @@ class AppController:
             self.auth.logout()
             QMessageBox.critical(
                 self.login_window,
-                "MySQL not ready",
-                "Official mode requires MySQL data.\n" + service.message
+                "MySQL chưa sẵn sàng",
+                "Ứng dụng cần dữ liệu trong MySQL.\n" + service.message
             )
             return
         self.main_window = MainWindow(
@@ -69,16 +69,16 @@ def main():
 
         if issubclass(exc_type, DatabaseError):
             message = (
-                "Mat ket noi MySQL. Ung dung se dong de tranh "
-                "hien thi du lieu khong day du."
+                "Mất kết nối MySQL. Ứng dụng sẽ đóng để tránh "
+                "hiển thị dữ liệu không đầy đủ."
             )
         else:
             message = (
-                "Ung dung gap loi. Vui long xem chi tiet "
-                "trong terminal."
+                "Ứng dụng gặp lỗi. Vui lòng xem chi tiết "
+                "trong cửa sổ dòng lệnh."
             )
 
-        QMessageBox.critical(None, "RFM Insight - Loi", message)
+        QMessageBox.critical(None, "RFM Insight – Lỗi", message)
         app.quit()
 
     sys.excepthook = handle_gui_error
