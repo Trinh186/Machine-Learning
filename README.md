@@ -8,13 +8,16 @@
 
 **Windows:** bấm đúp file **`CHAY_APP.bat`** ở thư mục gốc `Machine-Learning`.
 
-- Lần đầu: file tự tạo môi trường riêng (`.venv`) và tự cài thư viện (cần Internet, khoảng 3–5 phút). Nếu máy chưa có Python 3.11+, file sẽ hỏi để tự cài Python 3.13.
-- Những lần sau: app mở ngay.
-- Chọn chế độ:
-  1. **Đầy đủ** – có màn Đăng nhập, cần MySQL Server đang chạy. Lần đầu sẽ hỏi tài khoản/mật khẩu MySQL, tự tạo database, các bảng và tài khoản Admin.
-  2. **Demo** – xem toàn bộ giao diện với dữ liệu mẫu, không cần MySQL.
+App chỉ chạy với dữ liệu thật trong MySQL, **cần cài và bật MySQL Server 8.x trước** (không có chế độ dữ liệu mẫu).
 
-**macOS / Linux:** `python3 launcher.py` (thêm `--demo` hoặc `--full` để bỏ qua bước chọn).
+- Lần đầu, file tự làm lần lượt:
+  1. tạo môi trường riêng (`.venv`) và cài thư viện (cần Internet, khoảng 3–5 phút). Nếu máy chưa có Python 3.11+, file sẽ hỏi để tự cài Python 3.13;
+  2. hỏi tài khoản/mật khẩu MySQL, tạo `ui_app/.env`, database, các bảng và tài khoản Admin;
+  3. nạp dữ liệu vào MySQL nếu database còn trống (khoảng 1–2 phút);
+  4. mở màn Đăng nhập.
+- Những lần sau: các bước đã xong được bỏ qua, app mở ngay.
+
+**macOS / Linux:** `python3 launcher.py`.
 
 ## Chạy thủ công từng bước (không dùng CHAY_APP.bat)
 
@@ -67,13 +70,12 @@ python -m scripts.create_admin
 **6. Chạy app** (vẫn ở thư mục `ui_app`):
 
 ```
-python main.py            # có màn Đăng nhập, đọc dữ liệu từ MySQL
-python main.py --demo     # xem giao diện bằng dữ liệu mẫu, không cần MySQL
+python main.py            # màn Đăng nhập, đọc dữ liệu từ MySQL
 ```
 
 > Bước 2, 3 và 5 có thể thay bằng một lệnh: `python -m scripts.setup_db` (trong thư mục `ui_app`) – script tự hỏi tài khoản MySQL, tạo `.env`, database, các bảng và Admin.
 
-Nếu MySQL tắt, sai mật khẩu hoặc database chưa có dữ liệu, app không bị văng: đầu trang hiện thanh cảnh báo (đỏ = không kết nối được, vàng = database rỗng) kèm nút **Thử lại**, và tạm hiển thị dữ liệu mẫu.
+App không dùng dữ liệu mẫu. Nếu MySQL tắt, sai mật khẩu hoặc database chưa có dữ liệu, app báo lỗi ngay ở màn Đăng nhập và không mở các trang; nếu mất kết nối MySQL trong lúc dùng, app báo lỗi rồi tự đóng để không hiển thị dữ liệu thiếu.
 
 ### Chạy lại phần xử lý dữ liệu và mô hình (khi cần)
 
@@ -104,7 +106,7 @@ Hai tệp Excel được giữ lại để clone về là chạy được ngay (
 Machine-Learning/
 │
 ├── CHAY_APP.bat                        → Bấm đúp để cài và mở app (Windows)
-├── launcher.py                         → Tạo .venv, cài thư viện, chọn chế độ Đầy đủ / Demo
+├── launcher.py                         → Tạo .venv, cài thư viện, thiết lập và nạp MySQL lần đầu, mở app
 │
 ├── customer_segmentation/              → Xử lý dữ liệu và mô hình
 │   ├── datasets/
@@ -124,7 +126,7 @@ Machine-Learning/
 │   └── requirements.txt
 │
 ├── ui_app/                             → Ứng dụng PyQt6
-│   ├── main.py                         → Điểm chạy app (python main.py, thêm --demo nếu không có MySQL)
+│   ├── main.py                         → Điểm chạy app (python main.py)
 │   ├── segment_colors.py               → Màu của từng phân khúc (dùng chung cho app và hình báo cáo)
 │   ├── docs/                           → Ảnh chụp giao diện dùng trong README
 │   ├── ui/                             → File Qt Designer: *.ui → *.py (pyuic6) → *Ex.py, style.qss, assets/
