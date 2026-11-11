@@ -1,7 +1,7 @@
 """Kiểm tra UserDAO và AuthService với MySQL thật; không ghi cứng mật khẩu.
 
 Từ thư mục ui_app chạy:
-    python -m tests.test_userDAO
+    python -m tests.manual_userDAO
 
 Không in password_hash, không lưu mật khẩu vào code.
 """

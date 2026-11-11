@@ -74,18 +74,10 @@ def run_in_ui(args):
     return subprocess.call([str(VENV_PY), "-W", "ignore", *args], cwd=UI_DIR)
 
 
-def choose_mode(argv):
-    if "--demo" in argv:
-        return "demo"
-    if "--full" in argv:
-        return "full"
-    say("\nChon che do:")
-    say("  1. Day du - co Dang nhap (can MySQL Server dang chay)")
-    say("  2. Demo   - xem giao dien voi du lieu mau (khong can MySQL)")
-    return "full" if ask("Nhap 1 hoac 2 roi Enter [2]: ", ["2", "1", ""]) == "1" else "demo"
-
-
 def main(argv):
+    if "--demo" in argv:
+        say("Che do Demo da bi vo hieu hoa.")
+        return 2
     if sys.version_info < MIN_PY:
         say(f"Can Python {MIN_PY[0]}.{MIN_PY[1]} tro len (dang dung {sys.version.split()[0]}).")
         return 1
@@ -95,18 +87,8 @@ def main(argv):
 
     ensure_venv()
     ensure_packages()
-    mode = choose_mode(argv)
-
-    if mode == "full":
-        say("\n[3/3] Kiem tra MySQL, database va tai khoan Admin ...")
-        if run_in_ui(["-m", "scripts.setup_db"]) != 0:
-            say("\nKhong thiet lap duoc MySQL (xem thong bao phia tren).")
-            if ask("Mo che do Demo thay the? (y/n) [y]: ", ["y", "n", ""]) == "n":
-                return 1
-            mode = "demo"
-
-    say("\nDang mo app ..." + (" (che do Demo)" if mode == "demo" else ""))
-    code = run_in_ui(["main.py"] + (["--demo"] if mode == "demo" else []))
+    say("\nDang mo ung dung chinh thuc ...")
+    code = run_in_ui(["main.py"])
     return 0 if code in (0, None) else code
 
 
